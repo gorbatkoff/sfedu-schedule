@@ -1,0 +1,14 @@
+.Header {
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+  padding: 5px 25px;
+  background-color: var(--secondary-color)
+}
+
+.themeSwitcher {
+  width: 10vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

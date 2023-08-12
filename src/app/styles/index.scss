@@ -1,0 +1,7 @@
+@import "reset";
+@import "variables/global";
+
+.App {
+  font: var(--font-m);
+  color: var(--secondary-color);
+}
