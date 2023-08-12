@@ -16,7 +16,7 @@ export default defineConfig({
       manifest: {
         theme_color: "#6217b4",
         background_color: "#eae0e0",
-        display: "browser",
+        display: "standalone",
         scope: "/",
         start_url: "/",
         name: "Sfedu Schedule",
