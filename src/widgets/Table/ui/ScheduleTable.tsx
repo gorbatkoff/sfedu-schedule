@@ -19,7 +19,7 @@ import TableCell from "/src/widgets/Table/ui/TableCell/TableCell";
 
 interface TableProps {
   className?: string;
-  schedule: any;
+  schedule?: any;
 }
 
 export const ScheduleTable = memo(({ className }: TableProps) => {
