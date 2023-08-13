@@ -25,7 +25,7 @@ export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
     setInput(e.target.value);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") alert(1);
+    if (e.key === "Enter") get;
   };
 
   return (
@@ -48,7 +48,7 @@ export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
           />
         </InputGroup>
       </FormControl>
-      <Button>Поиск</Button>
+      <Button colorScheme="blue">Поиск</Button>
     </div>
   );
 });

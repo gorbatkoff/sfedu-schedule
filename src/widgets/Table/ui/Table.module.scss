@@ -1,0 +1,25 @@
+.Table {
+  font-size:12px;
+  tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+    width: 500px;
+  }
+
+
+  .tableBody {
+    td {
+      padding: 0.5em;
+     height: 120px;
+     max-width: 100px;
+      white-space: normal;
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+   }
+
+    td:hover {
+      background-color: #25CA5D;
+    }
+  }
+}

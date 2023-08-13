@@ -15,17 +15,13 @@ export const Header = memo(({ className }: HeaderProps) => {
   const { toggleColorMode } = useColorMode();
 
   return (
-    <div className={classNames(styles.Header, {}, [className])}>
+    <header className={classNames(styles.Header, {}, [className])}>
       <Logo />
-
-      {/*<Button onClick={() => smoothThemeSwitch(toggleColorMode)}>
-        Toggle {colorMode === "light" ? "Dark" : "Light"}
-      </Button>*/}
       <div className={styles.themeSwitcher}>
         <SunIcon boxSize={6} color="white" />
-        <Switch size="lg" onChange={() => smoothThemeSwitch(toggleColorMode)} />
+        <Switch size="md" onChange={() => smoothThemeSwitch(toggleColorMode)} />
         <MoonIcon boxSize={6} color="white" />
       </div>
-    </div>
+    </header>
   );
 });

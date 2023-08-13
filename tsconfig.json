@@ -20,9 +20,8 @@
       "/src/*": ["src/*"],
       "/@src/*": ["src/*"],
       "/@status/*": ["src/packages/status/*"],
-      "/@cli/*": ["src/packages/cli/*"],
+      "/@cli/*": ["src/packages/cli/*"]
     }
-
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
