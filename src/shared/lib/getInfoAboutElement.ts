@@ -3,7 +3,7 @@
 export enum TableCellColor {
   DEFAULT_COLOR = "",
   LMS_COLOR = "#1378d6",
-  AUDIENCE_COLOR = "#13d685",
+  AUDIENCE_COLOR = "#18ca80",
   MILITARY_COLOR = "#1c523b",
 }
 
