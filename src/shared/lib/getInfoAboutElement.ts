@@ -9,15 +9,16 @@ export enum TableCellColor {
   EXAM_COLOR = "#8b1111",
 }
 
-const regex = /[А-К]-\d{3}/g;
+const auditoryRegex = /[А-К]-\d{3}/g;
+const LMSRegex = /LMS(|-\d+)/g;
 
 export const getInfoAboutElement = (element: string) => {
   if (element.length === 0) return TableCellColor.DEFAULT_COLOR;
   if (element.startsWith("экз.")) return TableCellColor.EXAM_COLOR;
   if (weekDays.includes(element.slice(0, 4))) return TableCellColor.DAY_COLOR;
-  if (element.includes("LMS")) return TableCellColor.LMS_COLOR;
+  if (element.match(LMSRegex)) return TableCellColor.LMS_COLOR;
   if (element.includes("Военная подготовка"))
     return TableCellColor.MILITARY_COLOR;
-  if (element.match(regex)) return TableCellColor.AUDIENCE_COLOR;
+  if (element.match(auditoryRegex)) return TableCellColor.AUDIENCE_COLOR;
   return TableCellColor.DEFAULT_COLOR;
 };
