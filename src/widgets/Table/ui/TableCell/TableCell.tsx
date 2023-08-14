@@ -1,12 +1,19 @@
-import { Td } from "@chakra-ui/react";
+import { Td, useColorModeValue } from "@chakra-ui/react";
 import { getInfoAboutElement } from "/src/shared/lib/getInfoAboutElement";
 
 interface ITableCell {
   element: string;
+  textColor: string;
 }
 
-const TableCell = ({ element }: ITableCell) => {
-  return <Td sx={{ background: getInfoAboutElement(element) }}>{element}</Td>;
+const TableCell = ({ element, textColor }: ITableCell) => {
+  console.log(textColor);
+
+  return (
+    <Td sx={{ background: getInfoAboutElement(element), color: "white" }}>
+      {element}
+    </Td>
+  );
 };
 
 export default TableCell;

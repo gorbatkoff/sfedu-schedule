@@ -1,9 +1,10 @@
-/*const weekDays = ["Пнд", "Втр", "Срд", "Чтв", "Птн", "Сбт"];*/
+const weekDays = ["Пнд,", "Втр,", "Срд,", "Чтв,", "Птн,", "Сбт,"];
 
 export enum TableCellColor {
   DEFAULT_COLOR = "",
-  LMS_COLOR = "#1378d6",
-  AUDIENCE_COLOR = "#18ca80",
+  DAY_COLOR = "var(--secondary-color)",
+  LMS_COLOR = "#054785",
+  AUDIENCE_COLOR = "#008038",
   MILITARY_COLOR = "#1c523b",
 }
 
@@ -11,6 +12,7 @@ const regex = /[А-К]-\d{3}/g;
 
 export const getInfoAboutElement = (element: string) => {
   if (element.length === 0) return TableCellColor.DEFAULT_COLOR;
+  if (weekDays.includes(element.slice(0, 4))) return TableCellColor.DAY_COLOR;
   if (element.includes("LMS")) return TableCellColor.LMS_COLOR;
   if (element.includes("Военная подготовка"))
     return TableCellColor.MILITARY_COLOR;

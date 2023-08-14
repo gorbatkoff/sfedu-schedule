@@ -3,19 +3,23 @@ import React, { memo, useEffect, useState } from "react";
 import styles from "./Table.module.scss";
 import classNames from "classnames";
 import {
+  Heading,
   Table,
   TableContainer,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
   Tr,
   useColorMode,
+  useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
 import { $api } from "/src/shared/api/api";
 import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/ScheduleTable";
 import TableCell from "/src/widgets/Table/ui/TableCell/TableCell";
+import Loader from "/src/shared/ui/Loader/Loader";
 
 interface TableProps {
   className?: string;
@@ -23,10 +27,8 @@ interface TableProps {
 }
 
 export const ScheduleTable = memo(({ className }: TableProps) => {
-  const { colorMode } = useColorMode();
+  const textColor = useColorModeValue("black", "white");
   const toast = useToast();
-
-  const tableColor = colorMode === "light" ? "black" : "white";
 
   const [scheduleData, setScheduleData] = useState<IScheduleTable>({
     table: {
@@ -48,8 +50,9 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
     } catch (error) {
       toast({
         title: "Ошибка загрузки данных",
-        description: "We've created your account for you.",
-        status: "success",
+        description:
+          "Произошла ошибка при загрузке данных. Попробуйте обновить страницу",
+        status: "error",
         duration: 9000,
         isClosable: true,
       });
@@ -60,39 +63,44 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
     getScheduleData();
   }, []);
 
-  console.log(scheduleData);
+  if (scheduleData.table.table.length === 0 || !scheduleData) return <Loader />;
 
   return (
     <div className={classNames(styles.Table, {}, [className])}>
-      {scheduleData ? <h1>Есть данные</h1> : <h1>Нету лол</h1>}
-
       {scheduleData && (
         <TableContainer sx={{ height: "100%", overflowY: "auto" }}>
-          <Table variant="simple" sx={{ color: tableColor }}>
+          <Table variant="simple" sx={{ color: textColor }}>
             <Thead
               sx={{
                 position: "sticky",
                 top: 0,
                 background: "#262D3F",
                 zIndex: 1,
+                color: "white",
               }}
             >
-              {scheduleData.table.table.slice(0, 2).map((row) => {
+              {scheduleData.table.table.slice(0, 2).map((row, index) => {
                 return (
-                  <Tr>
-                    {row.map((element) => {
-                      return <Td>{element}</Td>;
+                  <Tr key={index}>
+                    {row.map((element, index) => {
+                      return <Td key={index}>{element}</Td>;
                     })}
                   </Tr>
                 );
               })}
             </Thead>
             <Tbody className={styles.tableBody}>
-              {scheduleData.table.table.slice(2).map((row) => {
+              {scheduleData.table.table.slice(2).map((row, index) => {
                 return (
-                  <Tr>
-                    {row.map((element) => {
-                      return <TableCell element={element} />;
+                  <Tr key={index}>
+                    {row.map((element, index) => {
+                      return (
+                        <TableCell
+                          key={index}
+                          element={element}
+                          textColor={textColor}
+                        />
+                      );
                     })}
                   </Tr>
                 );
