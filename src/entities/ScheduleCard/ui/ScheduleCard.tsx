@@ -24,15 +24,16 @@ const lessonsTime = [
 ];
 
 const auditoryRegex = /[А-К]-\d{3}|\w{3}{|-\d+}/g;
-const subgroupRegex =
-  /([А-Яа-я]+ .\. .\.|\d+ п\/г * [А-Яа-я]+ .\. .\.)|[А-Яа-я0-9]+ ИКТИБ | Иностранный язык/g;
+const subgroupRegex = /([А-Яа-я]+ .\. .\.|\d+ п\/г * [А-Яа-я]+ .\. .\.)|[А-Яа-я0-9]+ ИКТИБ | Иностранный язык/g;
+const groupRegex = /([А-Яа-я]{4}\d-\d+)/g
 
 const ScheduleCard = (props: ScheduleCardProps) => {
-  const { index, day, element } = props;
+  const { index, day, element} = props;
 
-  const subject = element.split(subgroupRegex)[0];
-  const subgroup = element.match(subgroupRegex) || ["1 п/г"];
-  const auditory = element.match(auditoryRegex) || ["LMS"];
+  const groups = element.match(groupRegex) || [];
+  const subject = element.split(subgroupRegex)[0].replace(groups.join(","),"").split(auditoryRegex)[0];
+  const subgroup = element.match(subgroupRegex) || [""];
+  const auditory = element.match(auditoryRegex) || [""];
 
   return (
     <div className={classNames(styles.ScheduleCard)}>
@@ -42,15 +43,22 @@ const ScheduleCard = (props: ScheduleCardProps) => {
       </div>
       <div className={styles.cardContent}>
         <span>{subject}</span>
-        <span>
-          {subgroup.map((item, index) => {
+        <span>{
+          groups.length == 0 ? subgroup.map((item, index) => {
+          return (
+            <p className={styles.subgroup}>
+              {item} &mdash; {auditory[index]}
+            </p>
+          );
+          }) :
+          groups.map((item, index) => {
             return (
-              <p className={styles.subgroup} key={index}>
-                {item} &#8212; {auditory[index]}
+              <p className={styles.subgroup}>
+                {item} &mdash; {auditory[index]}
               </p>
             );
-          })}
-        </span>
+            })
+        }</span>
       </div>
 
       <div className={styles.cardFooter}>
