@@ -24,10 +24,11 @@ const lessonsTime = [
 ];
 
 const auditoryRegex = /[А-К]-\d{3}|\w{3}{|-\d+}/g;
-const subgroupRegex = /([А-Яа-я]+ .\. .\.|\d+ п\/г * [А-Яа-я]+ .\. .\.)|[А-Яа-я0-9]+ ИКТИБ | Иностранный язык/g;
+const subgroupRegex =
+  /([А-Яа-я]+ .\. .\.|\d+ п\/г * [А-Яа-я]+ .\. .\.)|[А-Яа-я0-9]+ ИКТИБ | Иностранный язык/g;
 
 const ScheduleCard = (props: ScheduleCardProps) => {
-  const { index, day, element} = props;
+  const { index, day, element } = props;
 
   const subject = element.split(subgroupRegex)[0];
   const subgroup = element.match(subgroupRegex) || ["1 п/г"];
@@ -41,13 +42,15 @@ const ScheduleCard = (props: ScheduleCardProps) => {
       </div>
       <div className={styles.cardContent}>
         <span>{subject}</span>
-        <span>{subgroup.map((item, index) => {
-          return (
-            <p className={styles.subgroup}>
-              {item} --- {auditory[index]}
-            </p>
-          );
-        })}</span>
+        <span>
+          {subgroup.map((item, index) => {
+            return (
+              <p className={styles.subgroup} key={index}>
+                {item} &#8212; {auditory[index]}
+              </p>
+            );
+          })}
+        </span>
       </div>
 
       <div className={styles.cardFooter}>
