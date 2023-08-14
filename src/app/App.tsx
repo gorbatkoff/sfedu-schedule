@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       <Header />
       <SearchSchedule />
-      {window.screen.width > 600 ? <ScheduleTable /> : <ScheduleCardsList />}
+      <ScheduleTable />
     </div>
   );
 }
