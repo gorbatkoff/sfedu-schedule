@@ -44,7 +44,7 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
 
   const getScheduleData = async () => {
     try {
-      const request = await $api.get("/?group=53.html&week=11");
+      const request = await $api.get("/?group=102.html&week=21");
 
       setScheduleData(request.data);
     } catch (error) {
