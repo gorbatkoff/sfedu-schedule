@@ -22,7 +22,7 @@ interface SearchScheduleProps {
 export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
   const { colorMode } = useColorMode();
   const [input, setInput] = useState("");
-  const [dataFromAPI, setDataFromAPI] = useState<IChoices | IScheduleTable>({
+  const [dataFromAPI, setDataFromAPI] = useState<IChoices>({
     choices: [],
   });
 
