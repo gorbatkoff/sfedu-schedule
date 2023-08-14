@@ -24,7 +24,7 @@ const lessonsTime = [
 ];
 
 const auditoryRegex = /[А-К]-\d{3}|\w{3}{|-\d+}/g;
-const subgroupRegex = /([А-Яа-я]+ .\. .\.|\d+ п\/г * [А-Яа-я]+ .\. .\.)|ИКТИБ/g;
+const subgroupRegex = /([А-Яа-я]+ .\. .\.|\d+ п\/г * [А-Яа-я]+ .\. .\.)|[А-Яа-я0-9]+ ИКТИБ | Иностранный язык/g;
 
 const ScheduleCard = (props: ScheduleCardProps) => {
   const { index, day, element} = props;
