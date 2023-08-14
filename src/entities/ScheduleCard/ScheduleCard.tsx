@@ -1,17 +1,18 @@
-import styles from "./ScheduleCard.module.scss";
 import classNames from "classnames";
-import { getInfoAboutElement } from "/src/shared/lib/getInfoAboutElement";
-import { Icon } from "@chakra-ui/react";
+
 import { TimeIcon } from "@chakra-ui/icons";
+
+import { getInfoAboutElement } from "/src/shared/lib/getInfoAboutElement";
+
+import styles from "./ScheduleCard.module.scss";
 
 interface ScheduleCardProps {
   index: number;
   day: string;
   element: string;
-  cardFunc?: Function;
 }
 
-const lessonTimes = [
+const lessonsTime = [
   "Время",
   "08:00-09:35",
   "09:50-11:25",
@@ -22,23 +23,23 @@ const lessonTimes = [
   "19:30-21:05",
 ];
 
-const auditoryRegex = /[А-К]-\d{3}|\w{3}{|-\d}/g;
+const auditoryRegex = /[А-К]-\d{3}|\w{3}{|-\d+}/g;
 const subgroupRegex = /([А-Яа-я]+ .\. .\.|\d+ п\/г * [А-Яа-я]+ .\. .\.)|ИКТИБ/g;
 
 const ScheduleCard = (props: ScheduleCardProps) => {
-  const { index, day, element, cardFunc = () => {} } = props;
+  const { index, day, element} = props;
 
   const subject = element.split(subgroupRegex)[0];
   const subgroup = element.match(subgroupRegex) || ["1 п/г"];
   const auditory = element.match(auditoryRegex) || ["LMS"];
-  // console.log(subject, subgroup, auditory);
+
   return (
     <div className={classNames(styles.ScheduleCard)}>
-      <div className={styles.header}>
+      <div className={styles.cardHeader}>
         <span>{day.split(",").join(", ")}</span>
-        <span>{index.toString()}-ая пара</span>
+        <span>{String(index)}-ая пара</span>
       </div>
-      <div className={styles.body}>
+      <div className={styles.cardContent}>
         <span>{subject}</span>
         <span>{subgroup.map((item, index) => {
           return (
@@ -49,10 +50,10 @@ const ScheduleCard = (props: ScheduleCardProps) => {
         })}</span>
       </div>
 
-      <div className={styles.footer}>
+      <div className={styles.cardFooter}>
         <span>
           <TimeIcon boxSize={6} className={styles.icon} />
-          {lessonTimes[index]}
+          {lessonsTime[index]}
         </span>
         <span
           style={{

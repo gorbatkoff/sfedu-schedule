@@ -12,21 +12,20 @@
     size: 18px;
 }
 
-.header {
+.cardHeader {
     display: flex;
     justify-content: space-between;
 }
 
-.footer {
+.cardFooter {
     align-items: center;
     display: flex;
     justify-content: space-between;
 
 }
 
-.body {
-    // border-top: 1px solid #1A202C;
-    // border-bottom: 1px solid #1A202C;
+.cardContent {
+    font-weight: 400;
     display: flex;
     flex-direction: column;
     row-gap: 20px;
@@ -36,6 +35,6 @@
     margin-right: 10px;
 }
 
-.subgroup {
+.subGroup {
     text-indent:5px;
 }
