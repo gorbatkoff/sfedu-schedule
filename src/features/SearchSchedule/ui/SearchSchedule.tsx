@@ -22,7 +22,7 @@ interface SearchScheduleProps {
 export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
   const { colorMode } = useColorMode();
   const [input, setInput] = useState("");
-  const [dataFromAPI, setDataFromAPI] = useState<IChoices>({
+  const [dataFromAPI, setDataFromAPI] = useState<IChoices | IScheduleTable>({
     choices: [],
   });
 
@@ -71,9 +71,13 @@ export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
         </FormControl>
         <Button colorScheme="blue">Поиск</Button>
       </div>
-      {dataFromAPI.choices.map((choice) => {
-        return <h1 style={{ color: "white" }}>{choice.name}</h1>;
-      })}
+      {"choices" in dataFromAPI ? (
+        dataFromAPI.choices.map((choice) => {
+          return <h1 style={{ color: "white" }}>{choice.name}</h1>;
+        })
+      ) : (
+        <h1>Table</h1>
+      )}
     </>
   );
 });
