@@ -4,6 +4,27 @@
   display: flex;
 }
 
+.choices {
+  width: 50%;
+  margin: 0 auto
+}
+
+.choice {
+  display: block;
+  width: 100%;
+  justify-content: flex-start !important;
+  padding: 0.5em 2em;
+  margin: 2px 0;
+  background: #262D3F;
+  color: #fff;
+  cursor:pointer;
+  letter-spacing: 1.2px;
+}
+
+.choice:hover {
+  opacity:0.8;
+}
+
 @media (max-width: 767px) {
   .form {
     width: 100%;

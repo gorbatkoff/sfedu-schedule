@@ -1,6 +1,4 @@
-import React, { memo, useState } from "react";
-
-import styles from "./SearchSchedule.module.scss";
+import React, { memo, useCallback, useState } from "react";
 
 import {
   Button,
@@ -12,12 +10,14 @@ import {
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import { $api } from "/src/shared/api/api";
-import { IChoices } from "/src/features/SearchSchedule/model/types/choice";
-import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/ScheduleTable";
+import { IScheduleTable } from "/src/entities/ScheduleTable";
+
+import styles from "./SearchSchedule.module.scss";
+import { IChoice, IChoices } from "/src/features/SearchSchedule";
 
 interface SearchScheduleProps {
   className?: string;
-  updateData: (data: any) => void;
+  updateData: (data: IScheduleTable) => void;
 }
 
 export const SearchSchedule = memo(
@@ -43,8 +43,42 @@ export const SearchSchedule = memo(
           },
         });
 
-        console.log(request.data);
         setDataFromAPI(request.data);
+
+        console.log(request.data);
+        if (!("choices" in request.data)) {
+          updateData(request.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    const sortFunction = useCallback((a: IChoice, b: IChoice) => {
+      const aNumber = +a.name.split("-")[1];
+      const bNumber = +b.name.split("-")[1];
+
+      if (aNumber < bNumber) {
+        return -1;
+      }
+      if (aNumber > bNumber) {
+        return 1;
+      }
+      return 0;
+    }, []);
+
+    async function fetchDataByChoice(group: string) {
+      try {
+        const request = await $api.get("/", {
+          params: {
+            group,
+          },
+        });
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        setDataFromAPI([]);
+        updateData(request.data);
       } catch (error) {
         console.log(error);
       }
@@ -80,15 +114,20 @@ export const SearchSchedule = memo(
             Поиск
           </Button>
         </div>
-        {"choices" in dataFromAPI
-          ? dataFromAPI.choices.map((choice, index) => {
+        <div className={styles.choices}>
+          {"choices" in dataFromAPI &&
+            dataFromAPI.choices.sort(sortFunction).map((choice, index) => {
               return (
-                <h1 style={{ color: "white" }} key={index}>
+                <Button
+                  className={styles.choice}
+                  key={index}
+                  onClick={() => fetchDataByChoice(choice.group)}
+                >
                   {choice.name}
-                </h1>
+                </Button>
               );
-            })
-          : updateData(dataFromAPI)}
+            })}
+        </div>
       </>
     );
   },

@@ -7,8 +7,6 @@ interface ITableCell {
 }
 
 const TableCell = ({ element, textColor }: ITableCell) => {
-  console.log(textColor);
-
   return (
     <Td sx={{ background: getInfoAboutElement(element), color: "white" }}>
       {element}
