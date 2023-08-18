@@ -12,7 +12,7 @@ export enum TableCellColor {
 
 const auditoryRegex = /[А-К]-\d{3}/g;
 const LMSRegex = /LMS(|-\d+)/g;
-const VPKRegex = / *ВПК*/g
+const VPKRegex = / *ВПК*/g;
 
 export const getInfoAboutElement = (element: string) => {
   if (element.length === 0) return TableCellColor.DEFAULT_COLOR;

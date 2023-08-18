@@ -26,7 +26,7 @@ const subgroupRegex =
   /([А-Яа-я]+ .\. .\.|\d+ п\/г * [А-Яа-я]+ .\. .\.)|[А-Яа-я0-9]+ ИКТИБ | Иностранный язык/g;
 const groupRegex = /([А-Яа-я]{4}\d-\d+)/g;
 
-const ScheduleCard = (props: ScheduleCardProps) => {
+export const ScheduleCard = (props: ScheduleCardProps) => {
   const { index, day, element } = props;
 
   const groups = element.match(groupRegex) || [];
@@ -81,5 +81,3 @@ const ScheduleCard = (props: ScheduleCardProps) => {
     </div>
   );
 };
-
-export default ScheduleCard;

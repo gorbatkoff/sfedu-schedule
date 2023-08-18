@@ -3,8 +3,8 @@ import { FC, memo, useState } from "react";
 import { Button } from "@chakra-ui/react";
 import classNames from "classnames";
 
-import ScheduleCard from "/src/entities/ScheduleCard/ui/ScheduleCard";
-import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/ScheduleTable";
+import { IScheduleTable } from "/src/entities/ScheduleTable";
+import { ScheduleCard } from "/src/entities/ScheduleCard";
 
 const weekDays = ["Пнд", "Втр", "Срд", "Чтв", "Птн", "Сбт"];
 
