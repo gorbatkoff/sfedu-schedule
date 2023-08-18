@@ -13,10 +13,11 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import TableCell from "/src/widgets/Table/ui/TableCell/TableCell";
+
+import { $api } from "/src/shared/api/api";
 import { IScheduleTable } from "/src/entities/ScheduleTable";
 
 import styles from "./Table.module.scss";
-import { $api } from "/src/shared/api/api";
 
 interface TableProps {
   className?: string;
@@ -120,58 +121,3 @@ export const ScheduleTable = memo(
     );
   },
 );
-=======
-  return (
-    <div className={classNames(styles.Table, {}, [className])}>
-      {schedule && (
-        <>
-          <div className={styles.weeksList}>
-            {schedule.weeks.map((week, index) => {
-              return <Button>{week}</Button>;
-            })}
-          </div>
-          <TableContainer sx={{ height: "100%", overflowY: "auto" }}>
-            <Table variant="simple" sx={{ color: textColor }}>
-              <Thead
-                sx={{
-                  position: "sticky",
-                  top: 0,
-                  background: "#262D3F",
-                  zIndex: 1,
-                  color: "white",
-                }}
-              >
-                {schedule.table.table.slice(0, 2).map((row, index) => {
-                  return (
-                    <Tr key={index}>
-                      {row.map((element, index) => {
-                        return <Td key={index}>{element}</Td>;
-                      })}
-                    </Tr>
-                  );
-                })}
-              </Thead>
-              <Tbody className={styles.tableBody}>
-                {schedule.table.table.slice(2).map((row, index) => {
-                  return (
-                    <Tr key={index}>
-                      {row.map((element, index) => {
-                        return (
-                          <TableCell
-                            key={index}
-                            element={element}
-                            textColor={textColor}
-                          />
-                        );
-                      })}
-                    </Tr>
-                  );
-                })}
-              </Tbody>
-            </Table>
-          </TableContainer>
-        </>
-      )}
-    </div>
-  );
-});
