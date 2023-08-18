@@ -64,14 +64,7 @@ export const ScheduleTable = memo(({ className, schedule }: TableProps) => {
     <div className={classNames(styles.Table, {}, [className])}>
       {schedule && (
         <>
-          <div
-            style={{
-              display: "flex",
-              width: "100%",
-              justifyContent: "space-around",
-              padding: "1em",
-            }}
-          >
+          <div className={styles.weeksList}>
             {schedule.weeks.map((week, index) => {
               return <Button>{week}</Button>;
             })}
