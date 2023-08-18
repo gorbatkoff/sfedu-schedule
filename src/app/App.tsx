@@ -29,7 +29,7 @@ function App() {
       {window.screen.width > 600 ? (
         <ScheduleTable schedule={finishedTable} />
       ) : (
-          <ScheduleCardsList schedule={finishedTable}/>
+        <ScheduleCardsList schedule={finishedTable} />
       )}
     </div>
   );

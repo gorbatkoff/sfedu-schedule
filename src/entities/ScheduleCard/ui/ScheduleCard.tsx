@@ -1,7 +1,5 @@
 import classNames from "classnames";
-
 import { TimeIcon } from "@chakra-ui/icons";
-
 import { getInfoAboutElement } from "/src/shared/lib/getInfoAboutElement";
 
 import styles from "./ScheduleCard.module.scss";
@@ -24,56 +22,61 @@ const lessonsTime = [
 ];
 
 const auditoryRegex = /[А-К]-\d{3}|\w{3}{|-\d+}/g;
-const subgroupRegex = /([А-Яа-я]+ .\. .\.|\d+ п\/г * [А-Яа-я]+ .\. .\.)|[А-Яа-я0-9]+ ИКТИБ | Иностранный язык/g;
-const groupRegex = /([А-Яа-я]{4}\d-\d+)/g
+const subgroupRegex =
+  /([А-Яа-я]+ .\. .\.|\d+ п\/г * [А-Яа-я]+ .\. .\.)|[А-Яа-я0-9]+ ИКТИБ | Иностранный язык/g;
+const groupRegex = /([А-Яа-я]{4}\d-\d+)/g;
 
 const ScheduleCard = (props: ScheduleCardProps) => {
-  const { index, day, element=""} = props;
+  const { index, day, element } = props;
 
   const groups = element.match(groupRegex) || [];
-  const subject = element.split(subgroupRegex)[0].replace(groups.join(","),"").split(auditoryRegex)[0];
-  const subgroup = element.match(subgroupRegex) || [""];
+  const subject = element
+    .split(subgroupRegex)[0]
+    .replace(groups.join(","), "")
+    .split(auditoryRegex)[0];
+  const subGroups = element.match(subgroupRegex) || [""];
   const auditory = element.match(auditoryRegex) || [""];
 
   return (
     <div className={classNames(styles.ScheduleCard)}>
       <div className={styles.cardHeader}>
         <span>{day.split(",").join(", ")}</span>
-        <span>{String(index)}-ая пара</span>
+        <span>{index}-ая пара</span>
       </div>
       <div className={styles.cardContent}>
-        <span>{subject}</span>
-        <span>{
-          groups.length == 0 ? subgroup.map((item, index) => {
-          return (
-            <p className={styles.subgroup}>
-              {item} &mdash; {auditory[index]}
-            </p>
-          );
-          }) :
-          groups.map((item, index) => {
-            return (
-              <p className={styles.subgroup}>
-                {item} &mdash; {auditory[index]}
-              </p>
-            );
+        <h3>{subject}</h3>
+        {element === ""
+          ? null
+          : groups.length == 0
+          ? subGroups.map((item, index) => {
+              return (
+                <p className={styles.subgroup}>
+                  {item} &mdash; {auditory[index]}
+                </p>
+              );
             })
-        }</span>
+          : groups.map((item, index) => {
+              return (
+                <p className={styles.subgroup}>
+                  {item} &mdash; {auditory[index]}
+                </p>
+              );
+            })}
       </div>
 
       <div className={styles.cardFooter}>
-        <span>
+        <div>
           <TimeIcon boxSize={6} className={styles.icon} />
           {lessonsTime[index]}
-        </span>
-        <span
+        </div>
+        <div
           style={{
             borderLeft: `${getInfoAboutElement(element)} 4px solid`,
             paddingLeft: "5px",
           }}
         >
           {auditory[0]}
-        </span>
+        </div>
       </div>
     </div>
   );
