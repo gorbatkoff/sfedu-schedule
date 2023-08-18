@@ -93,6 +93,7 @@ export const SearchSchedule = memo(
                 <SearchIcon color="gray.300" />
               </InputLeftElement>
               <Input
+                sx={{ borderRadius: "5px 0 0 5px" }}
                 type="text"
                 value={input}
                 className={styles.input}
@@ -105,7 +106,11 @@ export const SearchSchedule = memo(
               />
             </InputGroup>
           </FormControl>
-          <Button colorScheme="blue" onClick={fetchUserQuery}>
+          <Button
+            colorScheme="blue"
+            onClick={fetchUserQuery}
+            sx={{ borderRadius: "0 5px 5px 0" }}
+          >
             Поиск
           </Button>
         </div>
