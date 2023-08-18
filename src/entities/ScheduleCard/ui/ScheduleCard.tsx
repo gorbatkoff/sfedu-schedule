@@ -28,7 +28,7 @@ const subgroupRegex = /([А-Яа-я]+ .\. .\.|\d+ п\/г * [А-Яа-я]+ .\. .\.
 const groupRegex = /([А-Яа-я]{4}\d-\d+)/g
 
 const ScheduleCard = (props: ScheduleCardProps) => {
-  const { index, day, element} = props;
+  const { index, day, element=""} = props;
 
   const groups = element.match(groupRegex) || [];
   const subject = element.split(subgroupRegex)[0].replace(groups.join(","),"").split(auditoryRegex)[0];
