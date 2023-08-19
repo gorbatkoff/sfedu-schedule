@@ -14,6 +14,7 @@ import { IScheduleTable } from "/src/entities/ScheduleTable";
 
 import styles from "./SearchSchedule.module.scss";
 import { IChoice, IChoices } from "/src/features/SearchSchedule";
+import { defaultValue } from "/src/shared/const";
 
 interface SearchScheduleProps {
   className?: string;
@@ -49,18 +50,7 @@ export const SearchSchedule = memo(
         if (!("choices" in request.data)) {
           updateData(request.data);
         } else {
-          updateData({
-            table: {
-              group: "",
-              link: "",
-              name: "",
-              table: [],
-              type: "",
-              week: 0,
-            },
-            weeks: [],
-            result: null,
-          });
+          updateData(defaultValue);
         }
       } catch (error) {
         console.log(error);
