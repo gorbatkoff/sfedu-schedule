@@ -20,6 +20,7 @@ export default function useCurrentWeek() {
   const currentWeek = currentWeekDate / (1000 * 60 * 60 * 24 * 7);
 
   return {
-    week: Math.ceil(currentWeek),
+    /*    week: Math.ceil(currentWeek),*/
+    week: 9,
   };
 }

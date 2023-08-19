@@ -28,8 +28,6 @@ export const SearchSchedule = memo(
   ({ className, updateData }: SearchScheduleProps) => {
     const { week } = useCurrentWeek();
 
-    const [loading, setLoading] = useState<boolean>(false);
-
     const { colorMode } = useColorMode();
     const [input, setInput] = useState("");
     const [dataFromAPI, setDataFromAPI] = useState<IChoices | IScheduleTable>({
@@ -53,6 +51,18 @@ export const SearchSchedule = memo(
         });
 
         setDataFromAPI(request.data);
+
+        console.log(request.data);
+
+        if ("table" in request.data && "weeks" in request.data) {
+          const {
+            table: { group },
+          } = request.data as IScheduleTable;
+
+          fetchDataByChoice(group);
+
+          return;
+        }
 
         if (!("choices" in request.data)) {
           updateData(request.data);
@@ -82,6 +92,7 @@ export const SearchSchedule = memo(
         const request = await $api.get("/", {
           params: {
             group,
+            week,
           },
         });
 
