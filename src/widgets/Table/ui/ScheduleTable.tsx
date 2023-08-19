@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo } from "react";
 
 import classNames from "classnames";
 import {
@@ -10,14 +10,13 @@ import {
   Thead,
   Tr,
   useColorModeValue,
-  useToast,
 } from "@chakra-ui/react";
 import TableCell from "/src/widgets/Table/ui/TableCell/TableCell";
 
 import { $api } from "/src/shared/api/api";
 import { IScheduleTable } from "/src/entities/ScheduleTable";
 
-import styles from "./Table.module.scss";
+import styles from "./ScheduleTable.module.scss";
 
 interface TableProps {
   className?: string;
@@ -28,20 +27,6 @@ interface TableProps {
 export const ScheduleTable = memo(
   ({ className, schedule, updateData }: TableProps) => {
     const textColor = useColorModeValue("black", "white");
-    const toast = useToast();
-
-    const [scheduleData, setScheduleData] = useState<IScheduleTable>({
-      table: {
-        group: "",
-        link: "",
-        name: "",
-        table: [],
-        type: "",
-        week: 0,
-      },
-      weeks: [],
-      result: null,
-    });
 
     async function fetchDataByWeek(week: number) {
       try {
@@ -68,13 +53,21 @@ export const ScheduleTable = memo(
               style={{
                 display: "flex",
                 width: "100%",
-                justifyContent: "space-around",
-                padding: "1em",
+                justifyContent: "space-between",
+                padding: "1em 0",
               }}
             >
               {schedule.weeks.map((week, index) => {
                 return (
-                  <Button onClick={() => fetchDataByWeek(week)} key={index}>
+                  <Button
+                    className={styles.weekButton}
+                    onClick={() => fetchDataByWeek(week)}
+                    key={index}
+                    isDisabled={schedule.table.week === index + 1}
+                    colorScheme={
+                      schedule.table.week === index + 1 ? "green" : "twitter"
+                    }
+                  >
                     {week}
                   </Button>
                 );

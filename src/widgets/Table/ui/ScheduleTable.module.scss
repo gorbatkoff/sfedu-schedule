@@ -1,5 +1,6 @@
 .Table {
   font-size:12px;
+
   tbody {
     display: table-row-group;
     vertical-align: middle;
@@ -31,7 +32,11 @@
     padding: 1em;
   }
 
-  @media (max-width: 768px) {
+  .weekButton:hover {
+    background: yellow;
+  }
+
+  @media (width <= 768px) {
     .weeksList {
       display: flex;
       width: 100%;

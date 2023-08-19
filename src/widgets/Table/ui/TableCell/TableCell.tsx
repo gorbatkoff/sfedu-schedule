@@ -1,4 +1,4 @@
-import { Td, useColorModeValue } from "@chakra-ui/react";
+import { Td } from "@chakra-ui/react";
 import { getInfoAboutElement } from "/src/shared/lib/getInfoAboutElement";
 
 interface ITableCell {

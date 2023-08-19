@@ -9,6 +9,8 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
+    "lint:scss": "npx stylelint \"**/*.scss\"",
+    "lint:scss:fix": "npx stylelint \"**/*.scss\" --fix",
     "prettier:fix": "prettier --write \"./**/*.{js,jsx,ts,tsx,json}\""
   },
   "dependencies": {
@@ -35,6 +37,8 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "prettier": "3.0.1",
+    "stylelint": "^15.10.3",
+    "stylelint-config-standard-scss": "^10.0.0",
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
     "vite-plugin-pwa": "^0.16.4",
