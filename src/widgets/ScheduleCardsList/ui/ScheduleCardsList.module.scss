@@ -4,3 +4,12 @@
   flex-direction: column;
   row-gap: 20px;
 }
+
+.weekDayBtns {
+  display: flex;
+  overflow-x: scroll;
+  width: 100%;
+  justify-content: space-between;
+  padding: 1em 0;
+  column-gap: 1em;
+}
