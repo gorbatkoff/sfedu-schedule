@@ -17,6 +17,7 @@ import { $api } from "/src/shared/api/api";
 import { IScheduleTable } from "/src/entities/ScheduleTable";
 
 import styles from "./ScheduleTable.module.scss";
+import Carousel from "/src/features/Carousel/Carousel";
 
 interface TableProps {
   className?: string;

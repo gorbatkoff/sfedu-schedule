@@ -5,11 +5,12 @@ import { useState, useEffect } from "react";
 import styles from './Carousel.module.scss'
 
 interface CarouselProps {
+    week: number;
     carouselItems: number[],
     fetchDataByWeek: (week:number)=>void
 }
 
-const Carousel = ({ carouselItems,fetchDataByWeek}:CarouselProps) => {
+const Carousel = ({week,carouselItems,fetchDataByWeek}:CarouselProps) => {
     const [active, setActive] = useState(0);
     let scrollInterval: any;
   
@@ -26,7 +27,14 @@ const Carousel = ({ carouselItems,fetchDataByWeek}:CarouselProps) => {
         {carouselItems.map((item, index) => {
           const activeClass = active === index ? ' visible' : '';
             return (
-                <Button onClick={() => fetchDataByWeek(item)} key={index} className={`carouselItem${activeClass}`}>
+                <Button className={styles.weekButton}
+                onClick={() => fetchDataByWeek(item)}
+                key={index}
+                isDisabled={week === index + 1}
+                colorScheme={
+                  week === index + 1 ? "green" : "twitter"
+                }
+                >
                 {item}
               </Button>
           )

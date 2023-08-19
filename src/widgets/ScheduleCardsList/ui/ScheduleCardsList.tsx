@@ -1,6 +1,6 @@
 import { FC, memo, useState } from "react";
 
-import { Button } from "@chakra-ui/react";
+import { Button, Table } from "@chakra-ui/react";
 import classNames from "classnames";
 
 import { IScheduleTable } from "/src/entities/ScheduleTable";
@@ -18,7 +18,7 @@ interface TableProps {
 }
 
 export const ScheduleCardsList: FC<TableProps> = memo(
-  ({ className, schedule, updateData}) => {
+  ({ className, schedule, updateData }) => {
     const [day, setDay] = useState<number>(0);
 
     const dayHandler = (index: number) => {
@@ -39,42 +39,49 @@ export const ScheduleCardsList: FC<TableProps> = memo(
         console.log(error);
       }
     }
-
+    if (schedule.table.table.length == 0) return null;
     return (
       <div className={classNames("", {}, [className])}>
-        <Carousel carouselItems={schedule.weeks} fetchDataByWeek={fetchDataByWeek}/>
-        <div>
-          {weekDays.map((day, index) => {
+        <Carousel
+          carouselItems={schedule.weeks}
+          fetchDataByWeek={fetchDataByWeek}
+          week={schedule.table.week}
+        />
+        <div className={classNames(styles.weekDayBtns)}>
+          {weekDays.map((dayItem, index) => {
             return (
-              <Button key={index} onClick={() => dayHandler(index)}>
-                {day}
+              <Button
+                key={index}
+                onClick={() => dayHandler(index)}
+                isDisabled={day === index}
+              >
+                {dayItem}
               </Button>
             );
           })}
         </div>
-        {schedule && (
-          <div className={classNames(styles.ScheduleCardList)}>
-            {schedule.table.table.slice(2)[day] &&
-              schedule.table.table
-                .slice(2)
-                // eslint-disable-next-line no-unexpected-multiline
-                [day].slice(2)
-                .map((item: string, index) => {
-                  const weekDay = schedule.table.table.slice(2)[day][0];
 
-                  return (
-                    <ScheduleCard
-                      lessonTime={schedule.table.table[1][index + 1]}
-                      index={index + 1}
-                      day={weekDay}
-                      key={index}
-                      element={item}
-                    />
-                  );
-                })}
-          </div>
-        )}
+        <div className={classNames(styles.ScheduleCardList)}>
+          {schedule.table.table.slice(2)[day] &&
+            schedule.table.table
+              .slice(2)
+              // eslint-disable-next-line no-unexpected-multiline
+              [day].slice(2)
+              .map((item: string, index) => {
+                const weekDay = schedule.table.table.slice(2)[day][0];
+
+                return (
+                  <ScheduleCard
+                    lessonTime={schedule.table.table[1][index + 1]}
+                    index={index + 1}
+                    day={weekDay}
+                    key={index}
+                    element={item}
+                  />
+                );
+              })}
+        </div>
       </div>
     );
-  },
+  }
 );
