@@ -83,5 +83,5 @@ export const ScheduleCardsList: FC<TableProps> = memo(
         </div>
       </div>
     );
-  }
+  },
 );

@@ -19,7 +19,9 @@ function App() {
   const renderTableByViewPort = () => {
     if (window.screen.width > 600)
       return <ScheduleTable schedule={finishedTable} updateData={updateData} />;
-    return <ScheduleCardsList schedule={finishedTable} updateData={updateData}/>;
+    return (
+      <ScheduleCardsList schedule={finishedTable} updateData={updateData} />
+    );
   };
 
   return (
