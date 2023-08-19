@@ -6,6 +6,7 @@ import { IScheduleTable } from "/src/entities/ScheduleTable";
 import { SearchSchedule } from "/src/features/SearchSchedule";
 import { ScheduleCardsList } from "/src/widgets/ScheduleCardsList";
 import { defaultValue } from "/src/shared/const";
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
 function App() {
   const [finishedTable, setFinishedTable] =

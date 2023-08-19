@@ -12,9 +12,11 @@ import { SearchIcon } from "@chakra-ui/icons";
 import { $api } from "/src/shared/api/api";
 import { IScheduleTable } from "/src/entities/ScheduleTable";
 
-import styles from "./SearchSchedule.module.scss";
 import { IChoice, IChoices } from "/src/features/SearchSchedule";
 import { defaultValue } from "/src/shared/const";
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
+
+import styles from "./SearchSchedule.module.scss";
 
 interface SearchScheduleProps {
   className?: string;
@@ -23,6 +25,8 @@ interface SearchScheduleProps {
 
 export const SearchSchedule = memo(
   ({ className, updateData }: SearchScheduleProps) => {
+    const { week } = useCurrentWeek();
+
     const { colorMode } = useColorMode();
     const [input, setInput] = useState("");
     const [dataFromAPI, setDataFromAPI] = useState<IChoices | IScheduleTable>({

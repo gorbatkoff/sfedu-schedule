@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo } from "react";
 
 import classNames from "classnames";
 import {
@@ -10,7 +10,6 @@ import {
   Thead,
   Tr,
   useColorModeValue,
-  useToast,
 } from "@chakra-ui/react";
 import TableCell from "/src/widgets/Table/ui/TableCell/TableCell";
 
@@ -18,7 +17,7 @@ import { $api } from "/src/shared/api/api";
 import { IScheduleTable } from "/src/entities/ScheduleTable";
 
 import styles from "./Table.module.scss";
-import Loader from "/src/shared/ui/Loader/Loader";
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
 interface TableProps {
   className?: string;
@@ -29,7 +28,7 @@ interface TableProps {
 export const ScheduleTable = memo(
   ({ className, schedule, updateData }: TableProps) => {
     const textColor = useColorModeValue("black", "white");
-
+    const { week } = useCurrentWeek();
     async function fetchDataByWeek(week: number) {
       try {
         const request = await $api.get("/", {
@@ -65,8 +64,9 @@ export const ScheduleTable = memo(
                     className={styles.weekButton}
                     onClick={() => fetchDataByWeek(week)}
                     key={index}
+                    isDisabled={schedule.table.week === index + 1}
                     colorScheme={
-                      schedule.table.week === index + 1 ? "yellow" : "twitter"
+                      schedule.table.week === index + 1 ? "green" : "twitter"
                     }
                   >
                     {week}
