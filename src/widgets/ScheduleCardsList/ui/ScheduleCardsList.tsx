@@ -5,8 +5,9 @@ import classNames from "classnames";
 
 import { IScheduleTable } from "/src/entities/ScheduleTable";
 import { ScheduleCard } from "/src/entities/ScheduleCard";
+import { weekDays } from "/src/shared/const";
 
-const weekDays = ["Пнд", "Втр", "Срд", "Чтв", "Птн", "Сбт"];
+import styles from "./ScheduleCardsList.module.scss"
 
 interface TableProps {
   className?: string;
@@ -35,12 +36,7 @@ export const ScheduleCardsList: FC<TableProps> = memo(
         </div>
         {schedule && (
           <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
-              rowGap: "20px",
-            }}
+            className={classNames(styles.ScheduleCardList)}
           >
             {schedule.table.table.slice(2)[day] &&
               schedule.table.table
@@ -52,6 +48,7 @@ export const ScheduleCardsList: FC<TableProps> = memo(
 
                   return (
                     <ScheduleCard
+                      lessonTime={schedule.table.table[1][index+1]}
                       index={index + 1}
                       day={weekDay}
                       key={index}

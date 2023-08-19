@@ -1,4 +1,6 @@
-const weekDays = ["Пнд,", "Втр,", "Срд,", "Чтв,", "Птн,", "Сбт,"];
+import { auditoryRegex, LMSRegex, VPKRegex } from "../regex";
+import { weekDays } from "../const";
+
 
 export enum TableCellColor {
   DEFAULT_COLOR = "",
@@ -9,10 +11,6 @@ export enum TableCellColor {
   EXAM_COLOR = "#8b1111",
   VPK_COLOR = "#3182ce",
 }
-
-const auditoryRegex = /[А-К]-\d{3}/g;
-const LMSRegex = /LMS(|-\d+)/g;
-const VPKRegex = / *ВПК*/g;
 
 export const getInfoAboutElement = (element: string) => {
   if (element.length === 0) return TableCellColor.DEFAULT_COLOR;
