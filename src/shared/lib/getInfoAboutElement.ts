@@ -1,7 +1,6 @@
 import { auditoryRegex, LMSRegex, VPKRegex } from "../regex";
 import { weekDays } from "../const";
 
-
 export enum TableCellColor {
   DEFAULT_COLOR = "",
   DAY_COLOR = "var(--secondary-color)",
