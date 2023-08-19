@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { Header } from "/src/widgets/Header";
 import { ScheduleTable } from "/src/widgets/Table";
