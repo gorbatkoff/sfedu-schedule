@@ -40,6 +40,7 @@ export const ScheduleTable = memo(
         week: 0,
       },
       weeks: [],
+      result: null,
     });
 
     async function fetchDataByWeek(week: number) {
@@ -57,6 +58,8 @@ export const ScheduleTable = memo(
       }
     }
 
+    if (schedule.result === "no_entries") return null;
+
     return (
       <div className={classNames(styles.Table, {}, [className])}>
         {schedule && (
@@ -71,7 +74,9 @@ export const ScheduleTable = memo(
             >
               {schedule.weeks.map((week, index) => {
                 return (
-                  <Button onClick={() => fetchDataByWeek(week)}>{week}</Button>
+                  <Button onClick={() => fetchDataByWeek(week)} key={index}>
+                    {week}
+                  </Button>
                 );
               })}
             </div>

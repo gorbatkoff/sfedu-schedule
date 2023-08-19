@@ -50,8 +50,6 @@ export const ScheduleCardsList: FC<TableProps> = memo(
                 .map((item: string, index) => {
                   const weekDay = schedule.table.table.slice(2)[day][0];
 
-                  console.log(item);
-
                   return (
                     <ScheduleCard
                       index={index + 1}

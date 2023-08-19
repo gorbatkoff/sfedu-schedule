@@ -5,19 +5,11 @@ import { ScheduleTable } from "/src/widgets/Table";
 import { IScheduleTable } from "/src/entities/ScheduleTable";
 import { SearchSchedule } from "/src/features/SearchSchedule";
 import { ScheduleCardsList } from "/src/widgets/ScheduleCardsList";
+import { defaultValue } from "/src/shared/const";
 
 function App() {
-  const [finishedTable, setFinishedTable] = useState<IScheduleTable>({
-    table: {
-      group: "",
-      link: "",
-      name: "",
-      table: [],
-      type: "",
-      week: 0,
-    },
-    weeks: [],
-  });
+  const [finishedTable, setFinishedTable] =
+    useState<IScheduleTable>(defaultValue);
 
   const updateData = useCallback((data: IScheduleTable) => {
     setFinishedTable(data);

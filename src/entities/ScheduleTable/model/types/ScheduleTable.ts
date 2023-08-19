@@ -1,6 +1,6 @@
 type TableElement = string[];
 
-export interface IScheduleTable {
+export interface IScheduleTable extends INoData {
   table: {
     type: string;
     name: string;
@@ -10,4 +10,8 @@ export interface IScheduleTable {
     link: string;
   };
   weeks: number[];
+}
+
+export interface INoData {
+  result: "no_entries" | null;
 }

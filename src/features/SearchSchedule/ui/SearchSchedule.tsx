@@ -32,22 +32,39 @@ export const SearchSchedule = memo(
       setInput(e.target.value);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter") fetchUserQuery();
+      if (e.key === "Enter" && input.trim() !== "") fetchUserQuery();
     };
 
     async function fetchUserQuery() {
+      if (input.trim() === "") return;
       try {
         const request = await $api.get("/", {
           params: {
-            query: input,
+            query: input.trim(),
           },
         });
 
         setDataFromAPI(request.data);
 
-        console.log(request.data);
+        if ("result" in request.data) {
+          updateData(request.data);
+        }
+
         if (!("choices" in request.data)) {
           updateData(request.data);
+        } else {
+          updateData({
+            table: {
+              group: "",
+              link: "",
+              name: "",
+              table: [],
+              type: "",
+              week: 0,
+            },
+            weeks: [],
+            result: null,
+          });
         }
       } catch (error) {
         console.log(error);
@@ -127,6 +144,9 @@ export const SearchSchedule = memo(
                 </Button>
               );
             })}
+          {"result" in dataFromAPI && (
+            <h1 className={styles.choice}>Не найдено</h1>
+          )}
         </div>
       </>
     );
