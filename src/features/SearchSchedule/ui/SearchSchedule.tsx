@@ -17,6 +17,7 @@ import { defaultValue } from "/src/shared/const";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
 import styles from "./SearchSchedule.module.scss";
+import Loader from "/src/shared/ui/Loader/Loader";
 
 interface SearchScheduleProps {
   className?: string;
@@ -26,6 +27,8 @@ interface SearchScheduleProps {
 export const SearchSchedule = memo(
   ({ className, updateData }: SearchScheduleProps) => {
     const { week } = useCurrentWeek();
+
+    const [loading, setLoading] = useState<boolean>(false);
 
     const { colorMode } = useColorMode();
     const [input, setInput] = useState("");

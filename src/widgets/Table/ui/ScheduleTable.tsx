@@ -16,8 +16,7 @@ import TableCell from "/src/widgets/Table/ui/TableCell/TableCell";
 import { $api } from "/src/shared/api/api";
 import { IScheduleTable } from "/src/entities/ScheduleTable";
 
-import styles from "./Table.module.scss";
-import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
+import styles from "./ScheduleTable.module.scss";
 
 interface TableProps {
   className?: string;
@@ -28,7 +27,7 @@ interface TableProps {
 export const ScheduleTable = memo(
   ({ className, schedule, updateData }: TableProps) => {
     const textColor = useColorModeValue("black", "white");
-    const { week } = useCurrentWeek();
+
     async function fetchDataByWeek(week: number) {
       try {
         const request = await $api.get("/", {
@@ -54,8 +53,8 @@ export const ScheduleTable = memo(
               style={{
                 display: "flex",
                 width: "100%",
-                justifyContent: "space-around",
-                padding: "1em",
+                justifyContent: "space-between",
+                padding: "1em 0",
               }}
             >
               {schedule.weeks.map((week, index) => {
