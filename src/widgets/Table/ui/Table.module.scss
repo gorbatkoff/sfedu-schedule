@@ -31,6 +31,10 @@
     padding: 1em;
   }
 
+  .weekButton:hover {
+    background: yellow;
+  }
+
   @media (max-width: 768px) {
     .weeksList {
       display: flex;

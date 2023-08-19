@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import classNames from "classnames";
 import {
@@ -18,6 +18,7 @@ import { $api } from "/src/shared/api/api";
 import { IScheduleTable } from "/src/entities/ScheduleTable";
 
 import styles from "./Table.module.scss";
+import Loader from "/src/shared/ui/Loader/Loader";
 
 interface TableProps {
   className?: string;
@@ -28,20 +29,6 @@ interface TableProps {
 export const ScheduleTable = memo(
   ({ className, schedule, updateData }: TableProps) => {
     const textColor = useColorModeValue("black", "white");
-    const toast = useToast();
-
-    const [scheduleData, setScheduleData] = useState<IScheduleTable>({
-      table: {
-        group: "",
-        link: "",
-        name: "",
-        table: [],
-        type: "",
-        week: 0,
-      },
-      weeks: [],
-      result: null,
-    });
 
     async function fetchDataByWeek(week: number) {
       try {
@@ -74,7 +61,14 @@ export const ScheduleTable = memo(
             >
               {schedule.weeks.map((week, index) => {
                 return (
-                  <Button onClick={() => fetchDataByWeek(week)} key={index}>
+                  <Button
+                    className={styles.weekButton}
+                    onClick={() => fetchDataByWeek(week)}
+                    key={index}
+                    colorScheme={
+                      schedule.table.week === index + 1 ? "yellow" : "twitter"
+                    }
+                  >
                     {week}
                   </Button>
                 );

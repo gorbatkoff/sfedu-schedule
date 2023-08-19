@@ -46,10 +46,6 @@ export const SearchSchedule = memo(
 
         setDataFromAPI(request.data);
 
-        if ("result" in request.data) {
-          updateData(request.data);
-        }
-
         if (!("choices" in request.data)) {
           updateData(request.data);
         } else {
