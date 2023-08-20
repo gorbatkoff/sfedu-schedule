@@ -6,7 +6,6 @@ import { IScheduleTable } from "/src/entities/ScheduleTable";
 import { SearchSchedule } from "/src/features/SearchSchedule";
 import { ScheduleCardsList } from "/src/widgets/ScheduleCardsList";
 import { defaultValue } from "/src/shared/const";
-import { DrawerMenu } from "/src/widgets/DrawerMenu";
 import Loader from "/src/shared/ui/Loader/Loader";
 
 function App() {
@@ -28,7 +27,7 @@ function App() {
   return (
     <Suspense fallback={<Loader />}>
       <div className="App">
-        <Header />
+        <Header updateData={updateData} />
         <SearchSchedule updateData={updateData} />
         {renderTableByViewPort()}
       </div>

@@ -53,7 +53,6 @@ export const SearchSchedule = memo(
     async function fetchUserQuery() {
       if (input.trim() === "") return;
 
-      console.log("called with input", input);
       try {
         const request = await $api.get("/", {
           params: {
@@ -69,6 +68,8 @@ export const SearchSchedule = memo(
           } = request.data as IScheduleTable;
 
           fetchDataByChoice(group);
+
+          window.history.pushState(null, "group", `/?group=${group}`);
 
           return;
         }
@@ -105,7 +106,6 @@ export const SearchSchedule = memo(
           },
         });
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
         setDataFromAPI([]);
         updateData(request.data);
@@ -113,6 +113,15 @@ export const SearchSchedule = memo(
         console.log(error);
       }
     }
+
+    useEffect(() => {
+      const group = new URLSearchParams(window.location.search).get("group");
+
+      if (group) {
+        console.log(true);
+        fetchDataByChoice(group);
+      }
+    }, []);
 
     return (
       <>
