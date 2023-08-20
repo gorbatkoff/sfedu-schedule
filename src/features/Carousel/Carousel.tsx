@@ -33,7 +33,8 @@ const Carousel = ({ week, carouselItems, fetchDataByWeek }: CarouselProps) => {
             onClick={() => fetchDataByWeek(item)}
             key={index}
             isDisabled={week === index + 1}
-            ref={(instance) => (week === index + 1 ? myRef : instance)}
+            // @ts-ignore
+            ref={week === index + 1 ? myRef : null}
             colorScheme={week === index + 1 ? "green" : "twitter"}
           >
             {item}

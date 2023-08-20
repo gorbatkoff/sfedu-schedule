@@ -52,6 +52,8 @@ export const SearchSchedule = memo(
 
     async function fetchUserQuery() {
       if (input.trim() === "") return;
+
+      console.log("called with input", input);
       try {
         const request = await $api.get("/", {
           params: {
