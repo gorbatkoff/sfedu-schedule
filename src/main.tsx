@@ -2,8 +2,11 @@ import React, { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import App from "/src/app/App";
 
-import "./app/styles/index.scss";
+import { registerSW } from "virtual:pwa-register";
+
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+
+import "./app/styles/index.scss";
 
 const theme = extendTheme({
   colors: {
@@ -11,6 +14,17 @@ const theme = extendTheme({
       100: "#f7fafc",
       900: "#1a202c",
     },
+  },
+});
+
+const updateSW = registerSW({
+  onNeedRefresh() {
+    if (confirm("New content available. Reload?")) {
+      updateSW(true);
+    }
+  },
+  onOfflineReady() {
+    console.log("offline ready");
   },
 });
 

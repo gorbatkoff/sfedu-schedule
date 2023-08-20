@@ -14,15 +14,15 @@ export default defineConfig({
       // static assets in the public folder
       includeAssets: ["**/*"],
       manifest: {
-        theme_color: "#6217b4",
-        background_color: "#eae0e0",
+        theme_color: "#1e1e1e",
+        background_color: "#B100FF",
         display: "standalone",
         scope: "/",
         start_url: "/",
         name: "Sfedu Schedule",
-        short_name: "SS",
+        short_name: "Sfedu Schedule",
         description:
-          "Sfedu Schedule \u044d\u0442\u043e \u043f\u0440\u0438\u043b\u043e\u0436\u0435\u043d\u0438\u0435 \u043f\u043e\u043c\u043e\u0449\u043d\u0438\u043a \u0434\u043b\u044f \u043f\u0440\u043e\u0441\u043c\u043e\u0442\u0440\u0430 \u0440\u0430\u0441\u043f\u0438\u0441\u0430\u043d\u0438\u044f \u0441\u0442\u0443\u0434\u0435\u043d\u0442\u043e\u0432 \u042e\u0424\u0423",
+          "Sfedu Schedule это приложение помощник для просмотра расписания студентов ЮФУ",
         icons: [
           {
             src: "/icon-192x192.png",
