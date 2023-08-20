@@ -6,6 +6,7 @@ import { Logo } from "/src/shared/ui/Logo/Logo";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { ThemeSwitcher } from "/src/shared/ui/ThemeSwitcher/ThemeSwitcher";
 import { DrawerMenu } from "/src/widgets/DrawerMenu";
+import { Container, IconButton } from "@chakra-ui/react";
 
 interface HeaderProps {
   className?: string;
@@ -14,7 +15,9 @@ interface HeaderProps {
 export const Header = memo(({ className }: HeaderProps) => {
   return (
     <header className={classNames(styles.Header, {}, [className])}>
-      <Logo />
+      <IconButton aria-label="Logo" background="transparent">
+        <Logo />
+      </IconButton>
       <div className={styles.themeSwitcher}>
         <ThemeSwitcher />
       </div>
