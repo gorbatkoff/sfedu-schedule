@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 
 import {
   Button,
@@ -17,7 +17,7 @@ import { defaultValue } from "/src/shared/const";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
 import styles from "./SearchSchedule.module.scss";
-import Loader from "/src/shared/ui/Loader/Loader";
+import { useThrottle } from "/src/shared/hooks/useThrottle";
 
 interface SearchScheduleProps {
   className?: string;
@@ -27,15 +27,24 @@ interface SearchScheduleProps {
 export const SearchSchedule = memo(
   ({ className, updateData }: SearchScheduleProps) => {
     const { week } = useCurrentWeek();
-
     const { colorMode } = useColorMode();
     const [input, setInput] = useState("");
+
     const [dataFromAPI, setDataFromAPI] = useState<IChoices | IScheduleTable>({
       choices: [],
     });
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    const userInputThrottling = useThrottle(() => {
+      fetchUserQuery();
+    }, 500);
+
+    useEffect(() => {
+      userInputThrottling();
+    }, [input]);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setInput(e.target.value);
+    };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Enter" && input.trim() !== "") fetchUserQuery();
@@ -51,8 +60,6 @@ export const SearchSchedule = memo(
         });
 
         setDataFromAPI(request.data);
-
-        console.log(request.data);
 
         if ("table" in request.data && "weeks" in request.data) {
           const {

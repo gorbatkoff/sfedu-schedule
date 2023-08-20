@@ -33,7 +33,16 @@
   }
 
   .weekButton:hover {
-    background: yellow;
+    background: #623ad4;
+  }
+
+  .weekButton:disabled{
+    background: #B100FF;
+    opacity: 1;
+  }
+
+  .weekButton:disabled:hover{
+    background: #B100FF;
   }
 
   @media (width <= 768px) {
