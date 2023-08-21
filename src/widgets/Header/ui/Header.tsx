@@ -1,7 +1,7 @@
 import { memo } from "react";
 
 import classNames from "classnames";
-import { Box, IconButton } from "@chakra-ui/react";
+import { Box, IconButton, useColorMode } from "@chakra-ui/react";
 
 import { Logo } from "/src/shared/ui/Logo/Logo";
 import { defaultValue } from "/src/shared/const";
@@ -22,8 +22,14 @@ export const Header = memo(({ className, updateData }: HeaderProps) => {
     window.history.replaceState(null, "group", window.location.pathname);
   };
 
+  const { colorMode } = useColorMode();
+
   return (
-    <Box as="header" className={classNames(styles.Header, {}, [className])}>
+    <Box
+      bg={"var(--secondary-color)"}
+      as="header"
+      className={classNames(styles.Header, {}, [className])}
+    >
       <IconButton aria-label="Logo" bg="transparent" onClick={handleUpdateData}>
         <Logo />
       </IconButton>

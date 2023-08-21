@@ -17,7 +17,6 @@ import { $api } from "/src/shared/api/api";
 import { IScheduleTable } from "/src/entities/ScheduleTable";
 
 import styles from "./ScheduleTable.module.scss";
-import Carousel from "/src/features/Carousel/Carousel";
 
 interface TableProps {
   className?: string;
@@ -65,6 +64,7 @@ export const ScheduleTable = memo(
                     onClick={() => fetchDataByWeek(week)}
                     key={index}
                     isDisabled={schedule.table.week === index + 1}
+                    opacity={schedule.table.week > index ? "0.5" : "1"}
                     colorScheme={
                       schedule.table.week === index + 1 ? "green" : "twitter"
                     }
