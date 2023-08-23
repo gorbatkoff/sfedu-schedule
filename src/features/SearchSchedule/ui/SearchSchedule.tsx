@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 
 import {
   Button,
@@ -17,7 +17,8 @@ import { defaultValue } from "/src/shared/const";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
 import styles from "./SearchSchedule.module.scss";
-import Loader from "/src/shared/ui/Loader/Loader";
+import { useThrottle } from "/src/shared/hooks/useThrottle";
+import { MyCalendar } from "/src/widgets/Calendar/ui/Calendar";
 
 interface SearchScheduleProps {
   className?: string;
@@ -27,15 +28,24 @@ interface SearchScheduleProps {
 export const SearchSchedule = memo(
   ({ className, updateData }: SearchScheduleProps) => {
     const { week } = useCurrentWeek();
-
     const { colorMode } = useColorMode();
     const [input, setInput] = useState("");
+
     const [dataFromAPI, setDataFromAPI] = useState<IChoices | IScheduleTable>({
       choices: [],
     });
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    const userInputThrottling = useThrottle(() => {
+      fetchUserQuery();
+    }, 500);
+
+    useEffect(() => {
+      userInputThrottling();
+    }, [input]);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setInput(e.target.value);
+    };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === "Enter" && input.trim() !== "") fetchUserQuery();
@@ -43,6 +53,7 @@ export const SearchSchedule = memo(
 
     async function fetchUserQuery() {
       if (input.trim() === "") return;
+
       try {
         const request = await $api.get("/", {
           params: {
@@ -52,14 +63,14 @@ export const SearchSchedule = memo(
 
         setDataFromAPI(request.data);
 
-        console.log(request.data);
-
         if ("table" in request.data && "weeks" in request.data) {
           const {
             table: { group },
           } = request.data as IScheduleTable;
 
           fetchDataByChoice(group);
+
+          window.history.pushState(null, "group", `/?group=${group}`);
 
           return;
         }
@@ -96,7 +107,6 @@ export const SearchSchedule = memo(
           },
         });
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         //@ts-ignore
         setDataFromAPI([]);
         updateData(request.data);
@@ -105,8 +115,17 @@ export const SearchSchedule = memo(
       }
     }
 
+    useEffect(() => {
+      const group = new URLSearchParams(window.location.search).get("group");
+
+      if (group) {
+        console.log(true);
+        fetchDataByChoice(group);
+      }
+    }, []);
+
     return (
-      <>
+      <div>
         <div className={styles.form}>
           <FormControl className={styles.formControl}>
             <InputGroup>
@@ -152,7 +171,7 @@ export const SearchSchedule = memo(
             <h1 className={styles.choice}>Не найдено</h1>
           )}
         </div>
-      </>
+      </div>
     );
   },
 );

@@ -12,6 +12,7 @@ import {
 import styles from "./ScheduleCard.module.scss";
 
 interface ScheduleCardProps {
+  className?: string;
   index: number;
   lessonTime: string;
   day: string;
@@ -19,7 +20,7 @@ interface ScheduleCardProps {
 }
 
 export const ScheduleCard = (props: ScheduleCardProps) => {
-  const { index, lessonTime, day, element } = props;
+  const { className, index, lessonTime, day, element } = props;
 
   const groups =
     element.match(groupRegex) || element.match(subgroupRegex) || [];
@@ -30,7 +31,7 @@ export const ScheduleCard = (props: ScheduleCardProps) => {
   const auditory = element.match(auditoryLMSRegex) || [""];
 
   return (
-    <div className={classNames(styles.ScheduleCard)}>
+    <div className={classNames(styles.ScheduleCard, {}, [className])}>
       <div className={styles.cardHeader}>
         <span>{day.split(",").join(", ")}</span>
         <span>{index}-ая пара</span>
@@ -39,7 +40,7 @@ export const ScheduleCard = (props: ScheduleCardProps) => {
         <h3>{subject}</h3>
         {groups.map((item, index) => {
           return (
-            <p className={styles.subgroup}>
+            <p className={styles.subgroup} key={index}>
               {item}
               {auditory[index] == undefined
                 ? " — Не указано"

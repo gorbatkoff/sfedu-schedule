@@ -2,6 +2,12 @@
   margin: 0 auto;
   max-width: var(--app-width);
   font-size:12px;
+  width: var(--app-width);
+  margin: 0 auto;
+
+  .tableTitle {
+    text-align: center;
+  }
 
   tbody {
     display: table-row-group;
@@ -17,7 +23,8 @@
      height: 120px;
      max-width: 100px;
       white-space: normal;
-      cursor: pointer;
+      /*cursor: pointer;*/
+      cursor: default;
       transition: all 0.3s ease-in-out;
    }
 
@@ -34,8 +41,22 @@
     padding: 1em;
   }
 
+  .weekButton {
+    border-radius: 7px 0 7px 0;
+  }
+
   .weekButton:hover {
-    background: yellow;
+    background: #623ad4;
+  }
+
+  .weekButton:disabled{
+    background: #B100FF;
+    color: white;
+    opacity: 1;
+  }
+
+  .weekButton:disabled:hover{
+    background: black;
   }
 
   @media (width <= 768px) {

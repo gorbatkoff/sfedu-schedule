@@ -4,22 +4,19 @@ import App from "/src/app/App";
 
 import { registerSW } from "virtual:pwa-register";
 
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme, ThemeConfig } from "@chakra-ui/react";
 
 import "./app/styles/index.scss";
 
-const theme = extendTheme({
-  colors: {
-    brand: {
-      100: "#f7fafc",
-      900: "#1a202c",
-    },
+const theme: ThemeConfig = extendTheme({
+  config: {
+    initialColorMode: "dark",
   },
 });
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    if (confirm("New content available. Reload?")) {
+    if (confirm("Есть новые обновления, загрузить?")) {
       updateSW(true);
     }
   },

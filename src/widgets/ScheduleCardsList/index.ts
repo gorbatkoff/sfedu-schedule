@@ -1,1 +1,1 @@
-export { ScheduleCardsList } from "./ui/ScheduleCardsList";
+export { ScheduleCardsListAsync as ScheduleCardsList } from "./ui/ScheduleCardsList.async";

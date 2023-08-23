@@ -4,6 +4,7 @@
   align-items: center;
   flex-direction: column;
   row-gap: 20px;
+  padding: 0 5px;
 }
 
 .weekDayBtns {
@@ -11,6 +12,18 @@
   overflow-x: scroll;
   width: 100%;
   justify-content: space-between;
-  padding: 1em 0;
+  padding: 1em 5px;
   column-gap: 1em;
+}
+
+.button {
+  border-radius: 0!important;
+}
+
+.whiteMode {
+  color: #000;
+  background-color: #fff;
+  border-radius: 12px;
+  font-weight:bold;
+  border: 3px dashed var(--chakra-colors-gray-300);
 }

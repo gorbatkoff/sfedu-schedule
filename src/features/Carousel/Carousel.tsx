@@ -1,6 +1,7 @@
-import { Button } from "@chakra-ui/react";
+import { useEffect, useRef } from "react";
 import classNames from "classnames";
-import { useState, useEffect } from "react";
+
+import { Button } from "@chakra-ui/react";
 
 import styles from "./Carousel.module.scss";
 
@@ -11,6 +12,18 @@ interface CarouselProps {
 }
 
 const Carousel = ({ week, carouselItems, fetchDataByWeek }: CarouselProps) => {
+  const myRef = useRef<HTMLInputElement | HTMLButtonElement | null>(null);
+
+  const executeScroll = () => {
+    if (myRef.current !== null) {
+      myRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(() => executeScroll(), 500);
+  }, []);
+
   return (
     <div className={classNames(styles.Carousel)}>
       {carouselItems.map((item, index) => {
@@ -20,6 +33,8 @@ const Carousel = ({ week, carouselItems, fetchDataByWeek }: CarouselProps) => {
             onClick={() => fetchDataByWeek(item)}
             key={index}
             isDisabled={week === index + 1}
+            // @ts-ignore
+            ref={week === index + 1 ? myRef : null}
             colorScheme={week === index + 1 ? "green" : "twitter"}
           >
             {item}

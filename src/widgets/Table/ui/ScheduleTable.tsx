@@ -3,6 +3,7 @@ import { memo } from "react";
 import classNames from "classnames";
 import {
   Button,
+  Heading,
   Table,
   TableContainer,
   Tbody,
@@ -17,7 +18,6 @@ import { $api } from "/src/shared/api/api";
 import { IScheduleTable } from "/src/entities/ScheduleTable";
 
 import styles from "./ScheduleTable.module.scss";
-import Carousel from "/src/features/Carousel/Carousel";
 
 interface TableProps {
   className?: string;
@@ -50,6 +50,11 @@ export const ScheduleTable = memo(
       <div className={classNames(styles.Table, {}, [className])}>
         {schedule && (
           <>
+            {schedule.table.name && (
+              <Heading color="white" className={styles.tableTitle}>
+                Расписание {schedule.table.name}
+              </Heading>
+            )}
             <div
               style={{
                 display: "flex",
@@ -65,6 +70,7 @@ export const ScheduleTable = memo(
                     onClick={() => fetchDataByWeek(week)}
                     key={index}
                     isDisabled={schedule.table.week === index + 1}
+                    opacity={schedule.table.week > index ? "0.5" : "1"}
                     colorScheme={
                       schedule.table.week === index + 1 ? "green" : "twitter"
                     }

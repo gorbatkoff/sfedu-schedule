@@ -1,6 +1,6 @@
 import { FC, memo, useEffect, useState } from "react";
 
-import { Button, Table } from "@chakra-ui/react";
+import { Button, Table, useColorMode } from "@chakra-ui/react";
 import classNames from "classnames";
 
 import { IScheduleTable } from "/src/entities/ScheduleTable";
@@ -17,7 +17,7 @@ interface TableProps {
   updateData: (data: IScheduleTable) => void;
 }
 
-export const ScheduleCardsList: FC<TableProps> = memo(
+const ScheduleCardsList: FC<TableProps> = memo(
   ({ className, schedule, updateData }) => {
     const [day, setDay] = useState<number>(0);
     
@@ -25,6 +25,9 @@ export const ScheduleCardsList: FC<TableProps> = memo(
       const currentDay = new Date().getDay();
       (0 < currentDay && currentDay < 7) ? setDay(currentDay - 1) : setDay(0)
     },[])
+
+    const { colorMode } = useColorMode();
+
 
     const dayHandler = (index: number) => {
       setDay(index);
@@ -44,6 +47,7 @@ export const ScheduleCardsList: FC<TableProps> = memo(
         console.log(error);
       }
     }
+    if (schedule.result === "no_entries") return;
     if (schedule.table.table.length == 0) return null;
     return (
       <div className={classNames("", {}, [className])}>
@@ -82,6 +86,7 @@ export const ScheduleCardsList: FC<TableProps> = memo(
                     day={weekDay}
                     key={index}
                     element={item}
+                    className={colorMode === "light" ? styles.whiteMode : ""}
                   />
                 );
               })}
@@ -90,3 +95,5 @@ export const ScheduleCardsList: FC<TableProps> = memo(
     );
   },
 );
+
+export default ScheduleCardsList;

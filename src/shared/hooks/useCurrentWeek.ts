@@ -8,8 +8,6 @@ function getCurrentDate() {
 }
 
 export default function useCurrentWeek() {
-  console.log(getCurrentDate());
-
   const startDate = new Date("2023-08-27"); // Год-месяц-день
   const currentDate = new Date(getCurrentDate()); // Год-месяц-день
 
