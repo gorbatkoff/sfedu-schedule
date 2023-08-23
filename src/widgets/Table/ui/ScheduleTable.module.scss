@@ -1,5 +1,11 @@
 .Table {
   font-size:12px;
+  width: var(--app-width);
+  margin: 0 auto;
+
+  .tableTitle {
+    text-align: center;
+  }
 
   tbody {
     display: table-row-group;

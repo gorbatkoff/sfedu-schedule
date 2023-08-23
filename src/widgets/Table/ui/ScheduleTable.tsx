@@ -3,6 +3,7 @@ import { memo } from "react";
 import classNames from "classnames";
 import {
   Button,
+  Heading,
   Table,
   TableContainer,
   Tbody,
@@ -49,6 +50,11 @@ export const ScheduleTable = memo(
       <div className={classNames(styles.Table, {}, [className])}>
         {schedule && (
           <>
+            {schedule.table.name && (
+              <Heading color="white" className={styles.tableTitle}>
+                Расписание {schedule.table.name}
+              </Heading>
+            )}
             <div
               style={{
                 display: "flex",

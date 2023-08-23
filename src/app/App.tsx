@@ -7,6 +7,8 @@ import { SearchSchedule } from "/src/features/SearchSchedule";
 import { ScheduleCardsList } from "/src/widgets/ScheduleCardsList";
 import { defaultValue } from "/src/shared/const";
 import Loader from "/src/shared/ui/Loader/Loader";
+import MainColumns from "/src/shared/MainColumns/MainColumns";
+import { Calendar } from "/src/widgets/Calendar";
 
 function App() {
   const [finishedTable, setFinishedTable] =
@@ -24,11 +26,24 @@ function App() {
     );
   };
 
+  const renderColumnsByViewPort = () => {
+    if (window.screen.width > 600)
+      return (
+        <MainColumns>
+          <Calendar />
+          <SearchSchedule updateData={updateData} />
+          <div>12312312312</div>
+        </MainColumns>
+      );
+    return <SearchSchedule updateData={updateData} />;
+  };
+
   return (
     <Suspense fallback={<Loader />}>
       <div className="App">
         <Header updateData={updateData} />
-        <SearchSchedule updateData={updateData} />
+
+        {renderColumnsByViewPort()}
         {renderTableByViewPort()}
       </div>
     </Suspense>

@@ -18,6 +18,7 @@ import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
 import styles from "./SearchSchedule.module.scss";
 import { useThrottle } from "/src/shared/hooks/useThrottle";
+import { MyCalendar } from "/src/widgets/Calendar/ui/Calendar";
 
 interface SearchScheduleProps {
   className?: string;
@@ -124,7 +125,7 @@ export const SearchSchedule = memo(
     }, []);
 
     return (
-      <>
+      <div>
         <div className={styles.form}>
           <FormControl className={styles.formControl}>
             <InputGroup>
@@ -170,7 +171,7 @@ export const SearchSchedule = memo(
             <h1 className={styles.choice}>Не найдено</h1>
           )}
         </div>
-      </>
+      </div>
     );
   },
 );

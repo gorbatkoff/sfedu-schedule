@@ -23,6 +23,7 @@
     "framer-motion": "^10.15.1",
     "i18next": "^23.4.4",
     "react": "^18.2.0",
+    "react-calendar": "^4.6.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
     "sass": "^1.65.1"
