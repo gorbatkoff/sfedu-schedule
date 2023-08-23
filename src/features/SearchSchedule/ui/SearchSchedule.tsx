@@ -18,7 +18,6 @@ import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
 import styles from "./SearchSchedule.module.scss";
 import { useThrottle } from "/src/shared/hooks/useThrottle";
-import { MyCalendar } from "/src/widgets/Calendar/ui/Calendar";
 
 interface SearchScheduleProps {
   className?: string;
