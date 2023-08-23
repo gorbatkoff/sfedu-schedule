@@ -1,4 +1,4 @@
-import { FC, memo, useState } from "react";
+import { FC, memo, useEffect, useState } from "react";
 
 import { Button, Table } from "@chakra-ui/react";
 import classNames from "classnames";
@@ -20,6 +20,11 @@ interface TableProps {
 export const ScheduleCardsList: FC<TableProps> = memo(
   ({ className, schedule, updateData }) => {
     const [day, setDay] = useState<number>(0);
+    
+    useEffect(() => {
+      const currentDay = new Date().getDay();
+      (0 < currentDay && currentDay < 7) ? setDay(currentDay - 1) : setDay(0)
+    },[])
 
     const dayHandler = (index: number) => {
       setDay(index);
