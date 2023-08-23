@@ -3,6 +3,7 @@ import React, { memo, useCallback, useEffect, useState } from "react";
 import {
   Button,
   FormControl,
+  Heading,
   Input,
   InputGroup,
   InputLeftElement,
@@ -18,6 +19,7 @@ import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
 import styles from "./SearchSchedule.module.scss";
 import { useThrottle } from "/src/shared/hooks/useThrottle";
+import { FavoriteChoice } from "/src/shared/ui/FavoriteChoice/FavoriteChoice";
 
 interface SearchScheduleProps {
   className?: string;
@@ -153,6 +155,13 @@ export const SearchSchedule = memo(
             Поиск
           </Button>
         </div>
+
+        <div>
+          <FavoriteChoice title="КТбо4-9" />
+          <FavoriteChoice title="КТбо2-11" />
+          <FavoriteChoice title="Целых А. Н." />
+        </div>
+
         <div className={styles.choices}>
           {"choices" in dataFromAPI &&
             dataFromAPI.choices.sort(sortFunction).map((choice, index) => {

@@ -3,10 +3,18 @@
   max-width: var(--app-width);
   font-size:12px;
   width: var(--app-width);
-  margin: 0 auto;
+  margin-bottom: 15vh;
 
   .tableTitle {
     text-align: center;
+  }
+
+  thead {
+    position: sticky;
+    top: 0;
+    background: #262D3F;
+    z-index: 1;
+    color: white;
   }
 
   tbody {
@@ -46,17 +54,19 @@
   }
 
   .weekButton:hover {
-    background: #623ad4;
+    opacity: 0.8;
   }
 
   .weekButton:disabled{
-    background: #B100FF;
-    color: white;
+    background: #5b32e2;
+    color: black;
     opacity: 1;
   }
 
-  .weekButton:disabled:hover{
-    background: black;
+  .groupActions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   @media (width <= 768px) {

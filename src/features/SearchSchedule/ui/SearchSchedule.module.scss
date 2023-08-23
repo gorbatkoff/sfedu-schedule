@@ -1,14 +1,16 @@
 .form {
   width: 100%;
-  margin: 0 auto;
-
+  margin: 0 auto 0.8em 0;
   display: flex;
 }
 
 .choices {
   max-width: var(--app-width);
-  width: 50%;
+  width: 100%;
   margin: 0 auto;
+  z-index: 1;
+  max-height: var(--app-width-short);
+  overflow-y: scroll;
 }
 
 .choice {

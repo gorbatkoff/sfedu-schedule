@@ -1,5 +1,8 @@
 .mainColumns {
+  width: var(--app-width);
+  margin: 0 auto;
   display: grid;
   grid-template-columns: 25% 50% 20%;
   grid-gap: 1em;
+  padding: 2em 0;
 }

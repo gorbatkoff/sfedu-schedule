@@ -30,13 +30,19 @@ export const Header = memo(({ className, updateData }: HeaderProps) => {
       as="header"
       className={classNames(styles.Header, {}, [className])}
     >
-      <IconButton aria-label="Logo" bg="transparent" onClick={handleUpdateData}>
-        <Logo />
-      </IconButton>
-      <div className={styles.themeSwitcher}>
-        <ThemeSwitcher />
+      <div className={styles.headerWrapper}>
+        <IconButton
+          aria-label="Logo"
+          bg="transparent"
+          onClick={handleUpdateData}
+        >
+          <Logo />
+        </IconButton>
+        <div className={styles.themeSwitcher}>
+          <ThemeSwitcher />
+        </div>
+        <DrawerMenu />
       </div>
-      {window.screen.width <= 600 && <DrawerMenu />}
     </Box>
   );
 });

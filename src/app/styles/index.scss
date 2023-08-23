@@ -6,7 +6,22 @@
   color: var(--secondary-color);
 }
 
-/*
+
 ::-webkit-scrollbar {
-  display: none;
-} */
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
