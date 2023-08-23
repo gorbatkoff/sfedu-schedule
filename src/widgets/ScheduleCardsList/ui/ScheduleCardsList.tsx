@@ -20,14 +20,13 @@ interface TableProps {
 const ScheduleCardsList: FC<TableProps> = memo(
   ({ className, schedule, updateData }) => {
     const [day, setDay] = useState<number>(0);
-    
+
     useEffect(() => {
       const currentDay = new Date().getDay();
-      (0 < currentDay && currentDay < 7) ? setDay(currentDay - 1) : setDay(0)
-    },[])
+      0 < currentDay && currentDay < 7 ? setDay(currentDay - 1) : setDay(0);
+    }, []);
 
     const { colorMode } = useColorMode();
-
 
     const dayHandler = (index: number) => {
       setDay(index);
