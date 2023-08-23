@@ -1,12 +1,14 @@
 .form {
   width: 100%;
   margin: 0 auto;
+
   display: flex;
 }
 
 .choices {
+  max-width: var(--app-width);
   width: 50%;
-  margin: 0 auto
+  margin: 0 auto;
 }
 
 .choice {
@@ -15,14 +17,14 @@
   justify-content: flex-start !important;
   padding: 0.5em 2em;
   margin: 2px 0;
-  background: #262D3F;
+  background: #262d3f;
   color: #fff;
-  cursor:pointer;
+  cursor: pointer;
   letter-spacing: 1.2px;
 }
 
 .choice:hover {
-  opacity:0.8;
+  opacity: 0.8;
 }
 
 @media (width <= 767px) {
