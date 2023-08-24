@@ -13,14 +13,14 @@ import styles from "./ScheduleCard.module.scss";
 
 interface ScheduleCardProps {
   className?: string;
-  index: number;
+  lessonNumber: number;
   lessonTime: string;
   day: string;
   element: string;
 }
 
 export const ScheduleCard = (props: ScheduleCardProps) => {
-  const { className, index, lessonTime, day, element } = props;
+  const { className, lessonNumber: index, lessonTime, day, element } = props;
 
   const groups =
     element.match(groupRegex) || element.match(subgroupRegex) || [];
@@ -37,7 +37,7 @@ export const ScheduleCard = (props: ScheduleCardProps) => {
         <span>{index}-ая пара</span>
       </div>
       <div className={styles.cardContent}>
-        <h3>{subject}</h3>
+        <h3>{subject || "Нет пары"}</h3>
         {groups.map((item, index) => {
           return (
             <p className={styles.subgroup} key={index}>
@@ -53,7 +53,7 @@ export const ScheduleCard = (props: ScheduleCardProps) => {
       <div className={styles.cardFooter}>
         <div>
           <TimeIcon boxSize={6} className={styles.icon} />
-          {lessonTime}
+          {lessonTime || "--:-- — --:--"}
         </div>
         <div
           style={{

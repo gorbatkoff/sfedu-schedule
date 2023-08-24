@@ -1,8 +1,8 @@
 .Table {
   margin: 0 auto;
   max-width: var(--app-width);
-  font-size:12px;
-  width: var(--app-width);
+  font-size: 12px;
+  width: 100%;
   margin-bottom: 15vh;
 
   .tableTitle {
@@ -12,7 +12,7 @@
   thead {
     position: sticky;
     top: 0;
-    background: #262D3F;
+    background: #262d3f;
     z-index: 1;
     color: white;
   }
@@ -24,29 +24,31 @@
     width: 500px;
   }
 
-
   .tableBody {
     td {
       padding: 0.5em;
-     height: 120px;
-     max-width: 100px;
+      height: 120px;
+      max-width: 100px;
       white-space: normal;
       /*cursor: pointer;*/
       cursor: default;
       transition: all 0.3s ease-in-out;
-   }
+    }
 
     td:hover {
-      opacity:0.8;
-      transform: scale(0.95)
+      opacity: 0.8;
+      transform: scale(0.95);
     }
   }
 
   .weeksList {
     display: flex;
-    width: 100%;
-    justify-content: space-around;
+    max-width: 100%;
+    width: 100vw;
+    justify-content: space-between;
+    column-gap: 20px;
     padding: 1em;
+    overflow-x: scroll;
   }
 
   .weekButton {
@@ -57,7 +59,7 @@
     opacity: 0.8;
   }
 
-  .weekButton:disabled{
+  .weekButton:disabled {
     background: #5b32e2;
     color: black;
     opacity: 1;

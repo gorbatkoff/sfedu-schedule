@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
   Button,
@@ -16,10 +16,15 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import { $api } from "/src/shared/api/api";
+import {
+  IS_BUTTONS_BLOCKED,
+  USER_GROUP,
+} from "/src/shared/const/localStorageKeys";
 
-const userGroup = localStorage.getItem("USER_GROUP");
+const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 const isButtonBlock =
-  JSON.parse(localStorage.getItem("IS_BUTTONS_BLOCKED") || "false") || false;
+  JSON.parse(localStorage.getItem(IS_BUTTONS_BLOCKED) || "false") || false;
 
 export function DrawerMenu() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -27,12 +32,48 @@ export function DrawerMenu() {
 
   const [isButtonBlocked, setButtonBlocked] = useState<boolean>(isButtonBlock);
   const [isInputBlocked, setInputBlocked] = useState<boolean>(isButtonBlock);
-  const [inputValue, setInputValue] = useState<string>(userGroup || "КТ");
+  const [inputValue, setInputValue] = useState<string>(
+    userGroup.userGroup || "КТ"
+  );
+  const [groupId, setGroupId] = useState(userGroup.groupId || "");
+
+  const buttonHandler = () => {
+    fetchData();
+    saveInputValue();
+  };
 
   const toast = useToast();
 
+  async function fetchData() {
+    try {
+      const request = await $api.get("/", {
+        params: {
+          query: inputValue,
+        },
+      });
+      if (request.data.table) {
+        setGroupId(request.data.table.group);
+      }
+      if (request.data.choices) {
+        setGroupId(request.data.choices[0].group);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({
+          title: "Ошибка",
+          description: error.message,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+      console.log(error);
+    }
+  }
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const cleanedValue = e.target.value.replace(/[^КТА-Яа-я1-6-0-9]+/g, "");
+
     if (!cleanedValue.startsWith("КТ")) {
       setInputValue("КТ");
       return;
@@ -52,13 +93,26 @@ export function DrawerMenu() {
   };
 
   const saveInputValue = () => {
+    if (groupId == "") {
+      toast({
+        title: "Группа не найдена",
+        description: "Проверьте правильность написания группы",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
     if (
       inputValue.length >= 7 &&
       inputValue.length <= 8 &&
       inputValue.startsWith("КТ")
     ) {
-      localStorage.setItem("USER_GROUP", inputValue);
-      localStorage.setItem("IS_BUTTONS_BLOCKED", "true");
+      localStorage.setItem(
+        "USER_GROUP",
+        JSON.stringify({ userGroup: inputValue, groupId })
+      );
+      localStorage.setItem(IS_BUTTONS_BLOCKED, "true");
 
       setButtonBlocked(true);
       setInputBlocked(true);
@@ -111,7 +165,7 @@ export function DrawerMenu() {
               />
               <Button
                 colorScheme="blue"
-                onClick={saveInputValue}
+                onClick={buttonHandler}
                 isDisabled={isButtonBlocked}
               >
                 Сохранить

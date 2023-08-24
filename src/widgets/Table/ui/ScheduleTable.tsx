@@ -36,7 +36,7 @@ export interface IFavoriteChoice {
 }
 
 const localStorageGroups = JSON.parse(
-  localStorage.getItem("USER_FAVORITE_SEARCH") || "[]",
+  localStorage.getItem("USER_FAVORITE_SEARCH") || "[]"
 );
 
 export const ScheduleTable = memo(
@@ -86,7 +86,7 @@ export const ScheduleTable = memo(
         });
       } else {
         const filteredChoices = favoriteChoices.filter(
-          (item) => item.name !== favoriteSearch.name,
+          (item) => item.name !== favoriteSearch.name
         );
         setFavoriteChoices(filteredChoices);
         toast({
@@ -118,14 +118,7 @@ export const ScheduleTable = memo(
                 </IconButton>
               </div>
             )}
-            <div
-              style={{
-                display: "flex",
-                width: "100%",
-                justifyContent: "space-between",
-                padding: "1em 0",
-              }}
-            >
+            <div className={styles.weeksList}>
               {schedule.weeks.map((week, index) => {
                 return (
                   <Button
@@ -189,5 +182,5 @@ export const ScheduleTable = memo(
         )}
       </div>
     );
-  },
+  }
 );

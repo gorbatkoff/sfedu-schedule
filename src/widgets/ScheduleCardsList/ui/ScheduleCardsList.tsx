@@ -81,7 +81,7 @@ const ScheduleCardsList: FC<TableProps> = memo(
                 return (
                   <ScheduleCard
                     lessonTime={schedule.table.table[1][index + 1]}
-                    index={index + 1}
+                    lessonNumber={index + 1}
                     day={weekDay}
                     key={index}
                     element={item}
@@ -92,7 +92,7 @@ const ScheduleCardsList: FC<TableProps> = memo(
         </div>
       </div>
     );
-  },
+  }
 );
 
 export default ScheduleCardsList;

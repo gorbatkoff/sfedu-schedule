@@ -38,10 +38,12 @@ export const Header = memo(({ className, updateData }: HeaderProps) => {
         >
           <Logo />
         </IconButton>
-        <div className={styles.themeSwitcher}>
-          <ThemeSwitcher />
+        <div className={styles.menuBlock}>
+          <div className={styles.themeSwitcher}>
+            <ThemeSwitcher />
+          </div>
+          <DrawerMenu />
         </div>
-        <DrawerMenu />
       </div>
     </Box>
   );
