@@ -37,7 +37,7 @@ export const ScheduleCard = (props: ScheduleCardProps) => {
         <span>{index}-ая пара</span>
       </div>
       <div className={styles.cardContent}>
-        <h3>{subject}</h3>
+        <h3>{subject || "Нет пары"}</h3>
         {groups.map((item, index) => {
           return (
             <p className={styles.subgroup} key={index}>
