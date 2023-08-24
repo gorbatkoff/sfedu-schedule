@@ -1,0 +1,16 @@
+.UpcomingLessonsList {
+  padding: 0 1em;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 20px;
+  padding: 0 5px;
+}
+
+.whiteMode {
+  color: #000;
+  background-color: #fff;
+  border-radius: 12px;
+  font-weight: bold;
+  border: 3px dashed var(--chakra-colors-gray-300);
+}
