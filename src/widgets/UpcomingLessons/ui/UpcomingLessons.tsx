@@ -10,7 +10,7 @@ import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import styles from "./UpcomingLessons.module.scss";
 import { $api } from "/src/shared/api/api";
 
-import { cardTitle, lessonsTime } from "/src/shared/const";
+import { lessonsTime } from "/src/shared/const";
 
 interface TableProps {
   className?: string;
@@ -23,9 +23,7 @@ export const UpcomingLessons: FC<TableProps> = memo(
     const [day, setDay] = useState<number>(0);
     const [currentSchedule, setCurrentSchedule] = useState<any[]>([]);
 
-    const group = JSON.parse(
-      JSON.stringify(localStorage.getItem("USER_GROUP"))
-    );
+    const group = JSON.parse(localStorage.getItem("USER_GROUP") || "{}");
 
     const currentTime = new Date();
     const currentDay = currentTime.getDay();
@@ -57,7 +55,7 @@ export const UpcomingLessons: FC<TableProps> = memo(
       try {
         const request = await $api.get("/", {
           params: {
-            group: JSON.parse(group).groupId,
+            group: group.groupId,
             week,
           },
         });
@@ -77,11 +75,12 @@ export const UpcomingLessons: FC<TableProps> = memo(
             .slice(2)
             [day].slice(currentLesson, currentLesson + 2)
             .map((item: string, index: number) => {
+              let content = index == 0 ? "Текущая пара" : "Следующая пара";
               return (
                 <ScheduleCard
                   lessonTime={currentSchedule[1][currentLesson + index + 1]}
                   lessonNumber={currentLesson + index + 1}
-                  day={cardTitle[index]}
+                  day={content}
                   key={index}
                   element={item}
                   className={colorMode === "light" ? styles.whiteMode : ""}
