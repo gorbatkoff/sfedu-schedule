@@ -22,7 +22,7 @@ import {
   USER_GROUP,
 } from "/src/shared/const/localStorageKeys";
 
-const userGroup = JSON.parse(JSON.stringify(localStorage.getItem(USER_GROUP)));
+const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 const isButtonBlock =
   JSON.parse(localStorage.getItem(IS_BUTTONS_BLOCKED) || "false") || false;
 
@@ -36,10 +36,6 @@ export function DrawerMenu() {
     userGroup.userGroup || "КТ"
   );
   const [groupId, setGroupId] = useState(userGroup.groupId || "");
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, [inputValue]);
 
   const buttonHandler = () => {
     fetchData();
@@ -100,7 +96,7 @@ export function DrawerMenu() {
     if (groupId == "") {
       toast({
         title: "Группа не найдена",
-        description: "Проверьте, правильно ли написано название группы",
+        description: "Проверьте правильность написания группы",
         status: "error",
         duration: 3000,
         isClosable: true,
