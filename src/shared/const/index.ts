@@ -11,3 +11,15 @@ export const defaultValue = {
   weeks: [],
   result: null,
 };
+
+export const lessonsTime = [
+  "08:00",
+  "09:50",
+  "11:55",
+  "13:45",
+  "15:50",
+  "17:40",
+  "19:30",
+];
+
+export const cardTitle = ["Текущая пара", "Следующая пара"];
