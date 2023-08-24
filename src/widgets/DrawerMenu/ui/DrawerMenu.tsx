@@ -17,12 +17,14 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 import { $api } from "/src/shared/api/api";
+import {
+  IS_BUTTONS_BLOCKED,
+  USER_GROUP,
+} from "/src/shared/const/localStorageKeys";
 
-const userGroup = JSON.parse(
-  JSON.stringify(localStorage.getItem("USER_GROUP"))
-);
+const userGroup = JSON.parse(JSON.stringify(localStorage.getItem(USER_GROUP)));
 const isButtonBlock =
-  JSON.parse(localStorage.getItem("IS_BUTTONS_BLOCKED") || "false") || false;
+  JSON.parse(localStorage.getItem(IS_BUTTONS_BLOCKED) || "false") || false;
 
 export function DrawerMenu() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -90,7 +92,7 @@ export function DrawerMenu() {
         "USER_GROUP",
         JSON.stringify({ userGroup: inputValue, groupId })
       );
-      localStorage.setItem("IS_BUTTONS_BLOCKED", "true");
+      localStorage.setItem(IS_BUTTONS_BLOCKED, "true");
 
       setButtonBlocked(true);
       setInputBlocked(true);
