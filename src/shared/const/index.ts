@@ -21,5 +21,3 @@ export const lessonsTime = [
   "17:40",
   "19:30",
 ];
-
-export const cardTitle = ["Текущая пара", "Следующая пара"];
