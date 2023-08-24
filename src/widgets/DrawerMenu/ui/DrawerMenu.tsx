@@ -37,9 +37,14 @@ export function DrawerMenu() {
   );
   const [groupId, setGroupId] = useState(userGroup.groupId || "");
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   fetchData();
+  // }, [inputValue]);
+
+  const buttonHandler = () => {
     fetchData();
-  }, [inputValue]);
+    saveInputValue();
+  };
 
   const toast = useToast();
 
@@ -50,13 +55,22 @@ export function DrawerMenu() {
           query: inputValue,
         },
       });
-      if (request.data.choices) {
-        setGroupId(request.data.choices[0].group);
-      }
       if (request.data.table) {
         setGroupId(request.data.table.group);
       }
+      if (request.data.choices) {
+        setGroupId(request.data.choices[0].group);
+      }
     } catch (error) {
+      if (error instanceof Error) {
+        toast({
+          title: "Ошибка",
+          description: error.message,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
       console.log(error);
     }
   }
@@ -83,6 +97,16 @@ export function DrawerMenu() {
   };
 
   const saveInputValue = () => {
+    if (groupId == "") {
+      toast({
+        title: "Группа не найдена",
+        description: "Проверьте, правильно ли написано название группы",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
     if (
       inputValue.length >= 7 &&
       inputValue.length <= 8 &&
@@ -145,7 +169,7 @@ export function DrawerMenu() {
               />
               <Button
                 colorScheme="blue"
-                onClick={saveInputValue}
+                onClick={buttonHandler}
                 isDisabled={isButtonBlocked}
               >
                 Сохранить
