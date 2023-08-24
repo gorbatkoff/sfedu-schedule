@@ -68,28 +68,26 @@ export const UpcomingLessons: FC<TableProps> = memo(
       }
     }
 
-    if (!currentSchedule) return;
     if (currentSchedule.length == 0) return null;
 
     return (
       <div className={classNames("", {}, [className])}>
         <div className={classNames(styles.UpcomingLessonsList)}>
-          {currentSchedule &&
-            currentSchedule
-              .slice(2)
-              [day].slice(currentLesson, currentLesson + 2)
-              .map((item: string, index: number) => {
-                return (
-                  <ScheduleCard
-                    lessonTime={currentSchedule[1][currentLesson + index + 1]}
-                    index={currentLesson + index + 1}
-                    day={cardTitle[index]}
-                    key={index}
-                    element={item}
-                    className={colorMode === "light" ? styles.whiteMode : ""}
-                  />
-                );
-              })}
+          {currentSchedule
+            .slice(2)
+            [day].slice(currentLesson, currentLesson + 2)
+            .map((item: string, index: number) => {
+              return (
+                <ScheduleCard
+                  lessonTime={currentSchedule[1][currentLesson + index + 1]}
+                  lessonNumber={currentLesson + index + 1}
+                  day={cardTitle[index]}
+                  key={index}
+                  element={item}
+                  className={colorMode === "light" ? styles.whiteMode : ""}
+                />
+              );
+            })}
         </div>
       </div>
     );

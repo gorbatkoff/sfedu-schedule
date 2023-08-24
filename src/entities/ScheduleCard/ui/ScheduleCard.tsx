@@ -13,14 +13,14 @@ import styles from "./ScheduleCard.module.scss";
 
 interface ScheduleCardProps {
   className?: string;
-  index: number;
+  lessonNumber: number;
   lessonTime: string;
   day: string;
   element: string;
 }
 
 export const ScheduleCard = (props: ScheduleCardProps) => {
-  const { className, index, lessonTime, day, element } = props;
+  const { className, lessonNumber: index, lessonTime, day, element } = props;
 
   const groups =
     element.match(groupRegex) || element.match(subgroupRegex) || [];
