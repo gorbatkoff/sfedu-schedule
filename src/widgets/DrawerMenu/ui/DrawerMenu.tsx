@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
   Button,
@@ -16,8 +16,11 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
+import { $api } from "/src/shared/api/api";
 
-const userGroup = localStorage.getItem("USER_GROUP");
+const userGroup = JSON.parse(
+  JSON.stringify(localStorage.getItem("USER_GROUP"))
+);
 const isButtonBlock =
   JSON.parse(localStorage.getItem("IS_BUTTONS_BLOCKED") || "false") || false;
 
@@ -27,12 +30,38 @@ export function DrawerMenu() {
 
   const [isButtonBlocked, setButtonBlocked] = useState<boolean>(isButtonBlock);
   const [isInputBlocked, setInputBlocked] = useState<boolean>(isButtonBlock);
-  const [inputValue, setInputValue] = useState<string>(userGroup || "КТ");
+  const [inputValue, setInputValue] = useState<string>(
+    userGroup.userGroup || "КТ"
+  );
+  const [groupId, setGroupId] = useState(userGroup.groupId || "");
+
+  useEffect(() => {
+    fetchData();
+  }, [inputValue]);
 
   const toast = useToast();
 
+  async function fetchData() {
+    try {
+      const request = await $api.get("/", {
+        params: {
+          query: inputValue,
+        },
+      });
+      if (request.data.choices) {
+        setGroupId(request.data.choices[0].group);
+      }
+      if (request.data.table) {
+        setGroupId(request.data.table.group);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const cleanedValue = e.target.value.replace(/[^КТА-Яа-я1-6-0-9]+/g, "");
+
     if (!cleanedValue.startsWith("КТ")) {
       setInputValue("КТ");
       return;
@@ -57,7 +86,10 @@ export function DrawerMenu() {
       inputValue.length <= 8 &&
       inputValue.startsWith("КТ")
     ) {
-      localStorage.setItem("USER_GROUP", inputValue);
+      localStorage.setItem(
+        "USER_GROUP",
+        JSON.stringify({ userGroup: inputValue, groupId })
+      );
       localStorage.setItem("IS_BUTTONS_BLOCKED", "true");
 
       setButtonBlocked(true);
