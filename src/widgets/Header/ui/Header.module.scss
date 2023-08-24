@@ -7,10 +7,11 @@
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    align-items:center;
+    align-items: center;
   }
 
-  svg, h1 {
+  svg,
+  h1 {
     color: var(--chakra-colors-white);
   }
 }
@@ -20,4 +21,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.menuBlock {
+  display: flex;
+  justify-content: space-between;
+  column-gap: 50px;
 }
