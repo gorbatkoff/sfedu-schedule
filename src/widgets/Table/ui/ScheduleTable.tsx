@@ -36,7 +36,7 @@ export interface IFavoriteChoice {
 }
 
 const localStorageGroups = JSON.parse(
-  localStorage.getItem("USER_FAVORITE_SEARCH") || "[]"
+  localStorage.getItem("USER_FAVORITE_SEARCH") || "[]",
 );
 
 export const ScheduleTable = memo(
@@ -48,7 +48,7 @@ export const ScheduleTable = memo(
     const { week: currentWeek } = useCurrentWeek();
 
     const isFavorite =
-      favoriteChoices.filter((item) => item.name === schedule.table.name)
+      favoriteChoices.filter((item) => item.name === schedule.table?.name)
         .length > 0;
 
     async function fetchDataByWeek(week: number) {
@@ -86,7 +86,7 @@ export const ScheduleTable = memo(
         });
       } else {
         const filteredChoices = favoriteChoices.filter(
-          (item) => item.name !== favoriteSearch.name
+          (item) => item.name !== favoriteSearch.name,
         );
         setFavoriteChoices(filteredChoices);
         toast({
@@ -182,5 +182,5 @@ export const ScheduleTable = memo(
         )}
       </div>
     );
-  }
+  },
 );

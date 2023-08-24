@@ -36,6 +36,10 @@ export const SearchSchedule = memo(
       choices: [],
     });
 
+    const favoriteChoices = JSON.parse(
+      localStorage.getItem("USER_FAVORITE_SEARCH") || "[]",
+    );
+
     const userInputThrottling = useThrottle(() => {
       fetchUserQuery();
     }, 500);
@@ -157,9 +161,14 @@ export const SearchSchedule = memo(
         </div>
 
         <div>
-          <FavoriteChoice title="КТбо4-9" />
-          <FavoriteChoice title="КТбо2-11" />
-          <FavoriteChoice title="Целых А. Н." />
+          {favoriteChoices.map((choice: IChoice) => {
+            return (
+              <FavoriteChoice
+                title={choice.name}
+                onClick={() => fetchDataByChoice(choice.group)}
+              />
+            );
+          })}
         </div>
 
         <div className={styles.choices}>
