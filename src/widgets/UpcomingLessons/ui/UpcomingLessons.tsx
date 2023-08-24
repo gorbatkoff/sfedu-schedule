@@ -67,27 +67,27 @@ export const UpcomingLessons: FC<TableProps> = memo(
     }
 
     if (currentSchedule.length == 0) return null;
-
     return (
-      <div className={classNames("", {}, [className])}>
-        <div className={classNames(styles.UpcomingLessonsList)}>
-          {currentSchedule
-            .slice(2)
-            [day].slice(currentLesson, currentLesson + 2)
-            .map((item: string, index: number) => {
-              let content = index == 0 ? "Текущая пара" : "Следующая пара";
-              return (
-                <ScheduleCard
-                  lessonTime={currentSchedule[1][currentLesson + index + 1]}
-                  lessonNumber={currentLesson + index + 1}
-                  day={content}
-                  key={index}
-                  element={item}
-                  className={colorMode === "light" ? styles.whiteMode : ""}
-                />
-              );
-            })}
-        </div>
+      <div className={classNames(styles.UpcomingLessonsList, {}, [className])}>
+        {currentSchedule
+          .slice(2)
+          [day].slice(1)
+          .slice(currentLesson, currentLesson + 2)
+          .map((item: string, index: number) => {
+            return (
+              <ScheduleCard
+                lessonTime={currentSchedule[1][currentLesson + index + 1]}
+                lessonNumber={currentLesson + index + 1}
+                day={currentSchedule.slice(2)[day][0]}
+                key={index}
+                element={item}
+                className={String([
+                  colorMode === "light" ? styles.whiteMode : "",
+                  index === 0 ? styles.currentLesson : "",
+                ])}
+              />
+            );
+          })}
       </div>
     );
   }
