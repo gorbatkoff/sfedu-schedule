@@ -1,6 +1,6 @@
 import { FC, memo, useEffect, useState } from "react";
 
-import { Button, Table, useColorMode } from "@chakra-ui/react";
+import { useColorMode } from "@chakra-ui/react";
 import classNames from "classnames";
 
 import { IScheduleTable } from "/src/entities/ScheduleTable";
@@ -9,6 +9,7 @@ import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
 import styles from "./UpcomingLessons.module.scss";
 import { $api } from "/src/shared/api/api";
+
 import { cardTitle, lessonsTime } from "/src/shared/const";
 
 interface TableProps {
@@ -33,6 +34,8 @@ export const UpcomingLessons: FC<TableProps> = memo(
 
     let currentLesson = 0;
 
+    const { colorMode } = useColorMode();
+
     lessonsTime.forEach((lessonTime, i) => {
       const [lessonHour, lessonMinute] = lessonTime
         .split(":")
@@ -49,8 +52,6 @@ export const UpcomingLessons: FC<TableProps> = memo(
       fetchData();
       0 < currentDay && currentDay < 7 ? setDay(currentDay - 1) : setDay(0);
     }, []);
-
-    const { colorMode } = useColorMode();
 
     async function fetchData() {
       try {
@@ -80,9 +81,7 @@ export const UpcomingLessons: FC<TableProps> = memo(
               .map((item: string, index: number) => {
                 return (
                   <ScheduleCard
-                    lessonTime={`${
-                      currentSchedule[1][currentLesson + index + 1]
-                    }`}
+                    lessonTime={currentSchedule[1][currentLesson + index + 1]}
                     index={currentLesson + index + 1}
                     day={cardTitle[index]}
                     key={index}
