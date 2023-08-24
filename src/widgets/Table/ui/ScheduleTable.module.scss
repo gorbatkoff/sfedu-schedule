@@ -42,12 +42,11 @@
   }
 
   .weeksList {
-    display: flex;
     max-width: 100%;
     width: 100vw;
     justify-content: space-between;
     column-gap: 20px;
-    padding: 1em;
+    padding: 1em 0;
     overflow-x: scroll;
   }
 
@@ -75,9 +74,8 @@
     .weeksList {
       display: flex;
       width: 100%;
-      padding: 1em;
       overflow: scroll;
-      column-gap: 1em;
+      column-gap: 20px;
     }
   }
 }
