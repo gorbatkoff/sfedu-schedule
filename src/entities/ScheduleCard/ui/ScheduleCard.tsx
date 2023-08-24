@@ -53,7 +53,7 @@ export const ScheduleCard = (props: ScheduleCardProps) => {
       <div className={styles.cardFooter}>
         <div>
           <TimeIcon boxSize={6} className={styles.icon} />
-          {lessonTime}
+          {lessonTime || "--:-- — --:--"}
         </div>
         <div
           style={{
