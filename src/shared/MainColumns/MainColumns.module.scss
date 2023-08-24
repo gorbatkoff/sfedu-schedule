@@ -1,8 +1,28 @@
 .mainColumns {
-  width: var(--app-width);
+  max-width: var(--app-width);
+  width: 100%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 25% 50% 20%;
+  grid-template-columns: 1fr 2fr 1fr;
   grid-gap: 1em;
   padding: 2em 0;
+}
+
+@media screen and (max-width: 1120px) {
+  .mainColumns {
+    grid-template-columns: 1fr 2fr 2fr;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .mainColumns {
+    grid-template-columns: 2fr 2fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+      ". ."
+      "lessons lessons";
+    div:nth-child(3) {
+      grid-area: lessons;
+    }
+  }
 }
