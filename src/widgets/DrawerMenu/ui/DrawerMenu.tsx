@@ -36,10 +36,32 @@ export function DrawerMenu() {
     userGroup.userGroup || "КТ"
   );
   const [groupId, setGroupId] = useState(userGroup.groupId || "");
+  const [isSetted, setIsSetted] = useState<boolean>(false);
+
+  const checkGroupId = () => {
+    if (groupId == "" && isSetted) {
+      toast({
+        title: "Группа не найдена",
+        description: "Проверьте правильность написания группы",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      setIsSetted(false);
+      return;
+    }
+    if (isSetted) {
+      saveInputValue();
+    }
+  };
+
+  useEffect(() => {
+    checkGroupId();
+  }, [groupId]);
 
   const buttonHandler = () => {
     fetchData();
-    saveInputValue();
+    setIsSetted(true);
   };
 
   const toast = useToast();
@@ -93,16 +115,6 @@ export function DrawerMenu() {
   };
 
   const saveInputValue = () => {
-    if (groupId == "") {
-      toast({
-        title: "Группа не найдена",
-        description: "Проверьте правильность написания группы",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      return;
-    }
     if (
       inputValue.length >= 7 &&
       inputValue.length <= 8 &&
