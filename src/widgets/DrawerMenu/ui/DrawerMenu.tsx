@@ -38,7 +38,7 @@ export function DrawerMenu() {
   const [groupId, setGroupId] = useState(userGroup.groupId || "");
   const [isSetted, setIsSetted] = useState<boolean>(false);
 
-  useEffect(() => {
+  const checkGroupId = () => {
     if (groupId == "" && isSetted) {
       toast({
         title: "Группа не найдена",
@@ -53,6 +53,10 @@ export function DrawerMenu() {
     if (isSetted) {
       saveInputValue();
     }
+  };
+
+  useEffect(() => {
+    checkGroupId();
   }, [groupId]);
 
   const buttonHandler = () => {
