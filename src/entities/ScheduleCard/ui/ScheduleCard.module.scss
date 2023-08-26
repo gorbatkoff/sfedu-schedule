@@ -12,6 +12,19 @@
     size: 18px;
 }
 
+.ScheduleCardVisual {
+    background: var(--secondary-color);
+    color: white;
+    padding: 15%;
+    font-weight: normal;
+    transition: all 0.5s;
+}
+
+.ScheduleCardVisual:hover {
+    background: var(--chakra-colors-twitter-200);
+    color: #000;
+}
+
 .cardHeader {
     display: flex;
     justify-content: space-between;

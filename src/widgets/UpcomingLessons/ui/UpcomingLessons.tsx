@@ -11,6 +11,7 @@ import styles from "./UpcomingLessons.module.scss";
 import { $api } from "/src/shared/api/api";
 
 import { lessonsTime } from "/src/shared/const";
+import { ScheduleCardVisual } from "/src/entities/ScheduleCard/ui/ScheduleCardVisual";
 
 interface TableProps {
   className?: string;
@@ -66,11 +67,19 @@ export const UpcomingLessons: FC<TableProps> = memo(
       }
     }
 
-    if (currentSchedule.length == 0) return null;
+    if (currentSchedule.length == 0)
+      return (
+        <div className={classNames(styles.UpcomingLessonsList)}>
+          <ScheduleCardVisual />
+          <ScheduleCardVisual />
+        </div>
+      );
+
     return (
       <div className={classNames(styles.UpcomingLessonsList, {}, [className])}>
         {currentSchedule
           .slice(2)
+          // eslint-disable-next-line no-unexpected-multiline
           [day].slice(1)
           .slice(currentLesson, currentLesson + 2)
           .map((item: string, index: number) => {
@@ -90,5 +99,5 @@ export const UpcomingLessons: FC<TableProps> = memo(
           })}
       </div>
     );
-  }
+  },
 );

@@ -1,4 +1,4 @@
-import { Suspense, useCallback, useState } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 
 import { Header } from "/src/widgets/Header";
 import { ScheduleTable } from "/src/widgets/Table";
