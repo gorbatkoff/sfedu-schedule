@@ -21,19 +21,24 @@ import {
   IS_BUTTONS_BLOCKED,
   USER_GROUP,
 } from "/src/shared/const/localStorageKeys";
+import { IScheduleTable } from "/src/entities/ScheduleTable";
+
+interface IDrawerMenuProps {
+  updateData: (data: IScheduleTable) => void;
+}
 
 const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 const isButtonBlock =
   JSON.parse(localStorage.getItem(IS_BUTTONS_BLOCKED) || "false") || false;
 
-export function DrawerMenu() {
+export function DrawerMenu({ updateData }: IDrawerMenuProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
 
   const [isButtonBlocked, setButtonBlocked] = useState<boolean>(isButtonBlock);
   const [isInputBlocked, setInputBlocked] = useState<boolean>(isButtonBlock);
   const [inputValue, setInputValue] = useState<string>(
-    userGroup.userGroup || "КТ"
+    userGroup.userGroup || "КТ",
   );
   const [groupId, setGroupId] = useState(userGroup.groupId || "");
   const [isSetted, setIsSetted] = useState<boolean>(false);
@@ -73,10 +78,14 @@ export function DrawerMenu() {
           query: inputValue,
         },
       });
+
       if (request.data.table) {
         setGroupId(request.data.table.group);
+        updateData(request.data);
+        localStorage.setItem("USER_SCHEDULE", request.data);
       }
       if (request.data.choices) {
+        console.log(request.data.choices);
         setGroupId(request.data.choices[0].group);
       }
     } catch (error) {
@@ -122,7 +131,7 @@ export function DrawerMenu() {
     ) {
       localStorage.setItem(
         "USER_GROUP",
-        JSON.stringify({ userGroup: inputValue, groupId })
+        JSON.stringify({ userGroup: inputValue, groupId }),
       );
       localStorage.setItem(IS_BUTTONS_BLOCKED, "true");
 

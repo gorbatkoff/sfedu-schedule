@@ -20,6 +20,7 @@ import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import styles from "./SearchSchedule.module.scss";
 import { useThrottle } from "/src/shared/hooks/useThrottle";
 import { FavoriteChoice } from "/src/shared/ui/FavoriteChoice/FavoriteChoice";
+import { useDebounce } from "/src/shared/hooks/useDebounce";
 
 interface SearchScheduleProps {
   className?: string;
@@ -40,12 +41,12 @@ export const SearchSchedule = memo(
       localStorage.getItem("USER_FAVORITE_SEARCH") || "[]",
     );
 
-    const userInputThrottling = useThrottle(() => {
+    const debounceInput = useDebounce(() => {
       fetchUserQuery();
-    }, 500);
+    }, 1000);
 
     useEffect(() => {
-      userInputThrottling();
+      debounceInput();
     }, [input]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
