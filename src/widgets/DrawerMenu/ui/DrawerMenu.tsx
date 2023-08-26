@@ -89,6 +89,8 @@ export function DrawerMenu({ updateData }: IDrawerMenuProps) {
         console.log(request.data.choices);
         setGroupId(request.data.choices[0].group);
       }
+
+      onClose();
     } catch (error) {
       if (error instanceof Error) {
         toast({

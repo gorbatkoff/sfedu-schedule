@@ -7,7 +7,7 @@ import { SearchSchedule } from "/src/features/SearchSchedule";
 import { ScheduleCardsList } from "/src/widgets/ScheduleCardsList";
 import { defaultValue } from "/src/shared/const";
 import Loader from "/src/shared/ui/Loader/Loader";
-import MainColumns from "/src/shared/MainColumns/MainColumns";
+import MainColumns from "/src/shared/ui/MainColumns/MainColumns";
 import { Calendar } from "/src/widgets/Calendar";
 import { UpcomingLessons } from "/src/widgets/UpcomingLessons";
 import { SelectVPK } from "/src/features/SelectVPK";
@@ -32,8 +32,8 @@ function App() {
     const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 
     if (
-      finishedTable.table.name === userGroup.userGroup &&
-      finishedTable.table.week === week
+      finishedTable.table?.name === userGroup.userGroup &&
+      finishedTable.table?.week === week
     ) {
       localStorage.setItem(SAVED_SCHEDULE, JSON.stringify(finishedTable));
     }
@@ -62,7 +62,7 @@ function App() {
   }, []);
 
   const renderTableByViewPort = () => {
-    if (window.screen.width > 600)
+    if (window.screen.width > 768)
       return <ScheduleTable schedule={finishedTable} updateData={updateData} />;
     return (
       <ScheduleCardsList schedule={finishedTable} updateData={updateData} />
@@ -70,7 +70,7 @@ function App() {
   };
 
   const renderColumnsByViewPort = () => {
-    if (window.screen.width > 600)
+    if (window.screen.width > 768)
       return (
         <MainColumns>
           <Calendar />
