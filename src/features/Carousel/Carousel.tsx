@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { Button } from "@chakra-ui/react";
 
 import styles from "./Carousel.module.scss";
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
 interface CarouselProps {
   week: number;
@@ -13,7 +14,7 @@ interface CarouselProps {
 
 const Carousel = ({ week, carouselItems, fetchDataByWeek }: CarouselProps) => {
   const myRef = useRef<HTMLInputElement | HTMLButtonElement | null>(null);
-
+  const { week: currentWeek } = useCurrentWeek();
   const executeScroll = () => {
     if (myRef.current !== null) {
       myRef.current.scrollIntoView({ behavior: "smooth" });
@@ -23,6 +24,8 @@ const Carousel = ({ week, carouselItems, fetchDataByWeek }: CarouselProps) => {
   useEffect(() => {
     setTimeout(() => executeScroll(), 500);
   }, []);
+
+  console.log("current week hook", currentWeek);
 
   return (
     <div className={classNames(styles.Carousel)}>
@@ -35,6 +38,8 @@ const Carousel = ({ week, carouselItems, fetchDataByWeek }: CarouselProps) => {
             isDisabled={week === index + 1}
             // @ts-ignore
             ref={week === index + 1 ? myRef : null}
+            backgroundColor={index + 1 === currentWeek ? "#5b32e2" : ""}
+            opacity={item < currentWeek ? "0.5" : "1"}
             colorScheme={week === index + 1 ? "green" : "twitter"}
           >
             {item}

@@ -3,7 +3,6 @@ import React, { memo, useCallback, useEffect, useState } from "react";
 import {
   Button,
   FormControl,
-  Heading,
   Input,
   InputGroup,
   InputLeftElement,
@@ -18,7 +17,6 @@ import { defaultValue } from "/src/shared/const";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
 import styles from "./SearchSchedule.module.scss";
-import { useThrottle } from "/src/shared/hooks/useThrottle";
 import { FavoriteChoice } from "/src/shared/ui/FavoriteChoice/FavoriteChoice";
 import { useDebounce } from "/src/shared/hooks/useDebounce";
 
@@ -116,6 +114,8 @@ export const SearchSchedule = memo(
         //@ts-ignore
         setDataFromAPI([]);
         updateData(request.data);
+
+        window.history.pushState(null, "group", `/?group=${group}`);
       } catch (error) {
         console.log(error);
       }
@@ -125,7 +125,6 @@ export const SearchSchedule = memo(
       const group = new URLSearchParams(window.location.search).get("group");
 
       if (group) {
-        console.log(true);
         fetchDataByChoice(group);
       }
     }, []);
@@ -162,10 +161,11 @@ export const SearchSchedule = memo(
         </div>
 
         <div>
-          {favoriteChoices.map((choice: IChoice) => {
+          {favoriteChoices.map((choice: IChoice, index: number) => {
             return (
               <FavoriteChoice
                 title={choice.name}
+                key={index}
                 onClick={() => fetchDataByChoice(choice.group)}
               />
             );

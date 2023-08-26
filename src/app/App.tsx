@@ -10,13 +10,55 @@ import Loader from "/src/shared/ui/Loader/Loader";
 import MainColumns from "/src/shared/MainColumns/MainColumns";
 import { Calendar } from "/src/widgets/Calendar";
 import { UpcomingLessons } from "/src/widgets/UpcomingLessons";
+import { SelectVPK } from "/src/features/SelectVPK";
+import { SAVED_SCHEDULE, USER_GROUP } from "/src/shared/const/localStorageKeys";
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
+import { useToast } from "@chakra-ui/react";
+
+const isUserOnline = navigator.onLine;
+
+console.log(isUserOnline);
 
 function App() {
   const [finishedTable, setFinishedTable] =
     useState<IScheduleTable>(defaultValue);
-
-  const updateData = useCallback((data: IScheduleTable) => {
+  const { week } = useCurrentWeek();
+  const toast = useToast();
+  const updateData = (data: IScheduleTable) => {
     setFinishedTable(data);
+  };
+
+  useEffect(() => {
+    const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
+
+    if (
+      finishedTable.table.name === userGroup.userGroup &&
+      finishedTable.table.week === week
+    ) {
+      localStorage.setItem(SAVED_SCHEDULE, JSON.stringify(finishedTable));
+    }
+  }, [updateData]);
+
+  useEffect(() => {
+    const savedSchedule = JSON.parse(
+      localStorage.getItem(SAVED_SCHEDULE) || "{}",
+    );
+
+    if (Object.keys(savedSchedule).length === 0) return;
+
+    if (savedSchedule) {
+      setFinishedTable(savedSchedule);
+    }
+
+    if (!isUserOnline) {
+      toast({
+        title: "Нет интернета!",
+        description: "Показано сохраненное расписание вашей группы :)",
+        status: "warning",
+        duration: 6000,
+        isClosable: true,
+      });
+    }
   }, []);
 
   const renderTableByViewPort = () => {
@@ -46,6 +88,7 @@ function App() {
 
         {renderColumnsByViewPort()}
         {renderTableByViewPort()}
+        <SelectVPK schedule={finishedTable} updateData={updateData} />
       </div>
     </Suspense>
   );

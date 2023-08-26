@@ -12,92 +12,101 @@ import { $api } from "/src/shared/api/api";
 
 import { lessonsTime } from "/src/shared/const";
 import { ScheduleCardVisual } from "/src/entities/ScheduleCard/ui/ScheduleCardVisual";
+import { SAVED_SCHEDULE } from "/src/shared/const/localStorageKeys";
 
 interface TableProps {
   className?: string;
   updateData: (data: IScheduleTable) => void;
 }
 
-export const UpcomingLessons: FC<TableProps> = memo(
-  ({ className, updateData }) => {
-    const { week } = useCurrentWeek();
-    const [day, setDay] = useState<number>(0);
-    const [currentSchedule, setCurrentSchedule] = useState<any[]>([]);
+const isUserOnline = navigator.onLine;
+const scheduleFromLocalStorage = JSON.parse(
+  localStorage.getItem(SAVED_SCHEDULE) || "{}",
+);
 
-    const group = JSON.parse(localStorage.getItem("USER_GROUP") || "{}");
+export const UpcomingLessons: FC<TableProps> = memo(({ className }) => {
+  const { week } = useCurrentWeek();
+  const [day, setDay] = useState<number>(0);
+  const [currentSchedule, setCurrentSchedule] = useState<any[]>([]);
 
-    const currentTime = new Date();
-    const currentDay = currentTime.getDay();
-    const currentHour = +currentTime.getHours();
-    const currentMinute = +currentTime.getMinutes();
+  const group = JSON.parse(localStorage.getItem("USER_GROUP") || "{}");
 
-    let currentLesson = 0;
+  const currentTime = new Date();
+  const currentDay = currentTime.getDay();
+  const currentHour = +currentTime.getHours();
+  const currentMinute = +currentTime.getMinutes();
 
-    const { colorMode } = useColorMode();
+  let currentLesson = 0;
 
-    lessonsTime.forEach((lessonTime, i) => {
-      const [lessonHour, lessonMinute] = lessonTime
-        .split(":")
-        .map((item) => +item);
-      if (
-        currentHour > lessonHour ||
-        (currentHour === lessonHour && currentMinute >= lessonMinute)
-      ) {
-        currentLesson = i;
-      }
-    });
+  const { colorMode } = useColorMode();
 
-    useEffect(() => {
-      fetchData();
-      0 < currentDay && currentDay < 7 ? setDay(currentDay - 1) : setDay(0);
-    }, []);
-
-    async function fetchData() {
-      try {
-        const request = await $api.get("/", {
-          params: {
-            group: group.groupId,
-            week,
-          },
-        });
-
-        setCurrentSchedule(request.data.table.table);
-      } catch (error) {
-        console.log(error);
-      }
+  lessonsTime.forEach((lessonTime, i) => {
+    const [lessonHour, lessonMinute] = lessonTime
+      .split(":")
+      .map((item) => +item);
+    if (
+      currentHour > lessonHour ||
+      (currentHour === lessonHour && currentMinute >= lessonMinute)
+    ) {
+      currentLesson = i;
     }
+  });
 
-    if (currentSchedule.length == 0)
-      return (
-        <div className={classNames(styles.UpcomingLessonsList)}>
-          <ScheduleCardVisual />
-          <ScheduleCardVisual />
-        </div>
-      );
+  useEffect(() => {
+    if (isUserOnline) {
+      fetchData();
+    } else if (Object.keys(scheduleFromLocalStorage).length !== 0) {
+      setCurrentSchedule(scheduleFromLocalStorage.table.table);
+    }
+    0 < currentDay && currentDay < 7 ? setDay(currentDay - 1) : setDay(0);
+  }, []);
 
+  async function fetchData() {
+    try {
+      const request = await $api.get("/", {
+        params: {
+          group: group.groupId,
+          week,
+        },
+      });
+
+      setCurrentSchedule(request.data.table.table);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  if (currentSchedule.length == 0) {
     return (
-      <div className={classNames(styles.UpcomingLessonsList, {}, [className])}>
-        {currentSchedule
-          .slice(2)
-          // eslint-disable-next-line no-unexpected-multiline
-          [day].slice(1)
-          .slice(currentLesson, currentLesson + 2)
-          .map((item: string, index: number) => {
-            return (
-              <ScheduleCard
-                lessonTime={currentSchedule[1][currentLesson + index + 1]}
-                lessonNumber={currentLesson + index + 1}
-                day={currentSchedule.slice(2)[day][0]}
-                key={index}
-                element={item}
-                className={String([
-                  colorMode === "light" ? styles.whiteMode : "",
-                  index === 0 ? styles.currentLesson : "",
-                ])}
-              />
-            );
-          })}
+      <div className={classNames(styles.UpcomingLessonsList)}>
+        <ScheduleCardVisual />
+        <ScheduleCardVisual />
       </div>
     );
-  },
-);
+  }
+
+  return (
+    <div className={classNames(styles.UpcomingLessonsList, {}, [className])}>
+      {currentSchedule
+        .slice(2)
+        // eslint-disable-next-line no-unexpected-multiline
+        [day].slice(1)
+        .slice(currentLesson, currentLesson + 2)
+        .map((item: string, index: number) => {
+          return (
+            <ScheduleCard
+              lessonTime={currentSchedule[1][currentLesson + index + 1]}
+              lessonNumber={currentLesson + index + 1}
+              day={currentSchedule.slice(2)[day][0]}
+              key={index}
+              element={item}
+              className={String([
+                colorMode === "light" ? styles.whiteMode : "",
+                index === 0 ? styles.currentLesson : "",
+              ])}
+            />
+          );
+        })}
+    </div>
+  );
+});

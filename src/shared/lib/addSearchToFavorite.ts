@@ -4,10 +4,10 @@ import { IFavoriteChoice } from "/src/widgets/Table/ui/ScheduleTable";
 
 export const addSearchToFavorite = (
   schedule: IScheduleTable,
-  favoriteSearch: IFavoriteChoice
+  favoriteSearch: IFavoriteChoice,
 ): boolean => {
   const localStorageGroups = JSON.parse(
-    localStorage.getItem(USER_FAVORITE_SEARCH) || "[]"
+    localStorage.getItem(USER_FAVORITE_SEARCH) || "[]",
   ) as IFavoriteChoice[];
 
   if (
@@ -17,8 +17,8 @@ export const addSearchToFavorite = (
     localStorage.setItem(
       USER_FAVORITE_SEARCH,
       JSON.stringify(
-        localStorageGroups.filter((item) => item.name !== favoriteSearch.name)
-      )
+        localStorageGroups.filter((item) => item.name !== favoriteSearch.name),
+      ),
     );
     return false;
   } else {
@@ -26,7 +26,7 @@ export const addSearchToFavorite = (
 
     localStorage.setItem(
       USER_FAVORITE_SEARCH,
-      JSON.stringify(localStorageGroups)
+      JSON.stringify(localStorageGroups),
     );
     return true;
   }

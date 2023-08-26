@@ -18,7 +18,6 @@ interface HeaderProps {
 
 export const Header = memo(({ className, updateData }: HeaderProps) => {
   const handleUpdateData = () => {
-    updateData(defaultValue);
     window.history.replaceState(null, "group", window.location.pathname);
   };
 

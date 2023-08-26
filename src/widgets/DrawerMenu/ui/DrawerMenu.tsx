@@ -22,6 +22,7 @@ import {
   USER_GROUP,
 } from "/src/shared/const/localStorageKeys";
 import { IScheduleTable } from "/src/entities/ScheduleTable";
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
 interface IDrawerMenuProps {
   updateData: (data: IScheduleTable) => void;
@@ -34,7 +35,7 @@ const isButtonBlock =
 export function DrawerMenu({ updateData }: IDrawerMenuProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
-
+  const { week } = useCurrentWeek();
   const [isButtonBlocked, setButtonBlocked] = useState<boolean>(isButtonBlock);
   const [isInputBlocked, setInputBlocked] = useState<boolean>(isButtonBlock);
   const [inputValue, setInputValue] = useState<string>(

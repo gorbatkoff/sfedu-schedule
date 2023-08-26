@@ -3,7 +3,6 @@
   max-width: var(--app-width);
   font-size: 12px;
   width: 100%;
-  margin-bottom: 15vh;
 
   .tableTitle {
     text-align: center;
@@ -71,12 +70,16 @@
     align-items: center;
   }
 
+  .week {
+    font-weight: unset;
+  }
+
   @media (width <= 768px) {
     .weeksList {
       display: flex;
       width: 100%;
       padding: 1em 0;
-      overflow: scroll;
+      overflow-y: scroll;
       column-gap: 1em;
     }
   }

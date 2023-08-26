@@ -62,6 +62,7 @@ const ScheduleCardsList: FC<TableProps> = memo(
                 key={index}
                 onClick={() => dayHandler(index)}
                 isDisabled={day === index}
+                colorScheme={day === index ? "green" : "gray"}
               >
                 {dayItem}
               </Button>
@@ -92,7 +93,7 @@ const ScheduleCardsList: FC<TableProps> = memo(
         </div>
       </div>
     );
-  }
+  },
 );
 
 export default ScheduleCardsList;

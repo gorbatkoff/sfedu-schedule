@@ -107,9 +107,14 @@ export const ScheduleTable = memo(
           <>
             {schedule.table.name && (
               <div className={styles.groupActions}>
-                <Heading color="white" className={styles.tableTitle}>
-                  Расписание {schedule.table.name}
-                </Heading>
+                <div className={styles.groupActionsFirst}>
+                  <Heading color="white" className={styles.tableTitle}>
+                    Расписание {schedule.table.name}{" "}
+                    <span className={styles.week}>
+                      Неделя {schedule.table.week}
+                    </span>
+                  </Heading>
+                </div>
                 <IconButton
                   aria-label="Добавить в избранное"
                   onClick={handleFavoriteSearch}
@@ -139,16 +144,7 @@ export const ScheduleTable = memo(
             </div>
             <TableContainer sx={{ height: "100%", overflowY: "auto" }}>
               <Table variant="simple" sx={{ color: textColor }}>
-                <Thead
-                  className={styles.tableHead}
-                  sx={{
-                    position: "sticky",
-                    top: 0,
-                    background: "#262D3F",
-                    zIndex: 1,
-                    color: "white",
-                  }}
-                >
+                <Thead className={styles.tableHead}>
                   {schedule.table.table.slice(0, 2).map((row, index) => {
                     return (
                       <Tr key={index}>
