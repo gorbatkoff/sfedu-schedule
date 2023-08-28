@@ -41,7 +41,7 @@ export const SearchSchedule = memo(
 
     const debounceInput = useDebounce(() => {
       fetchUserQuery();
-    }, 1000);
+    }, 500);
 
     useEffect(() => {
       debounceInput();

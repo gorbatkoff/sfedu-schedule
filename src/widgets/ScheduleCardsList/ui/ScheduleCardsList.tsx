@@ -1,6 +1,14 @@
 import { FC, memo, useEffect, useState } from "react";
 
-import { Button, Table, useColorMode } from "@chakra-ui/react";
+import {
+  Button,
+  Heading,
+  IconButton,
+  Stack,
+  Table,
+  useColorMode,
+  useToast,
+} from "@chakra-ui/react";
 import classNames from "classnames";
 
 import { IScheduleTable } from "/src/entities/ScheduleTable";
@@ -10,6 +18,10 @@ import { weekDays } from "/src/shared/const";
 import styles from "./ScheduleCardsList.module.scss";
 import Carousel from "/src/features/Carousel/Carousel";
 import { $api } from "/src/shared/api/api";
+import { FavoriteChoice } from "/src/shared/ui/FavoriteChoice/FavoriteChoice";
+import { StarIcon } from "@chakra-ui/icons";
+import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
+import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorageKeys";
 
 interface TableProps {
   className?: string;
@@ -17,9 +29,17 @@ interface TableProps {
   updateData: (data: IScheduleTable) => void;
 }
 
+const favoriteChoices = JSON.parse(
+  localStorage.getItem(USER_FAVORITE_SEARCH) || "[]",
+);
+
 const ScheduleCardsList: FC<TableProps> = memo(
   ({ className, schedule, updateData }) => {
     const [day, setDay] = useState<number>(0);
+    const toast = useToast();
+    const [isFavorite, setFavorite] = useState(
+      favoriteChoices.includes(schedule.table.name),
+    );
 
     useEffect(() => {
       const currentDay = new Date().getDay();
@@ -46,10 +66,61 @@ const ScheduleCardsList: FC<TableProps> = memo(
         console.log(error);
       }
     }
+
+    const handleFavoriteSearch = () => {
+      const favoriteSearch = {
+        group: schedule.table.group,
+        name: schedule.table.name,
+      };
+
+      const response = addSearchToFavorite(schedule, favoriteSearch);
+
+      if (response) {
+        setFavorite(true);
+        toast({
+          title: "Добавлено!",
+          description:
+            "Успех! Данное расписание было добавлено в список избранных.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+      } else {
+        setFavorite(false);
+        toast({
+          title: "Удалено!",
+          description: "Данное расписание было удалено из списка избранных.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    };
+
     if (schedule.result === "no_entries") return;
     if (schedule.table.table.length == 0) return null;
+
     return (
       <div className={classNames("", {}, [className])}>
+        <div className={styles.groupActions}>
+          <div className={styles.groupActionsFirst}>
+            <Heading
+              color={colorMode === "dark" ? "white" : "var(--secondary-color)"}
+              className={styles.tableTitle}
+              size="md"
+            >
+              Расписание {schedule.table.name}
+            </Heading>
+          </div>
+          <IconButton
+            size="sm"
+            aria-label="Добавить в избранное"
+            onClick={handleFavoriteSearch}
+          >
+            <StarIcon color={isFavorite ? "yellow" : ""} />
+          </IconButton>
+        </div>
+
         <Carousel
           carouselItems={schedule.weeks}
           fetchDataByWeek={fetchDataByWeek}

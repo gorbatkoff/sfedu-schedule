@@ -25,7 +25,7 @@
 }
 
 .loader::after{
-  border-color: #FF3D00;
+  border-color: var(--chakra-colors-blue-500);;
   animation: prixClipFix 2s linear infinite , rotate 0.5s linear infinite reverse;
   inset: 6px;
 }

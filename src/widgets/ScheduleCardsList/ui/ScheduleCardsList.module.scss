@@ -1,5 +1,4 @@
 .ScheduleCardList {
-  padding: 0 1em;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -14,6 +13,17 @@
   justify-content: space-between;
   padding: 1em 5px;
   column-gap: 1em;
+}
+
+.groupTitle {
+  text-align: center;
+}
+
+.groupActions {
+  padding: 0 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /*
