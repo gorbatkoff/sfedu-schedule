@@ -17,8 +17,5 @@ export default function useCurrentWeek() {
   // Конвертируем миллисекунды в недели
   const currentWeek = currentWeekDate / (1000 * 60 * 60 * 24 * 7);
 
-  return {
-    /*    week: Math.ceil(currentWeek),*/
-    week: 9,
-  };
+  return { week: Math.ceil(currentWeek) };
 }

@@ -13,7 +13,7 @@ import { UpcomingLessons } from "/src/widgets/UpcomingLessons";
 import { SelectVPK } from "/src/features/SelectVPK";
 import { SAVED_SCHEDULE, USER_GROUP } from "/src/shared/const/localStorageKeys";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
-import { useToast } from "@chakra-ui/react";
+import { Box, Button, useToast } from "@chakra-ui/react";
 
 const isUserOnline = navigator.onLine;
 
@@ -24,6 +24,7 @@ function App() {
     useState<IScheduleTable>(defaultValue);
   const { week } = useCurrentWeek();
   const toast = useToast();
+  const [showVPKGroups, setShowVPKGroups] = useState(false);
   const updateData = (data: IScheduleTable) => {
     setFinishedTable(data);
   };
@@ -88,7 +89,20 @@ function App() {
 
         {renderColumnsByViewPort()}
         {renderTableByViewPort()}
-        <SelectVPK schedule={finishedTable} updateData={updateData} />
+        {!showVPKGroups && (
+          <Box
+            sx={{ display: "flex", justifyContent: "center", margin: "1em" }}
+          >
+            <Button sx={{ m: 2 }} onClick={() => setShowVPKGroups(true)}>
+              Выбрать ВПК
+            </Button>
+          </Box>
+        )}
+        <Suspense fallback={<Loader />}>
+          {showVPKGroups && (
+            <SelectVPK schedule={finishedTable} updateData={updateData} />
+          )}
+        </Suspense>
       </div>
     </Suspense>
   );
