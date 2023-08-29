@@ -18,16 +18,19 @@ export const FavoriteChoice = memo(
           type="reset"
           className={styles.FavoriteChoice}
           onClick={onClick}
-          sx={{ justifyContent: "flex-start" }}
+          sx={{ justifyContent: "flex-start", borderRadius: "8px 0 0 8px" }}
         >
           <Heading size="md" color="white">
             {title}
           </Heading>
         </Button>
-        <IconButton aria-label="Избранный поиск">
+        <IconButton
+          aria-label="Избранный поиск"
+          sx={{ borderRadius: "0 8px 8px 0" }}
+        >
           <StarIcon color="yellow" />
         </IconButton>
       </div>
     );
-  },
+  }
 );
