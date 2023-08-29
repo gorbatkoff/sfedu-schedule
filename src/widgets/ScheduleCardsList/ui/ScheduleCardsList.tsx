@@ -38,7 +38,7 @@ const ScheduleCardsList: FC<TableProps> = memo(
     const [day, setDay] = useState<number>(0);
     const toast = useToast();
     const [isFavorite, setFavorite] = useState(
-      favoriteChoices.includes(schedule.table.name),
+      favoriteChoices.includes(schedule.table?.name),
     );
 
     useEffect(() => {
