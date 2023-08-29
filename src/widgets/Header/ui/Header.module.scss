@@ -29,3 +29,9 @@
   justify-content: space-between;
   column-gap: 50px;
 }
+
+@media (min-width: 768px) {
+  .themeSwitcher {
+    display: none;
+  }
+}
