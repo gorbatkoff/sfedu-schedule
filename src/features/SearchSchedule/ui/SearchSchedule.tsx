@@ -9,7 +9,6 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
-import { IScheduleTable } from "/src/entities/ScheduleTable";
 
 import { IChoices } from "/src/features/SearchSchedule";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
@@ -25,6 +24,7 @@ import { useSelector } from "react-redux";
 import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorageKeys";
 import { getSchedule } from "/src/entities/Table/model/selectors/getSchedule";
 import { sortFunction } from "/src/shared/lib/sortChoices";
+import { IScheduleTable } from "/src/entities/Table/model/types/Table";
 
 interface SearchScheduleProps {
   className?: string;

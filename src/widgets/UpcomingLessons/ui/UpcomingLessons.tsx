@@ -2,8 +2,6 @@ import { FC, memo, useEffect, useState } from "react";
 
 import { useColorMode } from "@chakra-ui/react";
 import classNames from "classnames";
-
-import { IScheduleTable } from "/src/entities/ScheduleTable";
 import { ScheduleCard } from "/src/entities/ScheduleCard";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
@@ -16,7 +14,6 @@ import { SAVED_SCHEDULE, USER_GROUP } from "/src/shared/const/localStorageKeys";
 
 interface TableProps {
   className?: string;
-  updateData: (data: IScheduleTable) => void;
 }
 
 const isUserOnline = navigator.onLine;
@@ -27,6 +24,7 @@ const scheduleFromLocalStorage = JSON.parse(
 export const UpcomingLessons: FC<TableProps> = memo(({ className }) => {
   const { week } = useCurrentWeek();
   const [day, setDay] = useState<number>(0);
+
   const [currentSchedule, setCurrentSchedule] = useState<any[]>([]);
 
   const group = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");

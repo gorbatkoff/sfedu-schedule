@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IScheduleTable } from "/src/entities/ScheduleTable";
 import { defaultValue } from "/src/shared/const";
 import { $api } from "/src/shared/api/api";
 import { IChoices } from "/src/features/SearchSchedule";
-import { ScheduleScheme } from "/src/entities/Table/model/types/Table";
+import {
+  IScheduleTable,
+  ScheduleScheme,
+} from "/src/entities/Table/model/types/Table";
 
 export const fetchScheduleByQuery = createAsyncThunk(
   "schedule/fetchScheduleByQuery",
@@ -34,6 +36,34 @@ export const fetchScheduleByGroup = createAsyncThunk(
       const request = await $api.get("/", {
         params: {
           group,
+        },
+      });
+
+      return request.data;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+    }
+  },
+);
+
+interface IFetchScheduleByWeekProps {
+  group: string;
+  week: number;
+}
+
+export const fetchScheduleByWeek = createAsyncThunk(
+  "schedule/fetchScheduleByGroup",
+  async function (
+    { group, week }: IFetchScheduleByWeekProps,
+    { rejectWithValue },
+  ) {
+    try {
+      const request = await $api.get("/", {
+        params: {
+          group,
+          week,
         },
       });
 
@@ -82,8 +112,13 @@ export const tableSlice = createSlice({
       .addCase(
         fetchScheduleByGroup.fulfilled,
         (state, action: PayloadAction<IScheduleTable>) => {
-          console.log("Отработано");
-
+          state.schedule = action.payload;
+          state.choices = null;
+        },
+      )
+      .addCase(
+        fetchScheduleByWeek.fulfilled,
+        (state, action: PayloadAction<IScheduleTable>) => {
           state.schedule = action.payload;
           state.choices = null;
         },

@@ -17,7 +17,6 @@ import {
 import TableCell from "/src/entities/Table/ui/TableCell/TableCell";
 
 import { $api } from "/src/shared/api/api";
-import { IScheduleTable } from "/src/entities/ScheduleTable";
 
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { StarIcon } from "@chakra-ui/icons";
@@ -29,6 +28,8 @@ import {
   getSchedule,
   getScheduleTable,
 } from "/src/entities/Table/model/selectors/getSchedule";
+import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+import { fetchScheduleByWeek } from "/src/entities/Table/model/slice/tableSlice";
 
 interface TableProps {
   className?: string;
@@ -51,7 +52,7 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
     useState<IFavoriteChoice[]>(localStorageGroups);
   const toast = useToast();
   const { week: currentWeek } = useCurrentWeek();
-
+  const dispatch = useAppDispatch();
   const schedule = useSelector(getScheduleTable);
 
   const isFavorite =
@@ -137,7 +138,14 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
               return (
                 <Button
                   className={styles.weekButton}
-                  onClick={() => fetchDataByWeek(week)}
+                  onClick={() =>
+                    dispatch(
+                      fetchScheduleByWeek({
+                        week: week,
+                        group: schedule.table.group,
+                      }),
+                    )
+                  }
                   key={index}
                   backgroundColor={week === currentWeek ? "#3be7cb" : ""}
                   isDisabled={schedule.table.week === index + 1}
