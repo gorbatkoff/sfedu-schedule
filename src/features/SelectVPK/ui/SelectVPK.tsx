@@ -14,7 +14,7 @@ interface SelectVPKProps {
   updateData: (data: IScheduleTable) => void;
 }
 
-export const SelectVPK: FC<SelectVPKProps> = memo(({ schedule }) => {
+const SelectVPK: FC<SelectVPKProps> = memo(({ schedule }) => {
   const toast = useToast();
   const { week } = useCurrentWeek();
   const [VPKList, setVPKList] = useState<IChoice[]>();
@@ -60,6 +60,8 @@ export const SelectVPK: FC<SelectVPKProps> = memo(({ schedule }) => {
     }
   }
 
+  console.log("downloaded");
+
   return (
     <div className={styles.SelectVPK}>
       <Heading as="h3" size="md">
@@ -75,3 +77,5 @@ export const SelectVPK: FC<SelectVPKProps> = memo(({ schedule }) => {
     </div>
   );
 });
+
+export default SelectVPK;

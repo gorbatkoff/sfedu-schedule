@@ -101,6 +101,8 @@ export const ScheduleTable = memo(
 
     if (schedule.result === "no_entries") return null;
 
+    console.log(schedule);
+
     return (
       <div className={classNames(styles.Table, {}, [className])}>
         {schedule && (
