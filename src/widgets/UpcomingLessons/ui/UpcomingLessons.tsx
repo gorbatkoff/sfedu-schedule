@@ -12,7 +12,7 @@ import { $api } from "/src/shared/api/api";
 
 import { lessonsTime } from "/src/shared/const";
 import { ScheduleCardVisual } from "/src/entities/ScheduleCard/ui/ScheduleCardVisual";
-import { SAVED_SCHEDULE } from "/src/shared/const/localStorageKeys";
+import { SAVED_SCHEDULE, USER_GROUP } from "/src/shared/const/localStorageKeys";
 
 interface TableProps {
   className?: string;
@@ -29,7 +29,7 @@ export const UpcomingLessons: FC<TableProps> = memo(({ className }) => {
   const [day, setDay] = useState<number>(0);
   const [currentSchedule, setCurrentSchedule] = useState<any[]>([]);
 
-  const group = JSON.parse(localStorage.getItem("USER_GROUP") || "{}");
+  const group = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 
   const currentTime = new Date();
   const currentDay = currentTime.getDay();
@@ -63,6 +63,10 @@ export const UpcomingLessons: FC<TableProps> = memo(({ className }) => {
 
   async function fetchData() {
     try {
+      console.log("group.groupId", group.groupId);
+
+      if (!group.groupId) return;
+
       const request = await $api.get("/", {
         params: {
           group: group.groupId,
@@ -70,13 +74,14 @@ export const UpcomingLessons: FC<TableProps> = memo(({ className }) => {
         },
       });
 
+      console.log(request.data);
       setCurrentSchedule(request.data.table.table);
     } catch (error) {
       console.log(error);
     }
   }
 
-  if (currentSchedule.length == 0) {
+  if (currentSchedule.length == 0 || group.groupId === undefined) {
     return (
       <div className={classNames(styles.UpcomingLessonsList)}>
         <ScheduleCardVisual />

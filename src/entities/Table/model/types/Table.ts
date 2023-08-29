@@ -1,3 +1,5 @@
+import { IChoices } from "/src/features/SearchSchedule";
+
 type TableElement = string[];
 
 export interface IScheduleTable extends INoData {
@@ -14,4 +16,9 @@ export interface IScheduleTable extends INoData {
 
 export interface INoData {
   result: "no_entries" | null;
+}
+
+export interface ScheduleScheme {
+  choices: IChoices | null;
+  schedule: IScheduleTable;
 }

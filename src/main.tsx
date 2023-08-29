@@ -8,6 +8,7 @@ import { ErrorBoundary } from "/src/app/Providers/ErrorBoundary";
 import { ChakraProvider, extendTheme, ThemeConfig } from "@chakra-ui/react";
 
 import "./app/styles/index.scss";
+import StoreProvider from "/src/app/Providers/StoreProvider/ui/ProviderOfStore";
 
 const theme: ThemeConfig = extendTheme({
   config: {
@@ -29,9 +30,11 @@ const updateSW = registerSW({
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ErrorBoundary>
-      <ChakraProvider theme={theme}>
-        <App />
-      </ChakraProvider>
+      <StoreProvider>
+        <ChakraProvider theme={theme}>
+          <App />
+        </ChakraProvider>
+      </StoreProvider>
     </ErrorBoundary>
   </StrictMode>,
 );

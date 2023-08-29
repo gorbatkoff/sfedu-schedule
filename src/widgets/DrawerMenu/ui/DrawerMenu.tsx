@@ -23,6 +23,8 @@ import {
 } from "/src/shared/const/localStorageKeys";
 import { IScheduleTable } from "/src/entities/ScheduleTable";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
+import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+import { userGroupActions } from "/src/widgets/DrawerMenu/model/slice/userGroupSlice";
 
 interface IDrawerMenuProps {
   updateData: (data: IScheduleTable) => void;
@@ -38,11 +40,11 @@ export function DrawerMenu({ updateData }: IDrawerMenuProps) {
   const { week } = useCurrentWeek();
   const [isButtonBlocked, setButtonBlocked] = useState<boolean>(isButtonBlock);
   const [isInputBlocked, setInputBlocked] = useState<boolean>(isButtonBlock);
-  const [inputValue, setInputValue] = useState<string>(
-    userGroup.userGroup || "КТ",
-  );
+  const [inputValue, setInputValue] = useState<string>(userGroup.name || "КТ");
   const [groupId, setGroupId] = useState(userGroup.groupId || "");
   const [isSetted, setIsSetted] = useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
 
   const checkGroupId = () => {
     if (groupId == "" && isSetted) {
@@ -132,11 +134,7 @@ export function DrawerMenu({ updateData }: IDrawerMenuProps) {
       inputValue.length <= 8 &&
       inputValue.startsWith("КТ")
     ) {
-      localStorage.setItem(
-        "USER_GROUP",
-        JSON.stringify({ userGroup: inputValue, groupId }),
-      );
-      localStorage.setItem(IS_BUTTONS_BLOCKED, "true");
+      dispatch(userGroupActions.setUserGroup({ name: inputValue, groupId }));
 
       setButtonBlocked(true);
       setInputBlocked(true);

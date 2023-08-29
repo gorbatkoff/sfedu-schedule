@@ -1,7 +1,7 @@
 import { Suspense, useEffect, useState } from "react";
 
 import { Header } from "/src/widgets/Header";
-import { ScheduleTable } from "/src/widgets/Table";
+import { ScheduleTable } from "/src/entities/Table";
 import { IScheduleTable } from "/src/entities/ScheduleTable";
 import { SearchSchedule } from "/src/features/SearchSchedule";
 import { ScheduleCardsList } from "/src/widgets/ScheduleCardsList";
@@ -14,6 +14,10 @@ import { SelectVPK } from "/src/features/SelectVPK";
 import { SAVED_SCHEDULE, USER_GROUP } from "/src/shared/const/localStorageKeys";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { Box, Button, useToast } from "@chakra-ui/react";
+import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+import { tableActions } from "/src/entities/Table/model/slice/tableSlice";
+import { useSelector } from "react-redux";
+import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
 
 const isUserOnline = navigator.onLine;
 
@@ -25,7 +29,7 @@ function App() {
   const { week } = useCurrentWeek();
   const toast = useToast();
   const [showVPKGroups, setShowVPKGroups] = useState(false);
-  const updateData = (data: IScheduleTable) => {
+  /*  const updateData = (data: IScheduleTable) => {
     setFinishedTable(data);
   };
 
@@ -33,14 +37,14 @@ function App() {
     const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 
     if (
-      finishedTable.table?.name === userGroup.userGroup &&
+      finishedTable.table?.name === userGroup.name &&
       finishedTable.table?.week === week
     ) {
       localStorage.setItem(SAVED_SCHEDULE, JSON.stringify(finishedTable));
     }
-  }, [updateData]);
+  }, [updateData]);*/
 
-  useEffect(() => {
+  /*  useEffect(() => {
     const savedSchedule = JSON.parse(
       localStorage.getItem(SAVED_SCHEDULE) || "{}",
     );
@@ -61,13 +65,12 @@ function App() {
       });
     }
   }, []);
-
+*/
   const renderTableByViewPort = () => {
-    if (window.screen.width > 768)
-      return <ScheduleTable schedule={finishedTable} updateData={updateData} />;
-    return (
-      <ScheduleCardsList schedule={finishedTable} updateData={updateData} />
-    );
+    if (window.screen.width > 768) return <ScheduleTable />;
+    {
+      /* return <ScheduleCardsList schedule={finishedTable} />; */
+    }
   };
 
   const renderColumnsByViewPort = () => {
@@ -75,20 +78,28 @@ function App() {
       return (
         <MainColumns>
           <Calendar />
-          <SearchSchedule updateData={updateData} />
-          <UpcomingLessons updateData={updateData} />
+          <SearchSchedule />
+          {/* <UpcomingLessons updateData={updateData} /> */}
         </MainColumns>
       );
-    return <SearchSchedule updateData={updateData} />;
+    return /*<SearchSchedule updateData={updateData} />*/;
   };
+
+  const dispatch = useAppDispatch();
+
+  const schedule = useSelector((state: StateSchema) => state.schedule);
+
+  console.log("schedule", schedule);
 
   return (
     <Suspense fallback={<Loader />}>
       <div className="App">
-        <Header updateData={updateData} />
+        <Header />
 
         {renderColumnsByViewPort()}
         {renderTableByViewPort()}
+
+        {/*
         {!showVPKGroups && (
           <Box
             sx={{ display: "flex", justifyContent: "center", margin: "1em" }}
@@ -102,7 +113,7 @@ function App() {
           {showVPKGroups && (
             <SelectVPK schedule={finishedTable} updateData={updateData} />
           )}
-        </Suspense>
+        </Suspense>*/}
       </div>
     </Suspense>
   );
