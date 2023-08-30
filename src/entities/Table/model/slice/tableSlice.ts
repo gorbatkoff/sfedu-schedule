@@ -54,7 +54,7 @@ interface IFetchScheduleByWeekProps {
 }
 
 export const fetchScheduleByWeek = createAsyncThunk(
-  "schedule/fetchScheduleByGroup",
+  "schedule/fetchScheduleByWeek",
   async function (
     { group, week }: IFetchScheduleByWeekProps,
     { rejectWithValue },
