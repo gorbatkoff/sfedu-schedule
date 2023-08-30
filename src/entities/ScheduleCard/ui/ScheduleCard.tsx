@@ -1,6 +1,15 @@
 import classNames from "classnames";
 
 import { TimeIcon } from "@chakra-ui/icons";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Box,
+} from "@chakra-ui/react";
+// import { AccordionTheme } from "/src/shared/ui/Accordion/AccordionTheme";
 
 import { getInfoAboutElement } from "/src/shared/lib/getInfoAboutElement";
 import {
@@ -38,16 +47,41 @@ export const ScheduleCard = (props: ScheduleCardProps) => {
       </div>
       <div className={styles.cardContent}>
         <h3>{subject || "Нет пары"}</h3>
-        {groups.map((item, index) => {
-          return (
-            <p className={styles.subgroup} key={index}>
-              {item}
-              {auditory[index] == undefined
-                ? " — Не указано"
-                : " — " + auditory[index]}
-            </p>
-          );
-        })}
+        {groups.length < 2 ? (
+          groups.map((item, index) => {
+            return (
+              <p className={styles.subgroup} key={index}>
+                {item}
+                {auditory[index] == undefined
+                  ? " — " + auditory[auditory.length - 1]
+                  : " — " + auditory[index]}
+              </p>
+            );
+          })
+        ) : (
+          <Accordion allowToggle>
+            <AccordionItem className={styles.accodion}>
+              <AccordionButton className={styles.accodionBtn}>
+                <Box as="span" flex="1" textAlign="left">
+                  Показать больше
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
+              {groups.map((item, index) => {
+                return (
+                  <AccordionPanel pb={2} className={styles.accodionContent}>
+                    <p className={styles.subgroup} key={index}>
+                      {item}
+                      {auditory[index] == undefined
+                        ? " — " + auditory[auditory.length - 1]
+                        : " — " + auditory[index]}
+                    </p>
+                  </AccordionPanel>
+                );
+              })}
+            </AccordionItem>
+          </Accordion>
+        )}
       </div>
 
       <div className={styles.cardFooter}>
