@@ -1,22 +1,22 @@
 .Carousel {
-    display: flex;
-    overflow-x: scroll;
-    width: 100%;
-    justify-content: space-between;
-    padding: 1em 5px;
-    column-gap: 1em;
+  display: flex;
+  overflow-x: scroll;
+  width: 100%;
+  justify-content: flex-start;
+  padding: 1em 5px;
+  column-gap: 1em;
 }
 
 .weekButton {
-    border-radius: 7px 0 7px 0;
+  border-radius: 7px 0 7px 0;
 }
 
 .weekButton:hover {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 .weekButton:disabled {
-    background: #5b32e2;
-    color: black;
-    opacity: 1;
+  background: #5b32e2;
+  color: black;
+  opacity: 1;
 }

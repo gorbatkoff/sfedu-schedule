@@ -75,8 +75,8 @@ function App() {
     if (window.screen.width > 768)
       return (
         <MainColumns>
-          <Calendar />
           <SearchSchedule />
+          <Calendar />
           <UpcomingLessons />
         </MainColumns>
       );

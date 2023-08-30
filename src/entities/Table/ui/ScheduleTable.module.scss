@@ -3,6 +3,7 @@
   max-width: var(--app-width);
   font-size: 12px;
   width: 100%;
+  margin-bottom: 100px;
 
   .tableTitle {
     text-align: center;
@@ -38,13 +39,17 @@
       opacity: 0.8;
       transform: scale(0.95);
     }
+
+    td:first-child {
+      text-align: center;
+    }
   }
 
   .weeksList {
     display: flex;
     max-width: 100%;
     width: 100vw;
-    justify-content: space-between;
+    justify-content: flex-start;
     column-gap: 20px;
     padding: 1em 0;
     overflow-x: scroll;

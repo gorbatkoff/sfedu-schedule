@@ -4,6 +4,7 @@
   flex-direction: column;
   row-gap: 20px;
   padding: 0 5px;
+  margin-bottom: 50px;
 }
 
 .weekDayBtns {
@@ -34,14 +35,10 @@
 }
 */
 
-.button {
-  border-radius: 0 !important;
-}
-
 .whiteMode {
   color: #000;
-  background-color: #fff;
-  border-radius: 12px;
+  background: #fff;
+  border-radius: var(--border-radius);
   font-weight: bold;
   border: 3px dashed var(--chakra-colors-gray-300);
 }
