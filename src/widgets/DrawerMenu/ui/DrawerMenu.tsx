@@ -21,7 +21,7 @@ import {
   IS_BUTTONS_BLOCKED,
   USER_GROUP,
 } from "/src/shared/const/localStorageKeys";
-import { IScheduleTable } from "/src/entities/ScheduleTable";
+import { IScheduleTable } from "/src/entities/Table/model/types/Table";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { userGroupActions } from "/src/widgets/DrawerMenu/model/slice/userGroupSlice";

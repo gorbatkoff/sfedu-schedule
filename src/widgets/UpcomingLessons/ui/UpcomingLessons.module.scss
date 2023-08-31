@@ -10,7 +10,7 @@
 .whiteMode {
   color: #000;
   background-color: #fff;
-  border-radius: 12px;
+  border-radius: var(--border-radius);
   font-weight: bold;
   border: 3px dashed var(--chakra-colors-gray-300);
 }
