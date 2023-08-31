@@ -30,7 +30,7 @@ interface TableProps {
 }
 
 const favoriteChoices = JSON.parse(
-  localStorage.getItem(USER_FAVORITE_SEARCH) || "[]",
+  localStorage.getItem(USER_FAVORITE_SEARCH) || "[]"
 );
 
 const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
@@ -40,7 +40,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
   const schedule = useSelector(getScheduleTable);
 
   const [isFavorite, setFavorite] = useState(
-    favoriteChoices.includes(schedule.table?.name),
+    favoriteChoices.includes(schedule.table?.name)
   );
 
   useEffect(() => {
@@ -148,7 +148,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
           schedule.table.table
             .slice(2)
             // eslint-disable-next-line no-unexpected-multiline
-            [day].slice(2)
+            [day].slice(1)
             .map((item: string, index: number) => {
               const weekDay = schedule.table.table.slice(2)[day][0];
 
