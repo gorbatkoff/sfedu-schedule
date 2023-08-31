@@ -83,7 +83,7 @@
 }
 
 .react-calendar__month-view__days__day--weekend {
-  color: #a900ff;
+  color: var(--primary-color);
 }
 
 .react-calendar__month-view__days__day--neighboringMonth {

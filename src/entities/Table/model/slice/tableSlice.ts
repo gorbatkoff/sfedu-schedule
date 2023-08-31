@@ -7,6 +7,26 @@ import {
   ScheduleScheme,
 } from "/src/entities/Table/model/types/Table";
 
+export const fetchAndSaveUserGroup = createAsyncThunk(
+  "schedule/fetchAndSaveUserGroup",
+  async function (query: string, { rejectWithValue }) {
+    if (query.trim() === "") return;
+    try {
+      const request = await $api.get("/", {
+        params: {
+          query,
+        },
+      });
+
+      return request.data;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+    }
+  },
+);
+
 export const fetchScheduleByQuery = createAsyncThunk(
   "schedule/fetchScheduleByQuery",
   async function (query: string, { rejectWithValue }) {

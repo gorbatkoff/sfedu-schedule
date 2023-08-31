@@ -25,16 +25,13 @@ import { IScheduleTable } from "/src/entities/Table/model/types/Table";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { userGroupActions } from "/src/widgets/DrawerMenu/model/slice/userGroupSlice";
-
-interface IDrawerMenuProps {
-  updateData: (data: IScheduleTable) => void;
-}
+import { fetchAndSaveUserGroup } from "/src/entities/Table/model/slice/tableSlice";
 
 const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 const isButtonBlock =
   JSON.parse(localStorage.getItem(IS_BUTTONS_BLOCKED) || "false") || false;
 
-export function DrawerMenu({ updateData }: IDrawerMenuProps) {
+export function DrawerMenu() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
   const { week } = useCurrentWeek();
@@ -76,20 +73,15 @@ export function DrawerMenu({ updateData }: IDrawerMenuProps) {
 
   async function fetchData() {
     try {
-      const request = await $api.get("/", {
-        params: {
-          query: inputValue,
-        },
-      });
+      const data = await dispatch(fetchAndSaveUserGroup(inputValue));
 
-      if (request.data.table) {
-        setGroupId(request.data.table.group);
-        updateData(request.data);
-        localStorage.setItem("USER_SCHEDULE", request.data);
+      if (data.payload.table) {
+        setGroupId(data.payload.table.group);
+        localStorage.setItem("USER_SCHEDULE", data.payload);
       }
-      if (request.data.choices) {
-        console.log(request.data.choices);
-        setGroupId(request.data.choices[0].group);
+      if (data.payload.choices) {
+        console.log(data.payload.data.choices);
+        setGroupId(data.payload.data.choices[0].group);
       }
 
       onClose();
