@@ -1,7 +1,7 @@
 import { FC, memo, useEffect, useState } from "react";
 
 import styles from "./SelectVPK.module.scss";
-import { IScheduleTable } from "/src/entities/ScheduleTable";
+import { IScheduleTable } from "/src/entities/Table/model/types/Table";
 import { Button, Heading, useToast } from "@chakra-ui/react";
 import { $api } from "/src/shared/api/api";
 import { IChoice } from "/src/features/SearchSchedule";
