@@ -69,8 +69,12 @@ export const ScheduleCard = (props: ScheduleCardProps) => {
               </AccordionButton>
               {groups.map((item, index) => {
                 return (
-                  <AccordionPanel pb={2} className={styles.accodionContent}>
-                    <p className={styles.subgroup} key={index}>
+                  <AccordionPanel
+                    pb={2}
+                    className={styles.accodionContent}
+                    key={index}
+                  >
+                    <p className={styles.subgroup}>
                       {item}
                       {auditory[index] == undefined
                         ? " — " + auditory[auditory.length - 1]

@@ -30,7 +30,7 @@ interface TableProps {
 }
 
 const favoriteChoices = JSON.parse(
-  localStorage.getItem(USER_FAVORITE_SEARCH) || "[]"
+  localStorage.getItem(USER_FAVORITE_SEARCH) || "[]",
 );
 
 const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
@@ -40,7 +40,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
   const schedule = useSelector(getScheduleTable);
 
   const [isFavorite, setFavorite] = useState(
-    favoriteChoices.includes(schedule.table?.name)
+    favoriteChoices.includes(schedule.table?.name),
   );
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
     setDay(index);
   };
 
-  async function fetchDataByWeek(week: number) {
+  /*  async function fetchDataByWeek(week: number) {
     try {
       const request = await $api.get("/", {
         params: {
@@ -63,11 +63,11 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
         },
       });
 
-      /*      updateData(request.data);*/
+      /!*      updateData(request.data);*!/
     } catch (error) {
       console.log(error);
     }
-  }
+  }*/
 
   const handleFavoriteSearch = () => {
     const favoriteSearch = {
@@ -125,8 +125,8 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
 
       <Carousel
         carouselItems={schedule.weeks}
-        fetchDataByWeek={fetchDataByWeek}
         week={schedule.table.week}
+        group={schedule.table.group}
       />
       <div className={classNames(styles.weekDayBtns)}>
         {weekDays.map((dayItem, index) => {

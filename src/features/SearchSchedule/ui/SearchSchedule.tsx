@@ -60,8 +60,10 @@ export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && input.trim() !== "")
-      dispatch(fetchScheduleByQuery(input));
+    if (e.key === "Enter" && input.trim() !== "") {
+      dispatch(fetchScheduleByQuery(input.trim()));
+      setInput((prev) => prev.trim());
+    }
   };
 
   /*      window.history.pushState(null, "group", `/?group=${group}`);*/

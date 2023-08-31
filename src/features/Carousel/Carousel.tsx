@@ -5,16 +5,20 @@ import { Button } from "@chakra-ui/react";
 
 import styles from "./Carousel.module.scss";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
+import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+import { useDispatch } from "react-redux";
+import { fetchScheduleByWeek } from "/src/entities/Table/model/slice/tableSlice";
 
 interface CarouselProps {
-  week: number;
   carouselItems: number[];
-  fetchDataByWeek: (week: number) => void;
+  group: string;
+  week: number;
 }
 
-const Carousel = ({ week, carouselItems, fetchDataByWeek }: CarouselProps) => {
+const Carousel = ({ carouselItems, group, week }: CarouselProps) => {
   const myRef = useRef<HTMLInputElement | HTMLButtonElement | null>(null);
   const { week: currentWeek } = useCurrentWeek();
+  const dispatch = useAppDispatch();
   const executeScroll = () => {
     if (myRef.current !== null) {
       myRef.current.scrollIntoView({ behavior: "smooth" });
@@ -25,7 +29,9 @@ const Carousel = ({ week, carouselItems, fetchDataByWeek }: CarouselProps) => {
     setTimeout(() => executeScroll(), 500);
   }, []);
 
-  console.log("current week hook", currentWeek);
+  const fetchDataByWeek = async (week: number) => {
+    dispatch(fetchScheduleByWeek({ week, group }));
+  };
 
   return (
     <div className={classNames(styles.Carousel)}>

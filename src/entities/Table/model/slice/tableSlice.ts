@@ -119,6 +119,7 @@ export const tableSlice = createSlice({
       .addCase(
         fetchScheduleByWeek.fulfilled,
         (state, action: PayloadAction<IScheduleTable>) => {
+          console.log(action.payload);
           state.schedule = action.payload;
           state.choices = null;
         },
