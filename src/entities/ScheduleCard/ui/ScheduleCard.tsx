@@ -3,20 +3,15 @@ import classNames from "classnames";
 import { TimeIcon } from "@chakra-ui/icons";
 import {
   Accordion,
-  AccordionItem,
   AccordionButton,
-  AccordionPanel,
   AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
   Box,
 } from "@chakra-ui/react";
 // import { AccordionTheme } from "/src/shared/ui/Accordion/AccordionTheme";
-
 import { getInfoAboutElement } from "/src/shared/lib/getInfoAboutElement";
-import {
-  auditoryLMSRegex,
-  subgroupRegex,
-  groupRegex,
-} from "/src/shared/regex/index";
+import { auditoryLMSRegex, groupRegex, subgroupRegex } from "/src/shared/regex";
 
 import styles from "./ScheduleCard.module.scss";
 

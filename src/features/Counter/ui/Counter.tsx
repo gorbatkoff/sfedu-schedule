@@ -2,10 +2,7 @@ import { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
 import { Button, Heading } from "@chakra-ui/react";
-import {
-  counterActions,
-  counterSlice,
-} from "/src/features/Counter/model/slice/counterSlice";
+import { counterActions } from "/src/features/Counter/model/slice/counterSlice";
 
 interface CounterProps {
   className?: string;

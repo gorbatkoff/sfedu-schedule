@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 
 import { Header } from "/src/widgets/Header";
 import { ScheduleTable } from "/src/entities/Table";
@@ -9,12 +9,9 @@ import Loader from "/src/shared/ui/Loader/Loader";
 import MainColumns from "/src/shared/ui/MainColumns/MainColumns";
 import { Calendar } from "/src/widgets/Calendar";
 import { UpcomingLessons } from "/src/widgets/UpcomingLessons";
-import { SelectVPK } from "/src/features/SelectVPK";
-import { SAVED_SCHEDULE, USER_GROUP } from "/src/shared/const/localStorageKeys";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
-import { Box, Button, useToast } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import { tableActions } from "/src/entities/Table/model/slice/tableSlice";
 import { useSelector } from "react-redux";
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
 import { IScheduleTable } from "/src/entities/Table/model/types/Table";
@@ -85,6 +82,9 @@ function App() {
 
   const dispatch = useAppDispatch();
   const schedule = useSelector((state: StateSchema) => state.schedule);
+  const favoriteSearch = useSelector(
+    (state: StateSchema) => state.favoriteSearch,
+  );
 
   return (
     <Suspense fallback={<Loader />}>

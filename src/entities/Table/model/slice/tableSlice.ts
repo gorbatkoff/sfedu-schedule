@@ -124,6 +124,11 @@ export const tableSlice = createSlice({
           } else {
             state.schedule = action.payload;
             state.choices = null;
+            window.history.pushState(
+              null,
+              "group",
+              `/?group=${action.payload.table.group}`,
+            );
           }
 
           console.log(action.payload);
@@ -134,6 +139,11 @@ export const tableSlice = createSlice({
         (state, action: PayloadAction<IScheduleTable>) => {
           state.schedule = action.payload;
           state.choices = null;
+          window.history.pushState(
+            null,
+            "group",
+            `/?group=${action.payload.table.group}`,
+          );
         },
       )
       .addCase(

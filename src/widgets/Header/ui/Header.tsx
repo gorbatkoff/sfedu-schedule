@@ -4,9 +4,7 @@ import classNames from "classnames";
 import { Box, IconButton, useColorMode } from "@chakra-ui/react";
 
 import { Logo } from "/src/shared/ui/Logo/Logo";
-import { defaultValue } from "/src/shared/const";
 import { DrawerMenu } from "/src/widgets/DrawerMenu";
-import { IScheduleTable } from "/src/entities/Table/model/types/Table";
 import { ThemeSwitcher } from "/src/shared/ui/ThemeSwitcher/ThemeSwitcher";
 
 import styles from "./Header.module.scss";

@@ -4,8 +4,6 @@ import {
   Button,
   Heading,
   IconButton,
-  Stack,
-  Table,
   useColorMode,
   useToast,
 } from "@chakra-ui/react";
@@ -16,12 +14,9 @@ import { weekDays } from "/src/shared/const";
 
 import styles from "./ScheduleCardsList.module.scss";
 import Carousel from "/src/features/Carousel/Carousel";
-import { $api } from "/src/shared/api/api";
-import { FavoriteChoice } from "/src/shared/ui/FavoriteChoice/FavoriteChoice";
 import { StarIcon } from "@chakra-ui/icons";
 import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
 import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorageKeys";
-import { IScheduleTable } from "/src/entities/Table/model/types/Table";
 import { useSelector } from "react-redux";
 import { getScheduleTable } from "/src/entities/Table/model/selectors/getSchedule";
 

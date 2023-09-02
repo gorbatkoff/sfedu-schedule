@@ -1,7 +1,5 @@
 import { useRef, useState } from "react";
 
-import { Button } from "@chakra-ui/react";
-
 import styles from "./ErrorPage.module.scss";
 
 export const ErrorPage = () => {

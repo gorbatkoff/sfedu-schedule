@@ -6,7 +6,6 @@ import { Button } from "@chakra-ui/react";
 import styles from "./Carousel.module.scss";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import { useDispatch } from "react-redux";
 import { fetchScheduleByWeek } from "/src/entities/Table/model/slice/tableSlice";
 
 interface CarouselProps {

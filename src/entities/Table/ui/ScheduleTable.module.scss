@@ -30,9 +30,11 @@
       height: 120px;
       max-width: 100px;
       white-space: normal;
-      /*cursor: pointer;*/
+
+      /* cursor: pointer; */
       cursor: default;
       transition: all 0.3s ease-in-out;
+      border-right: 1px solid  var(--chakra-colors-chakra-border-color);
     }
 
     td:hover {
@@ -56,7 +58,7 @@
   }
 
   .weekButton {
-    border-radius: 7px 0 7px 0;
+    border-radius: 7px 0;
   }
 
   .weekButton:hover {

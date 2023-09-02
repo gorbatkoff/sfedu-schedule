@@ -1,4 +1,4 @@
-import { memo, useState } from "react";
+import { memo } from "react";
 
 import classNames from "classnames";
 import {
@@ -24,12 +24,11 @@ import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
 
 import styles from "./ScheduleTable.module.scss";
 import { useSelector } from "react-redux";
-import {
-  getSchedule,
-  getScheduleTable,
-} from "/src/entities/Table/model/selectors/getSchedule";
+import { getScheduleTable } from "/src/entities/Table/model/selectors/getSchedule";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { fetchScheduleByWeek } from "/src/entities/Table/model/slice/tableSlice";
+import { favoriteSearchActions } from "/src/entities/Table/model/slice/favoriteSearchSlice";
+import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
 
 interface TableProps {
   className?: string;
@@ -48,12 +47,17 @@ const localStorageGroups = JSON.parse(
 
 export const ScheduleTable = memo(({ className }: TableProps) => {
   const textColor = useColorModeValue("black", "white");
-  const [favoriteChoices, setFavoriteChoices] =
-    useState<IFavoriteChoice[]>(localStorageGroups);
+
+  /*  const [favoriteChoices, setFavoriteChoices] =
+    useState<IFavoriteChoice[]>(localStorageGroups);*/
   const toast = useToast();
   const { week: currentWeek } = useCurrentWeek();
   const dispatch = useAppDispatch();
+
   const schedule = useSelector(getScheduleTable);
+  const favoriteChoices = useSelector(
+    (state: StateSchema) => state.favoriteSearch,
+  );
 
   const isFavorite =
     favoriteChoices.filter((item) => item.name === schedule.table?.name)
@@ -83,7 +87,7 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
     const response = addSearchToFavorite(schedule, favoriteSearch);
 
     if (response) {
-      setFavoriteChoices([...favoriteChoices, favoriteSearch]);
+      dispatch(favoriteSearchActions.addSearchToFavorite(favoriteSearch));
       toast({
         title: "Добавлено!",
         description:
@@ -93,10 +97,9 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
         isClosable: true,
       });
     } else {
-      const filteredChoices = favoriteChoices.filter(
-        (item) => item.name !== favoriteSearch.name,
+      dispatch(
+        favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name),
       );
-      setFavoriteChoices(filteredChoices);
       toast({
         title: "Удалено!",
         description: "Данное расписание было удалено из списка избранных.",
@@ -108,8 +111,6 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
   };
 
   if (schedule.result === "no_entries") return null;
-
-  console.log("schedule", schedule);
 
   return (
     <div className={classNames(styles.Table, {}, [className])}>

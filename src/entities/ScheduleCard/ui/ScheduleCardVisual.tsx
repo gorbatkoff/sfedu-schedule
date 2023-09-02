@@ -2,7 +2,6 @@ import { memo } from "react";
 import classNames from "classnames";
 
 import styles from "./ScheduleCard.module.scss";
-import { useDisclosure } from "@chakra-ui/react";
 
 interface ScheduleCardVisualProps {
   className?: string;

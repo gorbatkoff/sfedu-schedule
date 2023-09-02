@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 import {
   Button,
@@ -13,7 +13,6 @@ import { SearchIcon } from "@chakra-ui/icons";
 import { IChoices } from "/src/features/SearchSchedule";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
-import styles from "./SearchSchedule.module.scss";
 import { useDebounce } from "/src/shared/hooks/useDebounce";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import {
@@ -21,10 +20,12 @@ import {
   fetchScheduleByQuery,
 } from "/src/entities/Table/model/slice/tableSlice";
 import { useSelector } from "react-redux";
-import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorageKeys";
 import { getSchedule } from "/src/entities/Table/model/selectors/getSchedule";
-import { sortFunction } from "/src/shared/lib/sortChoices";
 import { IScheduleTable } from "/src/entities/Table/model/types/Table";
+
+import styles from "./SearchSchedule.module.scss";
+import { FavoriteChoice } from "/src/shared/ui/FavoriteChoice/FavoriteChoice";
+import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
 
 interface SearchScheduleProps {
   className?: string;
@@ -41,11 +42,11 @@ export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
   const dispatch = useAppDispatch();
   const stateData = useSelector(getSchedule);
 
-  console.log(stateData);
-
-  const favoriteChoices = JSON.parse(
-    localStorage.getItem(USER_FAVORITE_SEARCH) || "[]",
+  const favoriteChoices = useSelector(
+    (state: StateSchema) => state.favoriteSearch,
   );
+
+  console.log("favoriteChoices", favoriteChoices);
 
   const debounceInput = useDebounce(() => {
     dispatch(fetchScheduleByQuery(input));
@@ -66,13 +67,12 @@ export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
     }
   };
 
-  /*      window.history.pushState(null, "group", `/?group=${group}`);*/
-
+  // fetching data by url params
   useEffect(() => {
     const group = new URLSearchParams(window.location.search).get("group");
 
     if (group) {
-      /*      fetchDataByChoice(group);*/
+      dispatch(fetchScheduleByGroup(group));
     }
   }, []);
 
@@ -107,17 +107,17 @@ export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
         </Button>
       </div>
 
-      {/*      <div>
-        {favoriteChoices.map((choice: IChoice, index: number) => {
+      <div>
+        {favoriteChoices.map((choice, index: number) => {
           return (
             <FavoriteChoice
               title={choice.name}
               key={index}
-              onClick={() => fetchDataByChoice(choice.group)}
+              onClick={() => dispatch(fetchScheduleByGroup(choice.group))}
             />
           );
         })}
-      </div>*/}
+      </div>
 
       <div className={styles.choices}>
         {stateData.choices !== null &&
