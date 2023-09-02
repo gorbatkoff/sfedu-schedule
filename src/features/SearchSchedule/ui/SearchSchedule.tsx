@@ -1,4 +1,5 @@
 import { memo, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import {
   Button,
@@ -10,43 +11,30 @@ import {
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 
-import { IChoices } from "/src/features/SearchSchedule";
-import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
-
 import { useDebounce } from "/src/shared/hooks/useDebounce";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import {
   fetchScheduleByGroup,
   fetchScheduleByQuery,
 } from "/src/entities/Table/model/slice/tableSlice";
-import { useSelector } from "react-redux";
 import { getSchedule } from "/src/entities/Table/model/selectors/getSchedule";
-import { IScheduleTable } from "/src/entities/Table/model/types/Table";
+
+import { FavoriteChoice } from "/src/shared/ui/FavoriteChoice/FavoriteChoice";
+import { getFavoriteSearch } from "/src/entities/Table/model/selectors/getFavoriteSearch";
 
 import styles from "./SearchSchedule.module.scss";
-import { FavoriteChoice } from "/src/shared/ui/FavoriteChoice/FavoriteChoice";
-import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
 
 interface SearchScheduleProps {
   className?: string;
 }
 
 export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
-  const { week } = useCurrentWeek();
-  const { colorMode } = useColorMode();
   const [input, setInput] = useState("");
-  const [dataFromAPI, setDataFromAPI] = useState<IChoices | IScheduleTable>({
-    choices: [],
-  });
+  const { colorMode } = useColorMode();
 
   const dispatch = useAppDispatch();
   const stateData = useSelector(getSchedule);
-
-  const favoriteChoices = useSelector(
-    (state: StateSchema) => state.favoriteSearch,
-  );
-
-  console.log("favoriteChoices", favoriteChoices);
+  const favoriteChoices = useSelector(getFavoriteSearch);
 
   const debounceInput = useDebounce(() => {
     dispatch(fetchScheduleByQuery(input));
@@ -67,7 +55,7 @@ export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
     }
   };
 
-  // fetching data by url params
+  // Fetching data by url params
   useEffect(() => {
     const group = new URLSearchParams(window.location.search).get("group");
 

@@ -1,4 +1,4 @@
-import React, { StrictMode } from "react";
+import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import App from "/src/app/App";
 import { registerSW } from "virtual:pwa-register";
