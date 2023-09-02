@@ -60,10 +60,13 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
   const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
 
   useEffect(() => {
-    dispatch(fetchVPKByWeek({ week: currentWeek, vpk: vpkInfo }));
+    if (vpkInfo.group) {
+      dispatch(fetchVPKByWeek({ week: currentWeek, vpk: vpkInfo }));
+    }
   }, []);
 
   useEffect(() => {
+    console.log("vpkData", vpkData);
     if (vpkData) {
       mergeVPKAndSchedule();
     }
@@ -135,7 +138,11 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
     await dispatch(
       fetchVPKByWeek({
         week: week,
-        group: vpkInfo.group,
+        vpk: {
+          group: schedule.table.group,
+          name: "", // should be fixed
+          id: "",
+        },
       }),
     );
   };

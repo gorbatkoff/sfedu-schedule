@@ -27,17 +27,16 @@ export const fetchVPK = createAsyncThunk(
 
 interface IFetchVPKByWeek {
   week: string | number;
-  vpk?: IVPK;
-  group?: string;
+  vpk: IVPK;
 }
 
 export const fetchVPKByWeek = createAsyncThunk(
   "vpk/fetchVPKByWeek",
-  async function ({ week, vpk, group }: IFetchVPKByWeek, { rejectWithValue }) {
+  async function ({ week, vpk }: IFetchVPKByWeek, { rejectWithValue }) {
     try {
       const request = await $api.get("/", {
         params: {
-          group: vpk?.group || group,
+          group: vpk.group,
           week: week,
         },
       });
