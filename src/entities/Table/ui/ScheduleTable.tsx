@@ -16,8 +16,6 @@ import {
 } from "@chakra-ui/react";
 import TableCell from "/src/entities/Table/ui/TableCell/TableCell";
 
-import { $api } from "/src/shared/api/api";
-
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { StarIcon } from "@chakra-ui/icons";
 import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
@@ -33,7 +31,6 @@ import {
 import { favoriteSearchActions } from "/src/entities/Table/model/slice/favoriteSearchSlice";
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
 import { fetchVPKByWeek } from "/src/features/SelectVPK/model/slice/selectVPKSlice";
-import { IVPK } from "/src/features/SelectVPK/model/types/VPK";
 
 interface TableProps {
   className?: string;
@@ -52,9 +49,6 @@ const localStorageGroups = JSON.parse(
 
 export const ScheduleTable = memo(({ className }: TableProps) => {
   const textColor = useColorModeValue("black", "white");
-
-  /*  const [favoriteChoices, setFavoriteChoices] =
-    useState<IFavoriteChoice[]>(localStorageGroups);*/
   const toast = useToast();
   const { week: currentWeek } = useCurrentWeek();
   const dispatch = useAppDispatch();
@@ -79,8 +73,6 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
     const header = schedule.table.table.slice(0, 2);
     const slicedSchedule = schedule.table.table.slice(2);
     const slicedVPK = vpkData.table.table.slice(2);
-
-    console.log(vpkData);
 
     const mergedSchedule = slicedSchedule.map((row, rowIndex) => {
       return row.map((item, itemIndex) => {
@@ -133,7 +125,7 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
 
   if (schedule.result === "no_entries") return null;
 
-  const zaebalo = async (week: number) => {
+  const fetchDataByWeek = async (week: number) => {
     await dispatch(
       fetchScheduleByWeek({
         week: week,
@@ -175,7 +167,7 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
               return (
                 <Button
                   className={styles.weekButton}
-                  onClick={() => zaebalo(week)}
+                  onClick={() => fetchDataByWeek(week)}
                   key={index}
                   backgroundColor={week === currentWeek ? "#3be7cb" : ""}
                   isDisabled={schedule.table.week === index + 1}
