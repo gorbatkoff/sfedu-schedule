@@ -8,6 +8,7 @@ import {
   InputGroup,
   InputLeftElement,
   useColorMode,
+  useToast,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 
@@ -31,7 +32,7 @@ interface SearchScheduleProps {
 export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
   const [input, setInput] = useState("");
   const { colorMode } = useColorMode();
-
+  const toast = useToast();
   const dispatch = useAppDispatch();
   const stateData = useSelector(getSchedule);
   const favoriteChoices = useSelector(getFavoriteSearch);
@@ -63,6 +64,17 @@ export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
       dispatch(fetchScheduleByGroup(group));
     }
   }, []);
+
+  const handleFetchScheduleByClick = async (group: string) => {
+    await dispatch(fetchScheduleByGroup(group));
+    toast({
+      title: "Успешно!",
+      description: "Расписание подгружено",
+      status: "success",
+      duration: 1000,
+      isClosable: true,
+    });
+  };
 
   return (
     <div>
@@ -101,7 +113,7 @@ export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
             <FavoriteChoice
               title={choice.name}
               key={index}
-              onClick={() => dispatch(fetchScheduleByGroup(choice.group))}
+              onClick={() => handleFetchScheduleByClick(choice.group)}
             />
           );
         })}

@@ -18,4 +18,10 @@
   gap: 1em;
   grid-template-columns: repeat(auto-fit, 150px);
   justify-content: space-between;
+
+  button:disabled {
+    background: var(--primary-color);
+    opacity: 1;
+  }
 }
+

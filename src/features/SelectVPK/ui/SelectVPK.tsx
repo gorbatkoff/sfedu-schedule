@@ -1,40 +1,35 @@
-import { FC, memo, useEffect, useState } from "react";
+import { memo, useEffect } from "react";
 
 import styles from "./SelectVPK.module.scss";
-import { IScheduleTable } from "/src/entities/Table/model/types/Table";
 import { Button, Heading, useToast } from "@chakra-ui/react";
-import { $api } from "/src/shared/api/api";
-import { IChoice } from "/src/features/SearchSchedule";
-import { vpkSort } from "/src/shared/lib/vpkSort";
 import { IVPK } from "/src/features/SelectVPK/model/types/VPK";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
+import { useSelector } from "react-redux";
+import { getSchedule } from "/src/entities/Table/model/selectors/getSchedule";
+import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+import {
+  fetchVPK,
+  fetchVPKByWeek,
+  selectVPKActions,
+} from "/src/features/SelectVPK/model/slice/selectVPKSlice";
+import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+import { VPK_FROM_LOCALSTORAGE } from "/src/shared/const/localStorageKeys";
 
-interface SelectVPKProps {
-  schedule: IScheduleTable;
-  updateData: (data: IScheduleTable) => void;
-}
+const userVpk = VPK_FROM_LOCALSTORAGE as IVPK;
 
-const SelectVPK: FC<SelectVPKProps> = memo(({ schedule }) => {
+const SelectVPK = memo(() => {
   const toast = useToast();
   const { week } = useCurrentWeek();
-  const [VPKList, setVPKList] = useState<IChoice[]>();
+
+  const dispatch = useAppDispatch();
+  const schedule = useSelector(getSchedule).schedule;
+  const VPKList = useSelector((state: StateSchema) => state.selectVPK.choices);
 
   useEffect(() => {
-    fetchVPKList();
+    dispatch(fetchVPK());
   }, []);
 
-  // По какой-то причине отправляется 2 запроса... надо узнать почему
-  async function fetchVPKList() {
-    try {
-      const request = await $api.get("?query=ВПК");
-
-      setVPKList(request.data.choices);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  if (VPKList === undefined || schedule.result === null) return null;
+  /*  if (VPKList === undefined || schedule.result === null) return null;
 
   if (+schedule.table?.name[4] < 3) {
     return null;
@@ -45,22 +40,23 @@ const SelectVPK: FC<SelectVPKProps> = memo(({ schedule }) => {
     schedule.table?.name[4] === "3"
   ) {
     return null;
-  }
+  }*/
 
   async function setVPK(vpk: IVPK) {
     try {
-      const request = await $api.get("/", {
-        params: {
-          group: vpk.group,
-          week: week,
-        },
+      await dispatch(selectVPKActions.setVPK(vpk));
+      await dispatch(fetchVPKByWeek({ vpk, week }));
+      toast({
+        title: "Успех!",
+        description: "Вы успешно выбрали ВПК!",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
       });
     } catch (error) {
       console.log(error);
     }
   }
-
-  console.log("downloaded");
 
   return (
     <div className={styles.SelectVPK}>
@@ -68,8 +64,12 @@ const SelectVPK: FC<SelectVPKProps> = memo(({ schedule }) => {
         Установите группу ВПК
       </Heading>
       <div className={styles.vpkList}>
-        {vpkSort(VPKList).map((item, index) => (
-          <Button key={index} onClick={() => setVPK(item)}>
+        {VPKList.map((item, index) => (
+          <Button
+            key={index}
+            onClick={() => setVPK(item)}
+            isDisabled={item.name === userVpk.name}
+          >
             {item.name}
           </Button>
         ))}

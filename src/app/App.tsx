@@ -10,11 +10,12 @@ import MainColumns from "/src/shared/ui/MainColumns/MainColumns";
 import { Calendar } from "/src/widgets/Calendar";
 import { UpcomingLessons } from "/src/widgets/UpcomingLessons";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
-import { useToast } from "@chakra-ui/react";
+import { Box, Button, useToast } from "@chakra-ui/react";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { useSelector } from "react-redux";
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
 import { IScheduleTable } from "/src/entities/Table/model/types/Table";
+import { SelectVPK } from "/src/features/SelectVPK";
 
 const isUserOnline = navigator.onLine;
 
@@ -90,11 +91,9 @@ function App() {
     <Suspense fallback={<Loader />}>
       <div className="App">
         <Header />
-
         {renderColumnsByViewPort()}
         {renderTableByViewPort()}
 
-        {/*
         {!showVPKGroups && (
           <Box
             sx={{ display: "flex", justifyContent: "center", margin: "1em" }}
@@ -105,10 +104,8 @@ function App() {
           </Box>
         )}
         <Suspense fallback={<Loader />}>
-          {showVPKGroups && (
-            <SelectVPK schedule={finishedTable} updateData={updateData} />
-          )}
-        </Suspense>*/}
+          {showVPKGroups && <SelectVPK />}
+        </Suspense>
       </div>
     </Suspense>
   );
