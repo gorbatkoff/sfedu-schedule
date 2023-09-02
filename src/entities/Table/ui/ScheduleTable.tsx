@@ -64,7 +64,7 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
   }, []);
 
   useEffect(() => {
-    if (vpkData.table.table.length !== 0) {
+    if (vpkData?.table?.table?.length !== 0 && vpkData) {
       mergeVPKAndSchedule();
     }
   }, [vpkData]);
