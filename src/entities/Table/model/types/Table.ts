@@ -18,7 +18,7 @@ export interface INoData {
   result: "no_entries" | null;
 }
 
-export interface ScheduleScheme {
+export interface ScheduleSchema {
   choices: IChoices | null;
   schedule: IScheduleTable;
 }

@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect } from "react";
 
 import classNames from "classnames";
 import {
@@ -26,9 +26,14 @@ import styles from "./ScheduleTable.module.scss";
 import { useSelector } from "react-redux";
 import { getScheduleTable } from "/src/entities/Table/model/selectors/getSchedule";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import { fetchScheduleByWeek } from "/src/entities/Table/model/slice/tableSlice";
+import {
+  fetchScheduleByWeek,
+  tableActions,
+} from "/src/entities/Table/model/slice/tableSlice";
 import { favoriteSearchActions } from "/src/entities/Table/model/slice/favoriteSearchSlice";
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+import { fetchVPKByWeek } from "/src/features/SelectVPK/model/slice/selectVPKSlice";
+import { IVPK } from "/src/features/SelectVPK/model/types/VPK";
 
 interface TableProps {
   className?: string;
@@ -53,30 +58,46 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
   const toast = useToast();
   const { week: currentWeek } = useCurrentWeek();
   const dispatch = useAppDispatch();
-
-  const schedule = useSelector(getScheduleTable);
   const favoriteChoices = useSelector(
     (state: StateSchema) => state.favoriteSearch,
   );
+  const schedule = useSelector(getScheduleTable);
+  const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
+  const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
+
+  useEffect(() => {
+    dispatch(fetchVPKByWeek({ week: currentWeek, vpk: vpkInfo }));
+  }, []);
+
+  useEffect(() => {
+    if (vpkData.table.table.length !== 0) {
+      mergeVPKAndSchedule();
+    }
+  }, [vpkData]);
+
+  const mergeVPKAndSchedule = () => {
+    const header = schedule.table.table.slice(0, 2);
+    const slicedSchedule = schedule.table.table.slice(2);
+    const slicedVPK = vpkData.table.table.slice(2);
+
+    console.log(vpkData);
+
+    const mergedSchedule = slicedSchedule.map((row, rowIndex) => {
+      return row.map((item, itemIndex) => {
+        if (item.includes("Дисциплины ВПК")) {
+          item = slicedVPK[rowIndex][itemIndex];
+          return item;
+        }
+        return item;
+      });
+    });
+
+    dispatch(tableActions.mergeScheduleAndVPK(header.concat(mergedSchedule)));
+  };
 
   const isFavorite =
     favoriteChoices.filter((item) => item.name === schedule.table?.name)
       .length > 0;
-
-  async function fetchDataByWeek(week: number) {
-    try {
-      const request = await $api.get("/", {
-        params: {
-          group: schedule.table.group,
-          week,
-        },
-      });
-
-      /*      updateData(request.data);*/
-    } catch (error) {
-      console.log(error);
-    }
-  }
 
   const handleFavoriteSearch = () => {
     const favoriteSearch = {
@@ -112,6 +133,21 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
 
   if (schedule.result === "no_entries") return null;
 
+  const zaebalo = async (week: number) => {
+    await dispatch(
+      fetchScheduleByWeek({
+        week: week,
+        group: schedule.table.group,
+      }),
+    );
+    await dispatch(
+      fetchVPKByWeek({
+        week: week,
+        group: vpkInfo.group,
+      }),
+    );
+  };
+
   return (
     <div className={classNames(styles.Table, {}, [className])}>
       {schedule && (
@@ -139,14 +175,7 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
               return (
                 <Button
                   className={styles.weekButton}
-                  onClick={() =>
-                    dispatch(
-                      fetchScheduleByWeek({
-                        week: week,
-                        group: schedule.table.group,
-                      }),
-                    )
-                  }
+                  onClick={() => zaebalo(week)}
                   key={index}
                   backgroundColor={week === currentWeek ? "#3be7cb" : ""}
                   isDisabled={schedule.table.week === index + 1}

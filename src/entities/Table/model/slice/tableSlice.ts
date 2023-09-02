@@ -4,7 +4,7 @@ import { $api } from "/src/shared/api/api";
 import { IChoices } from "/src/features/SearchSchedule";
 import {
   IScheduleTable,
-  ScheduleScheme,
+  ScheduleSchema,
 } from "/src/entities/Table/model/types/Table";
 
 export const fetchAndSaveUserGroup = createAsyncThunk(
@@ -96,7 +96,7 @@ export const fetchScheduleByWeek = createAsyncThunk(
   },
 );
 
-const initialState: ScheduleScheme = {
+const initialState: ScheduleSchema = {
   choices: null,
   schedule: defaultValue,
 };
@@ -113,12 +113,23 @@ export const tableSlice = createSlice({
       state.schedule = action.payload;
       state.choices = null;
     },
+    mergeScheduleAndVPK: (state, action: PayloadAction<any>) => {
+      state.schedule.table.table = action.payload;
+
+      /*splice(
+        2,
+        state.schedule.table.table.length - 2,
+        action.payload,
+      );*/
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(
         fetchScheduleByQuery.fulfilled,
         (state, action: PayloadAction<IScheduleTable | IChoices>) => {
+          if (!action.payload) return;
+
           if ("choices" in action.payload) {
             state.choices = action.payload;
           } else {

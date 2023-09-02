@@ -61,8 +61,6 @@ export const UpcomingLessons: FC<TableProps> = memo(({ className }) => {
 
   async function fetchData() {
     try {
-      console.log("group.groupId", group.groupId);
-
       if (!group.groupId) return;
 
       const request = await $api.get("/", {
@@ -72,7 +70,6 @@ export const UpcomingLessons: FC<TableProps> = memo(({ className }) => {
         },
       });
 
-      console.log(request.data);
       setCurrentSchedule(request.data.table.table);
     } catch (error) {
       console.log(error);
