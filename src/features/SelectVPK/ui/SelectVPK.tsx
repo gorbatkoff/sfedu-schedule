@@ -14,6 +14,7 @@ import {
 } from "/src/features/SelectVPK/model/slice/selectVPKSlice";
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
 import { VPK_FROM_LOCALSTORAGE } from "/src/shared/const/localStorageKeys";
+import { tableActions } from "/src/entities/Table/model/slice/tableSlice";
 
 const userVpk = VPK_FROM_LOCALSTORAGE as IVPK;
 
@@ -24,10 +25,36 @@ const SelectVPK = memo(() => {
   const dispatch = useAppDispatch();
   const schedule = useSelector(getSchedule).schedule;
   const VPKList = useSelector((state: StateSchema) => state.selectVPK.choices);
+  const VPKInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
+  const VPKData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
+
+  console.log("VPKINFO", VPKInfo);
 
   useEffect(() => {
     dispatch(fetchVPK());
   }, []);
+
+  const updateData = async () => {
+    const header = schedule.table.table.slice(0, 2);
+    const slicedSchedule = schedule.table.table.slice(2);
+    const slicedVPK = VPKData.table.table.slice(2);
+
+    const mergedSchedule = slicedSchedule.map((row, rowIndex) => {
+      return row.map((item, itemIndex) => {
+        if (item.includes("Дисциплины ВПК")) {
+          item = slicedVPK[rowIndex][itemIndex];
+          return item;
+        }
+        return item;
+      });
+    });
+
+    dispatch(tableActions.mergeScheduleAndVPK(header.concat(mergedSchedule)));
+  };
+
+  useEffect(() => {
+    updateData();
+  }, [fetchVPKByWeek]);
 
   /*  if (VPKList === undefined || schedule.result === null) return null;
 
@@ -54,7 +81,13 @@ const SelectVPK = memo(() => {
         isClosable: true,
       });
     } catch (error) {
-      console.log(error);
+      toast({
+        title: "Ошибка!",
+        description: "Не удалось успешно установить ВПК или получить данные",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   }
 
@@ -68,7 +101,7 @@ const SelectVPK = memo(() => {
           <Button
             key={index}
             onClick={() => setVPK(item)}
-            isDisabled={item.name === userVpk.name}
+            isDisabled={item.name === VPKInfo.name}
           >
             {item.name}
           </Button>

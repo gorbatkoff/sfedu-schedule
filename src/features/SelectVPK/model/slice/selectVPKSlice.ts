@@ -9,6 +9,8 @@ import {
 } from "/src/shared/const/localStorageKeys";
 import { defaultValue } from "/src/shared/const";
 import { IScheduleTable } from "/src/entities/Table/model/types/Table";
+import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+import { tableActions } from "/src/entities/Table/model/slice/tableSlice";
 
 export const fetchVPK = createAsyncThunk(
   "vpk/fetchVPK",
@@ -34,6 +36,8 @@ export const fetchVPKByWeek = createAsyncThunk(
   "vpk/fetchVPKByWeek",
   async function ({ week, vpk }: IFetchVPKByWeek, { rejectWithValue }) {
     try {
+      console.log("vpk", vpk);
+
       const request = await $api.get("/", {
         params: {
           group: vpk.group,
@@ -41,10 +45,6 @@ export const fetchVPKByWeek = createAsyncThunk(
         },
       });
 
-      localStorage.setItem(
-        "VPK_FROM_LOCALSTORAGE",
-        JSON.stringify(request.data),
-      );
       return request.data;
     } catch (error) {
       if (error instanceof Error) {
@@ -77,8 +77,11 @@ export const selectVPKSlice = createSlice({
       .addCase(
         fetchVPKByWeek.fulfilled,
         (state, action: PayloadAction<IScheduleTable>) => {
-          console.log(action.payload);
           state.VPKData = action.payload;
+          localStorage.setItem(
+            "VPK_LOCALSTORAGE",
+            JSON.stringify(action.payload),
+          );
         },
       );
   },

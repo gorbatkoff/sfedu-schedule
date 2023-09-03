@@ -77,12 +77,7 @@ export const UpcomingLessons: FC<TableProps> = memo(({ className }) => {
   }
 
   if (currentSchedule.length == 0 || group.groupId === undefined) {
-    return (
-      <div className={classNames(styles.UpcomingLessonsList)}>
-        <ScheduleCardVisual />
-        <ScheduleCardVisual />
-      </div>
-    );
+    return null;
   }
 
   return (

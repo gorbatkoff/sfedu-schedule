@@ -96,6 +96,27 @@ export const fetchScheduleByWeek = createAsyncThunk(
   },
 );
 
+/*const mergeVPKAndSchedule = (state) => {
+  const vpkData = JSON.parse(localStorage.getItem("VPK_LOCALSTORAGE") || "{}");
+
+  if (!("table" in vpkData)) return;
+
+  const header = state.schedule.table.table.slice(0, 2);
+  const slicedSchedule = state.schedule.table.table.slice(2);
+  const slicedVPK = vpkData.table.table.slice(2);
+
+  const mergedSchedule = slicedSchedule.map((row, rowIndex) => {
+    return row.map((item, itemIndex) => {
+      if (item.includes("Дисциплины ВПК")) {
+        item = slicedVPK[rowIndex][itemIndex];
+        return item;
+      }
+      return item;
+    });
+  });
+  return header.concat(mergedSchedule);
+};*/
+
 const initialState: ScheduleSchema = {
   choices: null,
   schedule: defaultValue,
@@ -115,12 +136,23 @@ export const tableSlice = createSlice({
     },
     mergeScheduleAndVPK: (state, action: PayloadAction<any>) => {
       state.schedule.table.table = action.payload;
+    },
+    updateScheduleByNewVPKData: (state, action: PayloadAction<any>) => {
+      const header = state.schedule.table.table.slice(0, 2);
+      const slicedSchedule = state.schedule.table.table.slice(2);
+      const slicedVPK = action.payload.table.table.slice(2);
 
-      /*splice(
-        2,
-        state.schedule.table.table.length - 2,
-        action.payload,
-      );*/
+      const mergedSchedule = slicedSchedule.map((row, rowIndex) => {
+        return row.map((item, itemIndex) => {
+          if (item.includes("Дисциплины ВПК")) {
+            item = slicedVPK[rowIndex][itemIndex];
+            return item;
+          }
+          return item;
+        });
+      });
+
+      state.schedule.table.table = header.concat(mergedSchedule);
     },
   },
   extraReducers: (builder) => {
@@ -141,8 +173,6 @@ export const tableSlice = createSlice({
               `/?group=${action.payload.table.group}`,
             );
           }
-
-          console.log(action.payload);
         },
       )
       .addCase(
@@ -158,11 +188,12 @@ export const tableSlice = createSlice({
         },
       )
       .addCase(
+        // Корень проблемы здесь
         fetchScheduleByWeek.fulfilled,
         (state, action: PayloadAction<IScheduleTable>) => {
-          console.log(action.payload);
           state.schedule = action.payload;
           state.choices = null;
+          /*          state.schedule.table.table = mergeVPKAndSchedule(state);*/
         },
       );
   },

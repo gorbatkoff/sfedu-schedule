@@ -128,6 +128,11 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
 
   if (schedule.result === "no_entries") return null;
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const userVPK = useSelector((state: StateSchema) => state.selectVPK.VPK);
+
+  console.log("==============", userVPK);
+
   const fetchDataByWeek = async (week: number) => {
     await dispatch(
       fetchScheduleByWeek({
@@ -135,11 +140,12 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
         group: schedule.table.group,
       }),
     );
+
     await dispatch(
       fetchVPKByWeek({
         week: week,
         vpk: {
-          group: schedule.table.group,
+          group: userVPK.group,
           name: "", // should be fixed
           id: "",
         },
