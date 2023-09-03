@@ -43,7 +43,7 @@ export const Header = memo(({ className }: HeaderProps) => {
           <div className={styles.themeSwitcher}>
             <ThemeSwitcher />
           </div>
-          <DrawerMenu />
+          {/*          <DrawerMenu />*/}
         </div>
       </div>
     </Box>

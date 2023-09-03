@@ -41,10 +41,6 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
 
   useEffect(() => {
     const currentDay = new Date().getDay();
-
-    console.log("currentWeek", week);
-    console.log("currentDay", currentDay);
-
     0 < currentDay && currentDay < 7 ? setDay(currentDay - 1) : setDay(0);
   }, []);
 

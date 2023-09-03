@@ -38,8 +38,6 @@ export const fetchScheduleByQuery = createAsyncThunk(
         },
       });
 
-      console.log(request.data);
-
       return request.data;
     } catch (error) {
       if (error instanceof Error) {

@@ -78,7 +78,6 @@ export function DrawerMenu() {
         localStorage.setItem("USER_SCHEDULE", data.payload);
       }
       if (data.payload.choices) {
-        console.log(data.payload.data.choices);
         setGroupId(data.payload.data.choices[0].group);
       }
 

@@ -4,17 +4,11 @@ import { Header } from "/src/widgets/Header";
 import { ScheduleTable } from "/src/entities/Table";
 import { SearchSchedule } from "/src/features/SearchSchedule";
 import { ScheduleCardsList } from "/src/widgets/ScheduleCardsList";
-import { defaultValue } from "/src/shared/const";
 import Loader from "/src/shared/ui/Loader/Loader";
 import MainColumns from "/src/shared/ui/MainColumns/MainColumns";
 import { Calendar } from "/src/widgets/Calendar";
 import { UpcomingLessons } from "/src/widgets/UpcomingLessons";
-import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
-import { Box, Button, useToast } from "@chakra-ui/react";
-import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import { useSelector } from "react-redux";
-import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
-import { IScheduleTable } from "/src/entities/Table/model/types/Table";
+import { Box, Button } from "@chakra-ui/react";
 import { SelectVPK } from "/src/features/SelectVPK";
 
 const isUserOnline = navigator.onLine;
@@ -22,11 +16,8 @@ const isUserOnline = navigator.onLine;
 console.log(isUserOnline);
 
 function App() {
-  const [finishedTable, setFinishedTable] =
-    useState<IScheduleTable>(defaultValue);
-  const { week } = useCurrentWeek();
-  const toast = useToast();
   const [showVPKGroups, setShowVPKGroups] = useState(false);
+
   /*  const updateData = (data: IScheduleTable) => {
     setFinishedTable(data);
   };
@@ -80,12 +71,6 @@ function App() {
       );
     return <SearchSchedule />;
   };
-
-  const dispatch = useAppDispatch();
-  const schedule = useSelector((state: StateSchema) => state.schedule);
-  const favoriteSearch = useSelector(
-    (state: StateSchema) => state.favoriteSearch,
-  );
 
   return (
     <Suspense fallback={<Loader />}>

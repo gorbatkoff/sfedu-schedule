@@ -28,8 +28,7 @@ const SelectVPK = memo(() => {
   const VPKInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
   const VPKData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
 
-  console.log("VPKINFO", VPKInfo);
-
+  // Check here
   useEffect(() => {
     dispatch(fetchVPK());
   }, []);

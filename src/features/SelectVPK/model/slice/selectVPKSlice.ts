@@ -36,8 +36,6 @@ export const fetchVPKByWeek = createAsyncThunk(
   "vpk/fetchVPKByWeek",
   async function ({ week, vpk }: IFetchVPKByWeek, { rejectWithValue }) {
     try {
-      console.log("vpk", vpk);
-
       const request = await $api.get("/", {
         params: {
           group: vpk.group,

@@ -45,7 +45,9 @@ export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
   }, 500);
 
   useEffect(() => {
-    debounceInput();
+    if (input !== "") {
+      debounceInput();
+    }
   }, [input]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
