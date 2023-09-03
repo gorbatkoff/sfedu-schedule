@@ -131,8 +131,6 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const userVPK = useSelector((state: StateSchema) => state.selectVPK.VPK);
 
-  console.log("==============", userVPK);
-
   const fetchDataByWeek = async (week: number) => {
     await dispatch(
       fetchScheduleByWeek({

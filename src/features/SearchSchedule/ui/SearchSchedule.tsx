@@ -17,6 +17,7 @@ import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import {
   fetchScheduleByGroup,
   fetchScheduleByQuery,
+  fetchScheduleByURL,
 } from "/src/entities/Table/model/slice/tableSlice";
 import { getSchedule } from "/src/entities/Table/model/selectors/getSchedule";
 
@@ -24,6 +25,7 @@ import { FavoriteChoice } from "/src/shared/ui/FavoriteChoice/FavoriteChoice";
 import { getFavoriteSearch } from "/src/entities/Table/model/selectors/getFavoriteSearch";
 
 import styles from "./SearchSchedule.module.scss";
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
 interface SearchScheduleProps {
   className?: string;
@@ -36,6 +38,7 @@ export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
   const dispatch = useAppDispatch();
   const stateData = useSelector(getSchedule);
   const favoriteChoices = useSelector(getFavoriteSearch);
+  const { week } = useCurrentWeek();
 
   const debounceInput = useDebounce(() => {
     dispatch(fetchScheduleByQuery(input));
@@ -61,7 +64,7 @@ export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
     const group = new URLSearchParams(window.location.search).get("group");
 
     if (group) {
-      dispatch(fetchScheduleByGroup(group));
+      dispatch(fetchScheduleByURL({ group: group, week: week }));
     }
   }, []);
 

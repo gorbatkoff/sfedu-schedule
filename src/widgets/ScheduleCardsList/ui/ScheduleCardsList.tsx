@@ -19,6 +19,7 @@ import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
 import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorageKeys";
 import { useSelector } from "react-redux";
 import { getScheduleTable } from "/src/entities/Table/model/selectors/getSchedule";
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
 interface TableProps {
   className?: string;
@@ -31,7 +32,7 @@ const favoriteChoices = JSON.parse(
 const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
   const [day, setDay] = useState<number>(0);
   const toast = useToast();
-
+  const { week } = useCurrentWeek();
   const schedule = useSelector(getScheduleTable);
 
   const [isFavorite, setFavorite] = useState(
@@ -40,6 +41,10 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
 
   useEffect(() => {
     const currentDay = new Date().getDay();
+
+    console.log("currentWeek", week);
+    console.log("currentDay", currentDay);
+
     0 < currentDay && currentDay < 7 ? setDay(currentDay - 1) : setDay(0);
   }, []);
 
@@ -48,21 +53,6 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
   const dayHandler = (index: number) => {
     setDay(index);
   };
-
-  /*  async function fetchDataByWeek(week: number) {
-    try {
-      const request = await $api.get("/", {
-        params: {
-          group: schedule.table.group,
-          week,
-        },
-      });
-
-      /!*      updateData(request.data);*!/
-    } catch (error) {
-      console.log(error);
-    }
-  }*/
 
   const handleFavoriteSearch = () => {
     const favoriteSearch = {
@@ -123,6 +113,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
         week={schedule.table.week}
         group={schedule.table.group}
       />
+
       <div className={classNames(styles.weekDayBtns)}>
         {weekDays.map((dayItem, index) => {
           return (

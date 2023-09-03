@@ -68,6 +68,31 @@ export const fetchScheduleByGroup = createAsyncThunk(
   },
 );
 
+interface IFetchScheduleByURL {
+  group: string;
+  week: number;
+}
+
+export const fetchScheduleByURL = createAsyncThunk(
+  "schedule/fetchScheduleByURL",
+  async function ({ week, group }: IFetchScheduleByURL, { rejectWithValue }) {
+    try {
+      const request = await $api.get("/", {
+        params: {
+          group,
+          week,
+        },
+      });
+
+      return request.data;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+    }
+  },
+);
+
 interface IFetchScheduleByWeekProps {
   group: string;
   week: number;
@@ -185,6 +210,13 @@ export const tableSlice = createSlice({
             "group",
             `/?group=${action.payload.table.group}`,
           );
+        },
+      )
+      .addCase(
+        fetchScheduleByURL.fulfilled,
+        (state, action: PayloadAction<IScheduleTable>) => {
+          state.schedule = action.payload;
+          state.choices = null;
         },
       )
       .addCase(
