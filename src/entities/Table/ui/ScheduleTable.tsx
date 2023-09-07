@@ -44,7 +44,7 @@ export interface IFavoriteChoice {
 }
 
 const localStorageGroups = JSON.parse(
-  localStorage.getItem("USER_FAVORITE_SEARCH") || "[]",
+  localStorage.getItem("USER_FAVORITE_SEARCH") || "[]"
 );
 
 export const ScheduleTable = memo(({ className }: TableProps) => {
@@ -53,7 +53,7 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
   const { week: currentWeek } = useCurrentWeek();
   const dispatch = useAppDispatch();
   const favoriteChoices = useSelector(
-    (state: StateSchema) => state.favoriteSearch,
+    (state: StateSchema) => state.favoriteSearch
   );
   const schedule = useSelector(getScheduleTable);
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
@@ -74,19 +74,22 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
   const mergeVPKAndSchedule = () => {
     const header = schedule.table.table.slice(0, 2);
     const slicedSchedule = schedule.table.table.slice(2);
-    const slicedVPK = vpkData.table.table.slice(2);
 
-    const mergedSchedule = slicedSchedule.map((row, rowIndex) => {
-      return row.map((item, itemIndex) => {
-        if (item.includes("Дисциплины ВПК")) {
-          item = slicedVPK[rowIndex][itemIndex];
+    if (vpkData?.table?.group) {
+      const slicedVPK = vpkData.table.table.slice(2);
+
+      const mergedSchedule = slicedSchedule.map((row, rowIndex) => {
+        return row.map((item, itemIndex) => {
+          if (item.includes("Дисциплины ВПК")) {
+            item = slicedVPK[rowIndex][itemIndex];
+            return item;
+          }
           return item;
-        }
-        return item;
+        });
       });
-    });
 
-    dispatch(tableActions.mergeScheduleAndVPK(header.concat(mergedSchedule)));
+      dispatch(tableActions.mergeScheduleAndVPK(header.concat(mergedSchedule)));
+    }
   };
 
   const isFavorite =
@@ -113,7 +116,7 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
       });
     } else {
       dispatch(
-        favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name),
+        favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name)
       );
       toast({
         title: "Удалено!",
@@ -135,7 +138,7 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
       fetchScheduleByWeek({
         week: week,
         group: schedule.table.group,
-      }),
+      })
     );
 
     await dispatch(
@@ -146,7 +149,7 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
           name: "", // should be fixed
           id: "",
         },
-      }),
+      })
     );
   };
 
