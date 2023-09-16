@@ -7,6 +7,7 @@ import Loader from "/src/shared/ui/Loader/Loader";
 import MainColumns from "/src/shared/ui/MainColumns/MainColumns";
 import { Calendar } from "/src/entities/Calendar";
 import { ShowVPK } from "/src/widgets/ShowVPK";
+import { ScheduleCardsList } from "/src/widgets/ScheduleCardsList";
 
 const isUserOnline = navigator.onLine;
 
@@ -27,8 +28,7 @@ function App() {
       <div className="App">
         <Header />
         {renderColumnsByViewPort()}
-        {/*window.screen.width > 768 ? <ScheduleTable /> : <ScheduleCardsList /> */}
-        <ScheduleTable />
+        {window.screen.width > 768 ? <ScheduleTable /> : <ScheduleCardsList />}
         <ShowVPK />
       </div>
     </Suspense>

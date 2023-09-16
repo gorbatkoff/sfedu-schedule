@@ -20,7 +20,6 @@ import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { StarIcon } from "@chakra-ui/icons";
 import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
 
-import styles from "./ScheduleTable.module.scss";
 import { useSelector } from "react-redux";
 import { getScheduleTable } from "/src/entities/ScheduleTable/model/selectors/getSchedule";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
@@ -33,6 +32,8 @@ import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
 import { fetchVPKByWeek } from "/src/features/SelectVPK/model/slice/selectVPKSlice";
 import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
 import { useFetchGroupQuery } from "/src/features/SearchSchedule/api";
+
+import styles from "./ScheduleTable.module.scss";
 
 interface TableProps {
   className?: string;
@@ -155,81 +156,81 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
     );
   };
 
+  if (!schedule) return null;
+
   return (
     <div className={classNames(styles.Table, {}, [className])}>
-      {schedule && (
-        <>
-          {schedule.table?.name && (
-            <div className={styles.groupActions}>
-              <div className={styles.groupActionsFirst}>
-                <Heading color="white" className={styles.tableTitle}>
-                  Расписание {schedule.table.name}{" "}
-                  <span className={styles.week}>
-                    Неделя {schedule.table.week}
-                  </span>
-                </Heading>
-              </div>
-              <IconButton
-                aria-label="Добавить в избранное"
-                onClick={() => handleFavoriteSearch(schedule)}
-              >
-                <StarIcon color={isFavorite ? "yellow" : ""} />
-              </IconButton>
+      <>
+        {schedule.table?.name && (
+          <div className={styles.groupActions}>
+            <div className={styles.groupActionsFirst}>
+              <Heading color="white" className={styles.tableTitle}>
+                Расписание {schedule.table.name}{" "}
+                <span className={styles.week}>
+                  Неделя {schedule.table.week}
+                </span>
+              </Heading>
             </div>
-          )}
-          <div className={styles.weeksList}>
-            {schedule.weeks.map((week, index) => {
-              return (
-                <Button
-                  className={styles.weekButton}
-                  onClick={() => fetchDataByWeek(week)}
-                  key={index}
-                  backgroundColor={week === currentWeek ? "#3be7cb" : ""}
-                  isDisabled={schedule.table.week === index + 1}
-                  opacity={week < currentWeek ? "0.5" : "1"}
-                  colorScheme={
-                    schedule.table.week === index + 1 ? "green" : "twitter"
-                  }
-                >
-                  {week}
-                </Button>
-              );
-            })}
+            <IconButton
+              aria-label="Добавить в избранное"
+              onClick={() => handleFavoriteSearch(schedule)}
+            >
+              <StarIcon color={isFavorite ? "yellow" : ""} />
+            </IconButton>
           </div>
-          <TableContainer sx={{ height: "100%", overflowY: "auto" }}>
-            <Table variant="simple" sx={{ color: textColor }}>
-              <Thead className={styles.tableHead}>
-                {schedule.table.table.slice(0, 2).map((row, index) => {
-                  return (
-                    <Tr key={index}>
-                      {row.map((element, index) => {
-                        return <Td key={index}>{element}</Td>;
-                      })}
-                    </Tr>
-                  );
-                })}
-              </Thead>
-              <Tbody className={styles.tableBody}>
-                {schedule.table.table.slice(2).map((row, index) => {
-                  return (
-                    <Tr key={index}>
-                      {row.map((element, index) => {
-                        return (
-                          <TableCell
-                            key={index}
-                            element={element}
-                            textColor={textColor}
-                          />
-                        );
-                      })}
-                    </Tr>
-                  );
-                })}
-              </Tbody>
-            </Table>
-          </TableContainer>
-        </>
-      )}
+        )}
+        <div className={styles.weeksList}>
+          {schedule.weeks.map((week, index) => {
+            return (
+              <Button
+                className={styles.weekButton}
+                onClick={() => fetchDataByWeek(week)}
+                key={index}
+                backgroundColor={week === currentWeek ? "#3be7cb" : ""}
+                isDisabled={schedule.table.week === index + 1}
+                opacity={week < currentWeek ? "0.5" : "1"}
+                colorScheme={
+                  schedule.table.week === index + 1 ? "green" : "twitter"
+                }
+              >
+                {week}
+              </Button>
+            );
+          })}
+        </div>
+        <TableContainer sx={{ height: "100%", overflowY: "auto" }}>
+          <Table variant="simple" sx={{ color: textColor }}>
+            <Thead className={styles.tableHead}>
+              {schedule.table.table.slice(0, 2).map((row, index) => {
+                return (
+                  <Tr key={index}>
+                    {row.map((element, index) => {
+                      return <Td key={index}>{element}</Td>;
+                    })}
+                  </Tr>
+                );
+              })}
+            </Thead>
+            <Tbody className={styles.tableBody}>
+              {schedule.table.table.slice(2).map((row, index) => {
+                return (
+                  <Tr key={index}>
+                    {row.map((element, index) => {
+                      return (
+                        <TableCell
+                          key={index}
+                          element={element}
+                          textColor={textColor}
+                        />
+                      );
+                    })}
+                  </Tr>
+                );
+              })}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </>
     </div>
   );
 });

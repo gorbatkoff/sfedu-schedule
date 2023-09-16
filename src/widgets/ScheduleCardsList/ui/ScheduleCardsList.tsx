@@ -24,6 +24,9 @@ import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { favoriteSearchActions } from "/src/entities/ScheduleTable/model/slice/favoriteSearchSlice";
 import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
 import { IFavoriteChoice } from "/src/entities/ScheduleTable/ui/ScheduleTable";
+import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+import { fetchVPKByWeek } from "/src/features/SelectVPK/model/slice/selectVPKSlice";
+import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
 
 interface TableProps {
   className?: string;
@@ -38,17 +41,50 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
   const toast = useToast();
   const { week } = useCurrentWeek();
   const schedule = useSelector(getScheduleTable);
+  const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
+  const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    if (vpkInfo.group) {
+      dispatch(fetchVPKByWeek({ week: week, vpk: vpkInfo }));
+    }
+
     const currentDay = new Date().getDay();
     0 < currentDay && currentDay < 7 ? setDay(currentDay - 1) : setDay(0);
   }, []);
+
+  useEffect(() => {
+    if (vpkData) {
+      mergeVPKAndSchedule();
+    }
+  }, [vpkData]);
 
   const { colorMode } = useColorMode();
 
   const dayHandler = (index: number) => {
     setDay(index);
+  };
+
+  const mergeVPKAndSchedule = () => {
+    const header = schedule.table.table.slice(0, 2);
+    const slicedSchedule = schedule.table.table.slice(2);
+
+    if (vpkData?.table?.group) {
+      const slicedVPK = vpkData.table.table.slice(2);
+
+      const mergedSchedule = slicedSchedule.map((row, rowIndex) => {
+        return row.map((item, itemIndex) => {
+          if (item.includes("Дисциплины ВПК")) {
+            item = slicedVPK[rowIndex][itemIndex];
+            return item;
+          }
+          return item;
+        });
+      });
+
+      dispatch(tableActions.mergeScheduleAndVPK(header.concat(mergedSchedule)));
+    }
   };
 
   const isFavorite =
@@ -67,7 +103,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
     if (response) {
       dispatch(favoriteSearchActions.addSearchToFavorite(favoriteSearch));
       toast({
-        title: "Добавлено!",
+        title: "Добавлено! ",
         description:
           "Успех! Данное расписание было добавлено в список избранных.",
         status: "success",

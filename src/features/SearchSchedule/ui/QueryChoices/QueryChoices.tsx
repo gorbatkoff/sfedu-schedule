@@ -6,7 +6,6 @@ import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
 
 import styles from "../SearchSchedule.module.scss";
 import { useLazyFetchGroupQuery } from "/src/features/SearchSchedule/api";
-import { useDispatch } from "react-redux";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
 
@@ -39,7 +38,7 @@ export const QueryChoices: FC<IQueryChoicesProps> = ({ data }) => {
     return (
       <Button
         className={styles.choice}
-        onClick={() => fetchChoice(data.table.group, true)}
+        onClick={() => fetchChoice(data.table.group)}
       >
         {"table" in data ? data.table.name : null}
       </Button>
