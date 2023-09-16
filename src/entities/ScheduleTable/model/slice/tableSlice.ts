@@ -5,7 +5,7 @@ import { IChoices } from "/src/features/SearchSchedule";
 import {
   IScheduleTable,
   ScheduleSchema,
-} from "/src/entities/Table/model/types/Table";
+} from "/src/entities/ScheduleTable/model/types/Table";
 
 export const fetchAndSaveUserGroup = createAsyncThunk(
   "schedule/fetchAndSaveUserGroup",

@@ -5,7 +5,7 @@ import { StarIcon } from "@chakra-ui/icons";
 
 import styles from "./FavoriteChoice.module.scss";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import { favoriteSearchActions } from "/src/entities/Table/model/slice/favoriteSearchSlice";
+import { favoriteSearchActions } from "/src/entities/ScheduleTable/model/slice/favoriteSearchSlice";
 
 type FavoriteChoiceProps = {
   className?: string;

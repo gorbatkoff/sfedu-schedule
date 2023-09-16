@@ -14,7 +14,7 @@ import {
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
-import TableCell from "/src/entities/Table/ui/TableCell/TableCell";
+import TableCell from "/src/entities/ScheduleTable/ui/TableCell/TableCell";
 
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { StarIcon } from "@chakra-ui/icons";
@@ -22,16 +22,17 @@ import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
 
 import styles from "./ScheduleTable.module.scss";
 import { useSelector } from "react-redux";
-import { getScheduleTable } from "/src/entities/Table/model/selectors/getSchedule";
+import { getScheduleTable } from "/src/entities/ScheduleTable/model/selectors/getSchedule";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import {
   fetchScheduleByWeek,
   tableActions,
-} from "/src/entities/Table/model/slice/tableSlice";
-import { favoriteSearchActions } from "/src/entities/Table/model/slice/favoriteSearchSlice";
+} from "/src/entities/ScheduleTable/model/slice/tableSlice";
+import { favoriteSearchActions } from "/src/entities/ScheduleTable/model/slice/favoriteSearchSlice";
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
 import { fetchVPKByWeek } from "/src/features/SelectVPK/model/slice/selectVPKSlice";
-import { IScheduleTable } from "/src/entities/Table/model/types/Table";
+import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
+import { useFetchGroupQuery } from "/src/features/SearchSchedule/api";
 
 interface TableProps {
   className?: string;
@@ -52,8 +53,11 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
   const favoriteChoices = useSelector(
     (state: StateSchema) => state.favoriteSearch,
   );
-
   const schedule = useSelector(getScheduleTable);
+  const { data = [], isLoading } = useFetchGroupQuery(schedule.table.group);
+
+  console.log(data);
+
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
   const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
 

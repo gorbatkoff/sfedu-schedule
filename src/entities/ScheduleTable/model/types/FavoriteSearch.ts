@@ -1,4 +1,4 @@
-import { IFavoriteChoice } from "/src/entities/Table/ui/ScheduleTable";
+import { IFavoriteChoice } from "/src/entities/ScheduleTable/ui/ScheduleTable";
 
 export interface FavoriteSearchSchema {
   favoriteSearch: IFavoriteChoice[];

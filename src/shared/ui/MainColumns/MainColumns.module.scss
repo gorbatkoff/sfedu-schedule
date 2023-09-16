@@ -4,15 +4,10 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  grid-template-areas: ". search .";
-
-  div:nth-child(1) {
-    grid-area: search;
-  }
-
   grid-gap: 1em;
   padding: 2em 0;
 }
+/*
 
 @media screen and (width <= 1120px) {
   .mainColumns {
@@ -60,3 +55,4 @@
     }
   }
 }
+*/

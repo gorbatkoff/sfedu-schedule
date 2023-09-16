@@ -5,7 +5,7 @@ import { Button, Heading, useToast } from "@chakra-ui/react";
 import { IVPK } from "/src/features/SelectVPK/model/types/VPK";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useSelector } from "react-redux";
-import { getSchedule } from "/src/entities/Table/model/selectors/getSchedule";
+import { getSchedule } from "/src/entities/ScheduleTable/model/selectors/getSchedule";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import {
   fetchVPK,
@@ -14,7 +14,7 @@ import {
 } from "/src/features/SelectVPK/model/slice/selectVPKSlice";
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
 import { VPK_FROM_LOCALSTORAGE } from "/src/shared/const/localStorageKeys";
-import { tableActions } from "/src/entities/Table/model/slice/tableSlice";
+import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
 
 const userVpk = VPK_FROM_LOCALSTORAGE as IVPK;
 

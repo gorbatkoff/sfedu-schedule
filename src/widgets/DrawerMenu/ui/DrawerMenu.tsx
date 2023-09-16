@@ -23,7 +23,7 @@ import {
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { userGroupActions } from "/src/widgets/DrawerMenu/model/slice/userGroupSlice";
-import { fetchAndSaveUserGroup } from "/src/entities/Table/model/slice/tableSlice";
+import { fetchAndSaveUserGroup } from "/src/entities/ScheduleTable/model/slice/tableSlice";
 
 const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 const isButtonBlock =

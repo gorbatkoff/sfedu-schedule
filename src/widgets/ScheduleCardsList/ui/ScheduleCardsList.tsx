@@ -18,12 +18,12 @@ import { StarIcon } from "@chakra-ui/icons";
 import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
 import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorageKeys";
 import { useSelector } from "react-redux";
-import { getScheduleTable } from "/src/entities/Table/model/selectors/getSchedule";
+import { getScheduleTable } from "/src/entities/ScheduleTable/model/selectors/getSchedule";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import { favoriteSearchActions } from "/src/entities/Table/model/slice/favoriteSearchSlice";
-import { IScheduleTable } from "/src/entities/Table/model/types/Table";
-import { IFavoriteChoice } from "/src/entities/Table/ui/ScheduleTable";
+import { favoriteSearchActions } from "/src/entities/ScheduleTable/model/slice/favoriteSearchSlice";
+import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
+import { IFavoriteChoice } from "/src/entities/ScheduleTable/ui/ScheduleTable";
 
 interface TableProps {
   className?: string;
