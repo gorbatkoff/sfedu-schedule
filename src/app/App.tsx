@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 
 import { Header } from "/src/widgets/Header";
 import { ScheduleTable } from "/src/entities/Table";
@@ -8,16 +8,13 @@ import Loader from "/src/shared/ui/Loader/Loader";
 import MainColumns from "/src/shared/ui/MainColumns/MainColumns";
 import { Calendar } from "/src/widgets/Calendar";
 import { UpcomingLessons } from "/src/widgets/UpcomingLessons";
-import { Box, Button } from "@chakra-ui/react";
-import { SelectVPK } from "/src/features/SelectVPK";
+import { ShowVPK } from "/src/widgets/ShowVPK";
 
 const isUserOnline = navigator.onLine;
 
 console.log(isUserOnline);
 
 function App() {
-  const [showVPKGroups, setShowVPKGroups] = useState(false);
-
   /*  const updateData = (data: IScheduleTable) => {
     setFinishedTable(data);
   };
@@ -78,19 +75,7 @@ function App() {
         <Header />
         {renderColumnsByViewPort()}
         {renderTableByViewPort()}
-
-        {!showVPKGroups && (
-          <Box
-            sx={{ display: "flex", justifyContent: "center", margin: "1em" }}
-          >
-            <Button sx={{ m: 2 }} onClick={() => setShowVPKGroups(true)}>
-              Выбрать ВПК
-            </Button>
-          </Box>
-        )}
-        <Suspense fallback={<Loader />}>
-          {showVPKGroups && <SelectVPK />}
-        </Suspense>
+        <ShowVPK />
       </div>
     </Suspense>
   );

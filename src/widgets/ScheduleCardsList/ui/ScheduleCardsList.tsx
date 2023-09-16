@@ -20,6 +20,10 @@ import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorageKeys";
 import { useSelector } from "react-redux";
 import { getScheduleTable } from "/src/entities/Table/model/selectors/getSchedule";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
+import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+import { favoriteSearchActions } from "/src/entities/Table/model/slice/favoriteSearchSlice";
+import { IScheduleTable } from "/src/entities/Table/model/types/Table";
+import { IFavoriteChoice } from "/src/entities/Table/ui/ScheduleTable";
 
 interface TableProps {
   className?: string;
@@ -34,10 +38,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
   const toast = useToast();
   const { week } = useCurrentWeek();
   const schedule = useSelector(getScheduleTable);
-
-  const [isFavorite, setFavorite] = useState(
-    favoriteChoices.includes(schedule.table?.name),
-  );
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const currentDay = new Date().getDay();
@@ -50,16 +51,21 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
     setDay(index);
   };
 
-  const handleFavoriteSearch = () => {
+  const isFavorite =
+    favoriteChoices.filter(
+      (item: IFavoriteChoice) => item.name === schedule.table?.name,
+    ).length > 0;
+
+  const handleFavoriteSearch = (schedule: IScheduleTable) => {
     const favoriteSearch = {
       group: schedule.table.group,
       name: schedule.table.name,
     };
 
-    const response = addSearchToFavorite(schedule, favoriteSearch);
+    const response = addSearchToFavorite(favoriteSearch);
 
     if (response) {
-      setFavorite(true);
+      dispatch(favoriteSearchActions.addSearchToFavorite(favoriteSearch));
       toast({
         title: "Добавлено!",
         description:
@@ -68,8 +74,10 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
         duration: 3000,
         isClosable: true,
       });
-    } else {
-      setFavorite(false);
+    } else if (isFavorite) {
+      dispatch(
+        favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name),
+      );
       toast({
         title: "Удалено!",
         description: "Данное расписание было удалено из списка избранных.",
@@ -98,7 +106,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
         <IconButton
           size="sm"
           aria-label="Добавить в избранное"
-          onClick={handleFavoriteSearch}
+          onClick={() => handleFavoriteSearch(schedule)}
         >
           <StarIcon color={isFavorite ? "yellow" : ""} />
         </IconButton>

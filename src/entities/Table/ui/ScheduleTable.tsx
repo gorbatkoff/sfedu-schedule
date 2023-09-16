@@ -31,6 +31,7 @@ import {
 import { favoriteSearchActions } from "/src/entities/Table/model/slice/favoriteSearchSlice";
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
 import { fetchVPKByWeek } from "/src/features/SelectVPK/model/slice/selectVPKSlice";
+import { IScheduleTable } from "/src/entities/Table/model/types/Table";
 
 interface TableProps {
   className?: string;
@@ -43,18 +44,15 @@ export interface IFavoriteChoice {
   name: string;
 }
 
-const localStorageGroups = JSON.parse(
-  localStorage.getItem("USER_FAVORITE_SEARCH") || "[]"
-);
-
 export const ScheduleTable = memo(({ className }: TableProps) => {
   const textColor = useColorModeValue("black", "white");
   const toast = useToast();
   const { week: currentWeek } = useCurrentWeek();
   const dispatch = useAppDispatch();
   const favoriteChoices = useSelector(
-    (state: StateSchema) => state.favoriteSearch
+    (state: StateSchema) => state.favoriteSearch,
   );
+
   const schedule = useSelector(getScheduleTable);
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
   const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
@@ -96,13 +94,13 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
     favoriteChoices.filter((item) => item.name === schedule.table?.name)
       .length > 0;
 
-  const handleFavoriteSearch = () => {
+  const handleFavoriteSearch = (schedule: IScheduleTable) => {
     const favoriteSearch = {
       group: schedule.table.group,
       name: schedule.table.name,
     };
 
-    const response = addSearchToFavorite(schedule, favoriteSearch);
+    const response = addSearchToFavorite(favoriteSearch);
 
     if (response) {
       dispatch(favoriteSearchActions.addSearchToFavorite(favoriteSearch));
@@ -114,9 +112,9 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
         duration: 3000,
         isClosable: true,
       });
-    } else {
+    } else if (isFavorite) {
       dispatch(
-        favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name)
+        favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name),
       );
       toast({
         title: "Удалено!",
@@ -138,7 +136,7 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
       fetchScheduleByWeek({
         week: week,
         group: schedule.table.group,
-      })
+      }),
     );
 
     await dispatch(
@@ -149,7 +147,7 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
           name: "", // should be fixed
           id: "",
         },
-      })
+      }),
     );
   };
 
@@ -169,7 +167,7 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
               </div>
               <IconButton
                 aria-label="Добавить в избранное"
-                onClick={handleFavoriteSearch}
+                onClick={() => handleFavoriteSearch(schedule)}
               >
                 <StarIcon color={isFavorite ? "yellow" : ""} />
               </IconButton>

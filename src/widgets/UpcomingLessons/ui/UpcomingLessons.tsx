@@ -51,11 +51,11 @@ export const UpcomingLessons: FC<TableProps> = memo(({ className }) => {
   });
 
   useEffect(() => {
-    if (isUserOnline) {
+    /*  if (isUserOnline) {
       fetchData();
     } else if (Object.keys(scheduleFromLocalStorage).length !== 0) {
       setCurrentSchedule(scheduleFromLocalStorage.table.table);
-    }
+    }*/
     0 < currentDay && currentDay < 7 ? setDay(currentDay - 1) : setDay(0);
   }, []);
 

@@ -61,15 +61,6 @@ export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
     }
   };
 
-  // Fetching data by url params
-  useEffect(() => {
-    const group = new URLSearchParams(window.location.search).get("group");
-
-    if (group) {
-      dispatch(fetchScheduleByURL({ group: group, week: week }));
-    }
-  }, []);
-
   const handleFetchScheduleByClick = async (group: string) => {
     await dispatch(fetchScheduleByGroup(group));
     toast({
@@ -80,6 +71,17 @@ export const SearchSchedule = memo(({ className }: SearchScheduleProps) => {
       isClosable: true,
     });
   };
+
+  let called = false;
+
+  // Fetching data by url params
+  useEffect(() => {
+    const group = new URLSearchParams(window.location.search).get("group");
+    if (group && !called) {
+      dispatch(fetchScheduleByURL({ group: group, week: week }));
+      called = true;
+    }
+  }, []);
 
   return (
     <div>

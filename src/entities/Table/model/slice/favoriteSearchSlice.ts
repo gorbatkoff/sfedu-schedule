@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IFavoriteChoice } from "/src/entities/Table/ui/ScheduleTable";
 import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorageKeys";
+import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
 
 const initialState: IFavoriteChoice[] = JSON.parse(
   localStorage.getItem(USER_FAVORITE_SEARCH) || "[]",
@@ -15,6 +16,16 @@ export const favoriteSearchSlice = createSlice({
       localStorage.setItem(USER_FAVORITE_SEARCH, JSON.stringify(state));
     },
     removeSearchFromFavorite: (state, action: PayloadAction<string>) => {
+      const data = JSON.parse(
+        localStorage.getItem(USER_FAVORITE_SEARCH) || "[]",
+      );
+
+      const filteredData = data.filter((favorite: IFavoriteChoice) => {
+        return favorite.name !== action.payload;
+      });
+
+      localStorage.setItem(USER_FAVORITE_SEARCH, JSON.stringify(filteredData));
+
       return state.filter(
         (item: IFavoriteChoice) => item.name !== action.payload,
       );
