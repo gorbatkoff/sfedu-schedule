@@ -1,15 +1,15 @@
 import { memo } from "react";
-
+import { useSelector } from "react-redux";
 import classNames from "classnames";
+
 import { Box, IconButton, useColorMode } from "@chakra-ui/react";
 
 import { Logo } from "/src/shared/ui/Logo/Logo";
 import { DrawerMenu } from "/src/widgets/DrawerMenu";
 import { ThemeSwitcher } from "/src/shared/ui/ThemeSwitcher/ThemeSwitcher";
 
-import styles from "./Header.module.scss";
-import { useSelector } from "react-redux";
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+import styles from "./Header.module.scss";
 
 interface HeaderProps {
   className?: string;
@@ -43,7 +43,7 @@ export const Header = memo(({ className }: HeaderProps) => {
           <div className={styles.themeSwitcher}>
             <ThemeSwitcher />
           </div>
-          {/*          <DrawerMenu />*/}
+          <DrawerMenu />
         </div>
       </div>
     </Box>
