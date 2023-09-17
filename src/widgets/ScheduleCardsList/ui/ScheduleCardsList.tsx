@@ -10,13 +10,13 @@ import {
 import classNames from "classnames";
 
 import { ScheduleCard } from "/src/entities/ScheduleCard";
-import { weekDays } from "/src/shared/const";
+import { weekDays } from "/src/shared/const/global/const";
 
 import styles from "./ScheduleCardsList.module.scss";
 import Carousel from "/src/features/Carousel/Carousel";
 import { StarIcon } from "@chakra-ui/icons";
 import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
-import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorageKeys";
+import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorage/localStorageKeys";
 import { useSelector } from "react-redux";
 import { getScheduleTable } from "/src/entities/ScheduleTable/model/selectors/getSchedule";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
