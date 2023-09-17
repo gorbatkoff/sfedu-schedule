@@ -1,6 +1,5 @@
 import { memo, useEffect } from "react";
 
-import styles from "./SelectVPK.module.scss";
 import { Button, Heading, useToast } from "@chakra-ui/react";
 import { IVPK } from "/src/features/SelectVPK/model/types/VPK";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
@@ -13,10 +12,9 @@ import {
   selectVPKActions,
 } from "/src/features/SelectVPK/model/slice/selectVPKSlice";
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
-import { VPK_FROM_LOCALSTORAGE } from "/src/shared/const/localStorageKeys";
 import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
 
-const userVpk = VPK_FROM_LOCALSTORAGE as IVPK;
+import styles from "./SelectVPK.module.scss";
 
 const SelectVPK = memo(() => {
   const toast = useToast();

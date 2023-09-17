@@ -57,8 +57,6 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
   const schedule = useSelector(getScheduleTable);
   const { data = [], isLoading } = useFetchGroupQuery(schedule.table.group);
 
-  console.log(data);
-
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
   const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
 
