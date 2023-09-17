@@ -9,6 +9,7 @@ import { ChakraProvider, extendTheme, ThemeConfig } from "@chakra-ui/react";
 
 import "./app/styles/index.scss";
 import StoreProvider from "/src/app/Providers/StoreProvider/ui/ProviderOfStore";
+import { BrowserRouter } from "react-router-dom";
 
 const theme: ThemeConfig = extendTheme({
   config: {
@@ -31,9 +32,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ErrorBoundary>
       <StoreProvider>
-        <ChakraProvider theme={theme}>
-          <App />
-        </ChakraProvider>
+        <BrowserRouter>
+          <ChakraProvider theme={theme}>
+            <App />
+          </ChakraProvider>
+        </BrowserRouter>
       </StoreProvider>
     </ErrorBoundary>
   </StrictMode>,

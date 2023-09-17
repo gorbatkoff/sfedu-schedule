@@ -10,20 +10,27 @@ import {
 import classNames from "classnames";
 
 import { ScheduleCard } from "/src/entities/ScheduleCard";
-import { weekDays } from "/src/shared/const";
+import { weekDays } from "/src/shared/const/global/const";
 
 import styles from "./ScheduleCardsList.module.scss";
 import Carousel from "/src/features/Carousel/Carousel";
 import { StarIcon } from "@chakra-ui/icons";
 import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
-import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorageKeys";
+import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorage/localStorageKeys";
 import { useSelector } from "react-redux";
-import { getScheduleTable } from "/src/entities/Table/model/selectors/getSchedule";
+import { getScheduleTable } from "/src/entities/ScheduleTable/model/selectors/getSchedule";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import { favoriteSearchActions } from "/src/entities/Table/model/slice/favoriteSearchSlice";
-import { IScheduleTable } from "/src/entities/Table/model/types/Table";
-import { IFavoriteChoice } from "/src/entities/Table/ui/ScheduleTable";
+import { favoriteSearchActions } from "/src/entities/ScheduleTable/model/slice/favoriteSearchSlice";
+import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
+import { IFavoriteChoice } from "/src/entities/ScheduleTable/ui/ScheduleTable";
+import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+import { fetchVPKByWeek } from "/src/features/SelectVPK/model/slice/selectVPKSlice";
+import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
+import {
+  ADD_TO_FAVORITE_SUCCESS,
+  REMOVE_FROM_FAVORITE,
+} from "/src/shared/const/toast/toast";
 
 interface TableProps {
   className?: string;
@@ -38,17 +45,50 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
   const toast = useToast();
   const { week } = useCurrentWeek();
   const schedule = useSelector(getScheduleTable);
+  const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
+  const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    if (vpkInfo.group) {
+      dispatch(fetchVPKByWeek({ week: week, vpk: vpkInfo }));
+    }
+
     const currentDay = new Date().getDay();
     0 < currentDay && currentDay < 7 ? setDay(currentDay - 1) : setDay(0);
   }, []);
+
+  useEffect(() => {
+    if (vpkData) {
+      mergeVPKAndSchedule();
+    }
+  }, [vpkData]);
 
   const { colorMode } = useColorMode();
 
   const dayHandler = (index: number) => {
     setDay(index);
+  };
+
+  const mergeVPKAndSchedule = () => {
+    const header = schedule.table.table.slice(0, 2);
+    const slicedSchedule = schedule.table.table.slice(2);
+
+    if (vpkData?.table?.group) {
+      const slicedVPK = vpkData.table.table.slice(2);
+
+      const mergedSchedule = slicedSchedule.map((row, rowIndex) => {
+        return row.map((item, itemIndex) => {
+          if (item.includes("Дисциплины ВПК")) {
+            item = slicedVPK[rowIndex][itemIndex];
+            return item;
+          }
+          return item;
+        });
+      });
+
+      dispatch(tableActions.mergeScheduleAndVPK(header.concat(mergedSchedule)));
+    }
   };
 
   const isFavorite =
@@ -66,25 +106,12 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
 
     if (response) {
       dispatch(favoriteSearchActions.addSearchToFavorite(favoriteSearch));
-      toast({
-        title: "Добавлено!",
-        description:
-          "Успех! Данное расписание было добавлено в список избранных.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(ADD_TO_FAVORITE_SUCCESS);
     } else if (isFavorite) {
       dispatch(
         favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name),
       );
-      toast({
-        title: "Удалено!",
-        description: "Данное расписание было удалено из списка избранных.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(REMOVE_FROM_FAVORITE);
     }
   };
 

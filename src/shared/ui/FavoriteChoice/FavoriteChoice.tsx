@@ -1,11 +1,19 @@
 import { ButtonHTMLAttributes, memo } from "react";
 
-import { Button, Heading, IconButton, useToast } from "@chakra-ui/react";
+import {
+  Button,
+  Heading,
+  IconButton,
+  useColorMode,
+  useToast,
+} from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 
-import styles from "./FavoriteChoice.module.scss";
+import { TOAST_SEARCH_REMOVED } from "/src/shared/const/toast/toast";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import { favoriteSearchActions } from "/src/entities/Table/model/slice/favoriteSearchSlice";
+import { favoriteSearchActions } from "/src/entities/ScheduleTable/model/slice/favoriteSearchSlice";
+
+import styles from "./FavoriteChoice.module.scss";
 
 type FavoriteChoiceProps = {
   className?: string;
@@ -13,19 +21,13 @@ type FavoriteChoiceProps = {
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const FavoriteChoice = memo(
-  ({ className, title, onClick }: FavoriteChoiceProps) => {
+  ({ title, onClick }: FavoriteChoiceProps) => {
+    const { colorMode } = useColorMode();
     const dispatch = useAppDispatch();
     const toast = useToast();
     const handleRemoveFavorite = async () => {
-      await dispatch(favoriteSearchActions.removeSearchFromFavorite(title));
-
-      toast({
-        title: "Удалено",
-        description: `Поиск ${title} был удалён!`,
-        status: "error",
-        duration: 1000,
-        isClosable: true,
-      });
+      dispatch(favoriteSearchActions.removeSearchFromFavorite(title));
+      toast(TOAST_SEARCH_REMOVED);
     };
 
     return (
@@ -36,7 +38,7 @@ export const FavoriteChoice = memo(
           onClick={onClick}
           sx={{ justifyContent: "flex-start" }}
         >
-          <Heading size="md" color="white">
+          <Heading size="md" color={colorMode}>
             {title}
           </Heading>
         </Button>

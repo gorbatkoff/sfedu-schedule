@@ -3,7 +3,7 @@ import { IUserGroup, UserGroupSchema } from "../types/UserGroup";
 import {
   IS_BUTTONS_BLOCKED,
   USER_GROUP,
-} from "/src/shared/const/localStorageKeys";
+} from "/src/shared/const/localStorage/localStorageKeys";
 
 const initialState: UserGroupSchema = {
   userGroup: {

@@ -1,11 +1,15 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { defaultValue } from "/src/shared/const";
+import { defaultValue } from "/src/shared/const/global/const";
 import { $api } from "/src/shared/api/api";
 import { IChoices } from "/src/features/SearchSchedule";
 import {
   IScheduleTable,
   ScheduleSchema,
-} from "/src/entities/Table/model/types/Table";
+} from "/src/entities/ScheduleTable/model/types/Table";
+import {
+  SAVED_SCHEDULE,
+  USER_GROUP,
+} from "/src/shared/const/localStorage/localStorageKeys";
 
 export const fetchAndSaveUserGroup = createAsyncThunk(
   "schedule/fetchAndSaveUserGroup",
@@ -119,27 +123,6 @@ export const fetchScheduleByWeek = createAsyncThunk(
   },
 );
 
-/*const mergeVPKAndSchedule = (state) => {
-  const vpkData = JSON.parse(localStorage.getItem("VPK_LOCALSTORAGE") || "{}");
-
-  if (!("table" in vpkData)) return;
-
-  const header = state.schedule.table.table.slice(0, 2);
-  const slicedSchedule = state.schedule.table.table.slice(2);
-  const slicedVPK = vpkData.table.table.slice(2);
-
-  const mergedSchedule = slicedSchedule.map((row, rowIndex) => {
-    return row.map((item, itemIndex) => {
-      if (item.includes("Дисциплины ВПК")) {
-        item = slicedVPK[rowIndex][itemIndex];
-        return item;
-      }
-      return item;
-    });
-  });
-  return header.concat(mergedSchedule);
-};*/
-
 const initialState: ScheduleSchema = {
   choices: null,
   schedule: defaultValue,
@@ -159,6 +142,12 @@ export const tableSlice = createSlice({
     },
     mergeScheduleAndVPK: (state, action: PayloadAction<any>) => {
       state.schedule.table.table = action.payload;
+      const userGroup = JSON.parse(localStorage.getItem(USER_GROUP)!);
+      if (!userGroup.groupId) return;
+
+      if (userGroup.groupId === state.schedule.table.group) {
+        localStorage.setItem(SAVED_SCHEDULE, JSON.stringify(state.schedule));
+      }
     },
     updateScheduleByNewVPKData: (state, action: PayloadAction<any>) => {
       const header = state.schedule.table.table.slice(0, 2);

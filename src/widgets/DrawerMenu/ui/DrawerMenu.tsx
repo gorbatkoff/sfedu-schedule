@@ -19,11 +19,15 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   IS_BUTTONS_BLOCKED,
   USER_GROUP,
-} from "/src/shared/const/localStorageKeys";
+} from "/src/shared/const/localStorage/localStorageKeys";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { userGroupActions } from "/src/widgets/DrawerMenu/model/slice/userGroupSlice";
-import { fetchAndSaveUserGroup } from "/src/entities/Table/model/slice/tableSlice";
+import { fetchAndSaveUserGroup } from "/src/entities/ScheduleTable/model/slice/tableSlice";
+import {
+  GROUP_NOT_FOUND,
+  GROUP_SAVED_SUCCESSFULLY,
+} from "/src/shared/const/toast/toast";
 
 const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 const isButtonBlock =
@@ -43,13 +47,7 @@ export function DrawerMenu() {
 
   const checkGroupId = () => {
     if (groupId == "" && isSetted) {
-      toast({
-        title: "Группа не найдена",
-        description: "Проверьте правильность написания группы",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(GROUP_NOT_FOUND);
       setIsSetted(false);
       return;
     }
@@ -75,7 +73,7 @@ export function DrawerMenu() {
 
       if (data.payload.table) {
         setGroupId(data.payload.table.group);
-        localStorage.setItem("USER_SCHEDULE", data.payload);
+        /*        localStorage.setItem("USER_SCHEDULE", data.payload);*/
       }
       if (data.payload.choices) {
         setGroupId(data.payload.data.choices[0].group);
@@ -127,13 +125,7 @@ export function DrawerMenu() {
 
       setButtonBlocked(true);
       setInputBlocked(true);
-      toast({
-        title: "Успешно!",
-        description: "Вы успешно сохранили группу",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(GROUP_SAVED_SUCCESSFULLY);
     }
   };
 

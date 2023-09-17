@@ -1,80 +1,68 @@
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import { Header } from "/src/widgets/Header";
-import { ScheduleTable } from "/src/entities/Table";
+import { ScheduleTable } from "/src/entities/ScheduleTable";
 import { SearchSchedule } from "/src/features/SearchSchedule";
-import { ScheduleCardsList } from "/src/widgets/ScheduleCardsList";
 import Loader from "/src/shared/ui/Loader/Loader";
 import MainColumns from "/src/shared/ui/MainColumns/MainColumns";
-import { Calendar } from "/src/widgets/Calendar";
-import { UpcomingLessons } from "/src/widgets/UpcomingLessons";
+import { Calendar } from "/src/entities/Calendar";
 import { ShowVPK } from "/src/widgets/ShowVPK";
+import { ScheduleCardsList } from "/src/widgets/ScheduleCardsList";
+import { UpcomingLessons } from "/src/entities/UpcomingLessons";
+import { useToast } from "@chakra-ui/react";
+import { TOAST_NO_INTERNET } from "/src/shared/const/toast/toast";
+import { SAVED_SCHEDULE } from "/src/shared/const/localStorage/localStorageKeys";
+import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
+import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
+import { useFetchGroupQuery } from "/src/features/SearchSchedule/api";
 
 const isUserOnline = navigator.onLine;
 
-console.log(isUserOnline);
-
 function App() {
-  /*  const updateData = (data: IScheduleTable) => {
-    setFinishedTable(data);
-  };
+  const toast = useToast();
+  const dispatch = useAppDispatch();
+  const [queryParameters] = useSearchParams();
+  const { data } = useFetchGroupQuery(queryParameters.get("group") || "");
 
   useEffect(() => {
-    const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
-
-    if (
-      finishedTable.table?.name === userGroup.name &&
-      finishedTable.table?.week === week
-    ) {
-      localStorage.setItem(SAVED_SCHEDULE, JSON.stringify(finishedTable));
+    if (data?.table?.group) {
+      dispatch(tableActions.setSchedule(data));
     }
-  }, [updateData]);*/
+  }, [data]);
 
-  /*  useEffect(() => {
-    const savedSchedule = JSON.parse(
-      localStorage.getItem(SAVED_SCHEDULE) || "{}",
-    );
-
-    if (Object.keys(savedSchedule).length === 0) return;
-
-    if (savedSchedule) {
-      setFinishedTable(savedSchedule);
-    }
-
-    if (!isUserOnline) {
-      toast({
-        title: "Нет интернета!",
-        description: "Показано сохраненное расписание вашей группы :)",
-        status: "warning",
-        duration: 6000,
-        isClosable: true,
-      });
-    }
-  }, []);
-*/
-  const renderTableByViewPort = () => {
-    if (window.screen.width > 768) return <ScheduleTable />;
-    return <ScheduleCardsList />;
-  };
+  const savedUserSchedule = JSON.parse(
+    localStorage.getItem(SAVED_SCHEDULE)!,
+  ) as IScheduleTable;
 
   const renderColumnsByViewPort = () => {
     if (window.screen.width > 768)
       return (
         <MainColumns>
-          <SearchSchedule />
           <Calendar />
+          <SearchSchedule />
           <UpcomingLessons />
         </MainColumns>
       );
     return <SearchSchedule />;
   };
 
+  useEffect(() => {
+    if (!isUserOnline) {
+      toast(TOAST_NO_INTERNET);
+      if (savedUserSchedule.table.group) {
+        dispatch(tableActions.setSchedule(savedUserSchedule));
+      }
+    }
+  }, []);
+
   return (
     <Suspense fallback={<Loader />}>
       <div className="App">
         <Header />
         {renderColumnsByViewPort()}
-        {renderTableByViewPort()}
+        {window.screen.width > 768 ? <ScheduleTable /> : <ScheduleCardsList />}
         <ShowVPK />
       </div>
     </Suspense>
