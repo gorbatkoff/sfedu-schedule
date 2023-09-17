@@ -42,12 +42,13 @@ const UpcomingLessons = () => {
 
   const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 
+  if (!userGroup.groupId) return null;
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { data, isLoading, status } = useFetchUpcomingLessonsQuery({
     group: userGroup.groupId,
     week: week,
   });
-
-  console.log("ЛЕРА СМОТРИ СЮДА", data);
 
   if (isLoading) {
     return (

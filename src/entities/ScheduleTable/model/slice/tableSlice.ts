@@ -143,7 +143,7 @@ export const tableSlice = createSlice({
     mergeScheduleAndVPK: (state, action: PayloadAction<any>) => {
       state.schedule.table.table = action.payload;
       const userGroup = JSON.parse(localStorage.getItem(USER_GROUP)!);
-      if (!userGroup.groupId) return;
+      if (!userGroup) return;
 
       if (userGroup.groupId === state.schedule.table.group) {
         localStorage.setItem(SAVED_SCHEDULE, JSON.stringify(state.schedule));
