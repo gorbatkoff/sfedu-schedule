@@ -3,10 +3,11 @@ import classNames from "classnames";
 
 import { Button } from "@chakra-ui/react";
 
-import styles from "./Carousel.module.scss";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { fetchScheduleByWeek } from "/src/entities/ScheduleTable/model/slice/tableSlice";
+
+import styles from "./Carousel.module.scss";
 
 interface CarouselProps {
   carouselItems: number[];
