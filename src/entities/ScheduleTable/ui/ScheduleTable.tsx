@@ -34,6 +34,10 @@ import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
 import { useFetchGroupQuery } from "/src/features/SearchSchedule/api";
 
 import styles from "./ScheduleTable.module.scss";
+import {
+  ADD_TO_FAVORITE_SUCCESS,
+  REMOVE_FROM_FAVORITE,
+} from "/src/shared/const/toast/toast";
 
 interface TableProps {
   className?: string;
@@ -107,25 +111,12 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
 
     if (response) {
       dispatch(favoriteSearchActions.addSearchToFavorite(favoriteSearch));
-      toast({
-        title: "Добавлено!",
-        description:
-          "Успех! Данное расписание было добавлено в список избранных.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(ADD_TO_FAVORITE_SUCCESS);
     } else if (isFavorite) {
       dispatch(
         favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name),
       );
-      toast({
-        title: "Удалено!",
-        description: "Данное расписание было удалено из списка избранных.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(REMOVE_FROM_FAVORITE);
     }
   };
 

@@ -29,8 +29,6 @@ function App() {
   const [queryParameters] = useSearchParams();
   const { data } = useFetchGroupQuery(queryParameters.get("group") || "");
 
-  console.log(data);
-
   useEffect(() => {
     if (data?.table?.group) {
       dispatch(tableActions.setSchedule(data));

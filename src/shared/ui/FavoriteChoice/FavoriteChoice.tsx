@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 
+import { TOAST_SEARCH_REMOVED } from "/src/shared/const/toast/toast";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { favoriteSearchActions } from "/src/entities/ScheduleTable/model/slice/favoriteSearchSlice";
 
@@ -20,20 +21,13 @@ type FavoriteChoiceProps = {
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const FavoriteChoice = memo(
-  ({ className, title, onClick }: FavoriteChoiceProps) => {
+  ({ title, onClick }: FavoriteChoiceProps) => {
     const { colorMode } = useColorMode();
     const dispatch = useAppDispatch();
     const toast = useToast();
     const handleRemoveFavorite = async () => {
-      await dispatch(favoriteSearchActions.removeSearchFromFavorite(title));
-
-      toast({
-        title: "Удалено",
-        description: `Поиск ${title} был удалён!`,
-        status: "error",
-        duration: 1000,
-        isClosable: true,
-      });
+      dispatch(favoriteSearchActions.removeSearchFromFavorite(title));
+      toast(TOAST_SEARCH_REMOVED);
     };
 
     return (

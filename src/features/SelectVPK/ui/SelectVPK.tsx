@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react";
+import { memo, useEffect, useMemo } from "react";
 
 import { Button, Heading, useToast } from "@chakra-ui/react";
 import { IVPK } from "/src/features/SelectVPK/model/types/VPK";
@@ -15,6 +15,11 @@ import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
 import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
 
 import styles from "./SelectVPK.module.scss";
+import { VPKSort } from "/src/shared/lib/vpkSort";
+import {
+  SELECT_VPK_ERROR,
+  VPK_SELECTED_SUCCESSFULLY,
+} from "/src/shared/const/toast/toast";
 
 const SelectVPK = memo(() => {
   const toast = useToast();
@@ -26,7 +31,10 @@ const SelectVPK = memo(() => {
   const VPKInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
   const VPKData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
 
-  // Check here
+  const filteredVPKList = useMemo(() => {
+    return [...VPKList].sort(VPKSort);
+  }, [VPKList]);
+
   useEffect(() => {
     dispatch(fetchVPK());
   }, []);
@@ -53,38 +61,13 @@ const SelectVPK = memo(() => {
     updateData();
   }, [fetchVPKByWeek]);
 
-  /*  if (VPKList === undefined || schedule.result === null) return null;
-
-  if (+schedule.table?.name[4] < 3) {
-    return null;
-  }
-
-  if (
-    schedule.table?.name.startsWith("КТс") &&
-    schedule.table?.name[4] === "3"
-  ) {
-    return null;
-  }*/
-
   async function setVPK(vpk: IVPK) {
     try {
-      await dispatch(selectVPKActions.setVPK(vpk));
+      dispatch(selectVPKActions.setVPK(vpk));
       await dispatch(fetchVPKByWeek({ vpk, week }));
-      toast({
-        title: "Успех!",
-        description: "Вы успешно выбрали ВПК!",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(VPK_SELECTED_SUCCESSFULLY);
     } catch (error) {
-      toast({
-        title: "Ошибка!",
-        description: "Не удалось успешно установить ВПК или получить данные",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(SELECT_VPK_ERROR);
     }
   }
 
@@ -94,7 +77,7 @@ const SelectVPK = memo(() => {
         Установите группу ВПК
       </Heading>
       <div className={styles.vpkList}>
-        {VPKList.map((item, index) => (
+        {filteredVPKList.map((item, index) => (
           <Button
             key={index}
             onClick={() => setVPK(item)}

@@ -27,6 +27,10 @@ import { IFavoriteChoice } from "/src/entities/ScheduleTable/ui/ScheduleTable";
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
 import { fetchVPKByWeek } from "/src/features/SelectVPK/model/slice/selectVPKSlice";
 import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
+import {
+  ADD_TO_FAVORITE_SUCCESS,
+  REMOVE_FROM_FAVORITE,
+} from "/src/shared/const/toast/toast";
 
 interface TableProps {
   className?: string;
@@ -102,25 +106,12 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
 
     if (response) {
       dispatch(favoriteSearchActions.addSearchToFavorite(favoriteSearch));
-      toast({
-        title: "Добавлено! ",
-        description:
-          "Успех! Данное расписание было добавлено в список избранных.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(ADD_TO_FAVORITE_SUCCESS);
     } else if (isFavorite) {
       dispatch(
         favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name),
       );
-      toast({
-        title: "Удалено!",
-        description: "Данное расписание было удалено из списка избранных.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast(REMOVE_FROM_FAVORITE);
     }
   };
 
