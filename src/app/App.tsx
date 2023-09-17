@@ -51,7 +51,7 @@ function App() {
   useEffect(() => {
     if (!isUserOnline) {
       toast(TOAST_NO_INTERNET);
-      if (savedUserSchedule.table.group) {
+      if (savedUserSchedule?.table?.group) {
         dispatch(tableActions.setSchedule(savedUserSchedule));
       }
     }
