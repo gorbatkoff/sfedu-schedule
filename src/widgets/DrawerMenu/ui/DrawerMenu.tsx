@@ -19,7 +19,7 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   IS_BUTTONS_BLOCKED,
   USER_GROUP,
-} from "/src/shared/const/localStorageKeys";
+} from "/src/shared/const/localStorage/localStorageKeys";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { userGroupActions } from "/src/widgets/DrawerMenu/model/slice/userGroupSlice";
@@ -75,7 +75,7 @@ export function DrawerMenu() {
 
       if (data.payload.table) {
         setGroupId(data.payload.table.group);
-        localStorage.setItem("USER_SCHEDULE", data.payload);
+        /*        localStorage.setItem("USER_SCHEDULE", data.payload);*/
       }
       if (data.payload.choices) {
         setGroupId(data.payload.data.choices[0].group);
