@@ -20,7 +20,7 @@ import { useFetchGroupQuery } from "/src/features/SearchSchedule/api";
 
 const isUserOnline = navigator.onLine;
 
-function App() {
+const App = () => {
   const toast = useToast();
   const dispatch = useAppDispatch();
   const [queryParameters] = useSearchParams();
@@ -69,6 +69,6 @@ function App() {
       </div>
     </Suspense>
   );
-}
+};
 
 export default App;
