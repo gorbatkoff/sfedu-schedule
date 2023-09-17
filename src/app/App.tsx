@@ -33,7 +33,7 @@ function App() {
   }, [data]);
 
   const savedUserSchedule = JSON.parse(
-    localStorage.getItem(SAVED_SCHEDULE)!,
+    localStorage.getItem(SAVED_SCHEDULE) || "{}",
   ) as IScheduleTable;
 
   const renderColumnsByViewPort = () => {
@@ -51,7 +51,7 @@ function App() {
   useEffect(() => {
     if (!isUserOnline) {
       toast(TOAST_NO_INTERNET);
-      if (savedUserSchedule?.table?.group) {
+      if (savedUserSchedule?.table.group) {
         dispatch(tableActions.setSchedule(savedUserSchedule));
       }
     }
