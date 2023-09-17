@@ -34,6 +34,7 @@ import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
 import { useFetchGroupQuery } from "/src/features/SearchSchedule/api";
 
 import styles from "./ScheduleTable.module.scss";
+
 import {
   ADD_TO_FAVORITE_SUCCESS,
   REMOVE_FROM_FAVORITE,
@@ -41,8 +42,6 @@ import {
 
 interface TableProps {
   className?: string;
-  /*  schedule: IScheduleTable;
-  updateData: (data: IScheduleTable) => void;*/
 }
 
 export interface IFavoriteChoice {
@@ -50,7 +49,7 @@ export interface IFavoriteChoice {
   name: string;
 }
 
-export const ScheduleTable = memo(({ className }: TableProps) => {
+const ScheduleTable = memo(({ className }: TableProps) => {
   const textColor = useColorModeValue("black", "white");
   const toast = useToast();
   const { week: currentWeek } = useCurrentWeek();
@@ -223,3 +222,5 @@ export const ScheduleTable = memo(({ className }: TableProps) => {
     </div>
   );
 });
+
+export default ScheduleTable;

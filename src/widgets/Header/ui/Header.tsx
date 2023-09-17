@@ -21,13 +21,9 @@ export const Header = memo(({ className }: HeaderProps) => {
     window.history.replaceState(null, "group", window.location.pathname);
   };
 
-  const { colorMode } = useColorMode();
-
-  const schedule = useSelector((state: StateSchema) => state.schedule);
-
   return (
     <Box
-      bg={"var(--secondary-color)"}
+      bg="var(--secondary-color)"
       as="header"
       className={classNames(styles.Header, {}, [className])}
     >

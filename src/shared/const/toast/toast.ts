@@ -7,6 +7,7 @@ export const TOAST_NO_INTERNET: UseToastOptions = {
   duration: 6000,
   isClosable: true,
 };
+
 export const ADD_TO_FAVORITE_SUCCESS: UseToastOptions = {
   title: "Добавлено! ",
   description: "Успех! Данное расписание было добавлено в список избранных.",
@@ -14,6 +15,7 @@ export const ADD_TO_FAVORITE_SUCCESS: UseToastOptions = {
   duration: 3000,
   isClosable: true,
 };
+
 export const REMOVE_FROM_FAVORITE: UseToastOptions = {
   title: "Удалено!",
   description: "Данное расписание было удалено из списка избранных.",
@@ -21,6 +23,7 @@ export const REMOVE_FROM_FAVORITE: UseToastOptions = {
   duration: 3000,
   isClosable: true,
 };
+
 export const TOAST_SEARCH_REMOVED: UseToastOptions = {
   title: "Удалено",
   description: `Поиск был удалён!`,
@@ -44,6 +47,7 @@ export const VPK_SELECTED_SUCCESSFULLY: UseToastOptions = {
   duration: 3000,
   isClosable: true,
 };
+
 export const GROUP_SAVED_SUCCESSFULLY: UseToastOptions = {
   title: "Успешно!",
   description: "Вы успешно сохранили группу",

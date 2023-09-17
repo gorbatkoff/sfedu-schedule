@@ -7,7 +7,7 @@ import { ScheduleCard } from "/src/entities/ScheduleCard";
 import { lessonsTime } from "/src/shared/const/global/const";
 import { useEffect, useState } from "react";
 
-export const UpcomingLessons = () => {
+const UpcomingLessons = () => {
   const { week } = useCurrentWeek();
   const { colorMode } = useColorMode();
 
@@ -41,10 +41,13 @@ export const UpcomingLessons = () => {
   }, []);
 
   const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
+
   const { data, isLoading, status } = useFetchUpcomingLessonsQuery({
     group: userGroup.groupId,
     week: week,
   });
+
+  console.log("ЛЕРА СМОТРИ СЮДА", data);
 
   if (isLoading) {
     return (
@@ -82,3 +85,5 @@ export const UpcomingLessons = () => {
     </div>
   );
 };
+
+export default UpcomingLessons;

@@ -9,17 +9,14 @@ import MainColumns from "/src/shared/ui/MainColumns/MainColumns";
 import { Calendar } from "/src/entities/Calendar";
 import { ShowVPK } from "/src/widgets/ShowVPK";
 import { ScheduleCardsList } from "/src/widgets/ScheduleCardsList";
-import { UpcomingLessons } from "/src/entities/UpcomingLessons/ui/UpcomingLessons";
+import { UpcomingLessons } from "/src/entities/UpcomingLessons";
 import { useToast } from "@chakra-ui/react";
 import { TOAST_NO_INTERNET } from "/src/shared/const/toast/toast";
 import { SAVED_SCHEDULE } from "/src/shared/const/localStorage/localStorageKeys";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
 import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
-import {
-  useFetchGroupQuery,
-  useLazyFetchGroupQuery,
-} from "/src/features/SearchSchedule/api";
+import { useFetchGroupQuery } from "/src/features/SearchSchedule/api";
 
 const isUserOnline = navigator.onLine;
 
