@@ -6,8 +6,8 @@ import { VPKSchema } from "/src/features/SelectVPK/model/types/VPKSchema";
 import {
   USER_VPK,
   VPK_FROM_LOCALSTORAGE,
-} from "/src/shared/const/localStorageKeys";
-import { defaultValue } from "/src/shared/const";
+} from "/src/shared/const/localStorage/localStorageKeys";
+import { defaultValue } from "/src/shared/const/global/const";
 import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
 
 export const fetchVPK = createAsyncThunk(
