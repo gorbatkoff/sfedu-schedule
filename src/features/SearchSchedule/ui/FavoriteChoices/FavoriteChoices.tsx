@@ -57,7 +57,7 @@ export const FavoriteChoices = () => {
         return (
           <FavoriteChoice
             title={choice.name}
-            key={index}
+            key={choice.group}
             onClick={() => fetchGroup(choice.group)}
           />
         );
