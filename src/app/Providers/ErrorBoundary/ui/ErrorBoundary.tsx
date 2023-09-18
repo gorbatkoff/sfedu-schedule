@@ -18,6 +18,7 @@ class ErrorBoundary extends React.Component<
     super(props);
     this.state = { hasError: false };
   }
+  errorInfoText: any;
 
   static getDerivedStateFromError(error: Error) {
     // Обновить состояние с тем, чтобы следующий рендер показал запасной UI.
@@ -27,6 +28,7 @@ class ErrorBoundary extends React.Component<
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     // Можно также сохранить информацию об ошибке в соответствующую службу журнала ошибок
     console.log(error, errorInfo);
+    this.errorInfoText = error.message;
   }
 
   render() {
@@ -37,7 +39,7 @@ class ErrorBoundary extends React.Component<
       // Можно отрендерить запасной UI произвольного вида
       return (
         <Suspense fallback={<Loader />}>
-          <ErrorPage />
+          <ErrorPage error={this.errorInfoText} />
         </Suspense>
       );
     }
