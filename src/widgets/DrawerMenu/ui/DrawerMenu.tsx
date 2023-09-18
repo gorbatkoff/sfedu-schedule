@@ -25,6 +25,7 @@ import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { userGroupActions } from "/src/widgets/DrawerMenu/model/slice/userGroupSlice";
 import { fetchAndSaveUserGroup } from "/src/entities/ScheduleTable/model/slice/tableSlice";
 import {
+  ERROR_SETTING_DEFAULT_GROUP,
   GROUP_NOT_FOUND,
   GROUP_SAVED_SUCCESSFULLY,
 } from "/src/shared/const/toast/toast";
@@ -60,9 +61,13 @@ export function DrawerMenu() {
     checkGroupId();
   }, [groupId]);
 
-  const buttonHandler = () => {
-    fetchData();
-    setIsSetted(true);
+  const buttonHandler = async () => {
+    try {
+      await fetchData();
+      setIsSetted(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const toast = useToast();
@@ -81,16 +86,7 @@ export function DrawerMenu() {
 
       onClose();
     } catch (error) {
-      if (error instanceof Error) {
-        toast({
-          title: "Ошибка",
-          description: error.message,
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
-      }
-      console.log(error);
+      toast(ERROR_SETTING_DEFAULT_GROUP);
     }
   }
 
@@ -169,7 +165,7 @@ export function DrawerMenu() {
               <Button
                 colorScheme="blue"
                 onClick={buttonHandler}
-                isDisabled={isButtonBlocked}
+                isDisabled={isButtonBlocked || inputValue.length < 7}
               >
                 Сохранить
               </Button>

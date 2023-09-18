@@ -51,13 +51,15 @@ export const FavoriteChoices = memo(() => {
   }, [status]);
 
   return (
-    <div>
+    <div style={{ marginTop: "1em" }}>
       {favoriteChoices.map((choice, index) => {
         return (
           <FavoriteChoice
             title={choice.name}
             key={choice.group}
-            onClick={() => fetchGroup(choice.group)}
+            onClick={() => {
+              fetchGroup(choice.group);
+            }}
           />
         );
       })}

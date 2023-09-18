@@ -38,11 +38,19 @@ export const FavoriteChoice = memo(
           onClick={onClick}
           sx={{ justifyContent: "flex-start" }}
         >
-          <Heading size="md" color={colorMode}>
+          <Heading
+            size="md"
+            color={colorMode}
+            className={styles.favoriteChoiceHeader}
+          >
             {title}
           </Heading>
         </Button>
-        <IconButton aria-label="Избранный поиск" onClick={handleRemoveFavorite}>
+        <IconButton
+          aria-label="Избранный поиск"
+          onClick={handleRemoveFavorite}
+          className={styles.actionButton}
+        >
           <StarIcon color="yellow" />
         </IconButton>
       </div>

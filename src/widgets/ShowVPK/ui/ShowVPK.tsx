@@ -1,4 +1,4 @@
-import { memo, Suspense, useState } from "react";
+import { memo, Suspense, useCallback, useState } from "react";
 import { Box, Button } from "@chakra-ui/react";
 import Loader from "/src/shared/ui/Loader/Loader";
 import { SelectVPK } from "/src/features/SelectVPK";
@@ -10,9 +10,13 @@ export const ShowVPK = memo(() => {
 
   const schedule = useSelector((state: StateSchema) => state.schedule);
 
+  const handleHideVPKList = useCallback(() => {
+    setShowVPKGroups(false);
+  }, []);
+
   return (
     <div>
-      {!showVPKGroups && schedule.schedule.table.name && (
+      {!showVPKGroups && schedule?.schedule?.table?.name && (
         <Box sx={{ display: "flex", justifyContent: "center", margin: "1em" }}>
           <Button sx={{ m: 2 }} onClick={() => setShowVPKGroups(true)}>
             Выбрать ВПК
@@ -20,7 +24,7 @@ export const ShowVPK = memo(() => {
         </Box>
       )}
       <Suspense fallback={<Loader />}>
-        {showVPKGroups && <SelectVPK />}
+        {showVPKGroups && <SelectVPK handleHideVPKList={handleHideVPKList} />}
       </Suspense>
     </div>
   );

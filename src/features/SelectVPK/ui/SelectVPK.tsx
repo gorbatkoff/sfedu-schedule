@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo } from "react";
+import { FC, memo, useEffect, useMemo } from "react";
 
 import { Button, Heading, useToast } from "@chakra-ui/react";
 import { IVPK } from "/src/features/SelectVPK/model/types/VPK";
@@ -21,7 +21,11 @@ import {
   VPK_SELECTED_SUCCESSFULLY,
 } from "/src/shared/const/toast/toast";
 
-const SelectVPK = memo(() => {
+interface ISelectVPKProps {
+  handleHideVPKList: () => void;
+}
+
+const SelectVPK: FC<ISelectVPKProps> = memo(({ handleHideVPKList }) => {
   const toast = useToast();
   const { week } = useCurrentWeek();
 
@@ -76,6 +80,9 @@ const SelectVPK = memo(() => {
       <Heading as="h3" size="md">
         Установите группу ВПК
       </Heading>
+      <div className={styles.hideVPKList}>
+        <Button onClick={handleHideVPKList}>Скрыть</Button>
+      </div>
       <div className={styles.vpkList}>
         {filteredVPKList.map((item, index) => (
           <Button

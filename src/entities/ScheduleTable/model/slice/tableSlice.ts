@@ -136,6 +136,9 @@ export const tableSlice = createSlice({
       state.schedule = defaultValue;
       state.choices = null;
     },
+    setEmptyChoices: (state) => {
+      state.choices = null;
+    },
     setSchedule: (state, action: PayloadAction<IScheduleTable>) => {
       state.schedule = action.payload;
       state.choices = null;

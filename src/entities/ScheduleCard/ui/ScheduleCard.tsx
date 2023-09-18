@@ -8,6 +8,7 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
+  useColorMode,
 } from "@chakra-ui/react";
 // import { AccordionTheme } from "/src/shared/ui/Accordion/AccordionTheme";
 import { getInfoAboutElement } from "/src/shared/lib/getInfoAboutElement";
@@ -25,6 +26,7 @@ interface ScheduleCardProps {
 
 export const ScheduleCard = (props: ScheduleCardProps) => {
   const { className, lessonNumber: index, lessonTime, day, element } = props;
+  const { colorMode } = useColorMode();
 
   const groups =
     element.match(groupRegex) || element.match(subgroupRegex) || [];
@@ -55,8 +57,8 @@ export const ScheduleCard = (props: ScheduleCardProps) => {
           })
         ) : (
           <Accordion allowToggle>
-            <AccordionItem className={styles.accodion}>
-              <AccordionButton className={styles.accodionBtn}>
+            <AccordionItem className={styles.accordion}>
+              <AccordionButton className={styles.accordionBtn}>
                 <Box as="span" flex="1" textAlign="left">
                   Показать больше
                 </Box>

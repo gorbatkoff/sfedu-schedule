@@ -73,10 +73,11 @@ export const InputForm: FC<IInputFormProps> = memo(
           onClick={() => fetchByQuery(input, true)}
           className={styles.searchButton}
           isLoading={isLoading}
+          isDisabled={!input}
         >
           Поиск
         </Button>
       </div>
     );
-  }
+  },
 );

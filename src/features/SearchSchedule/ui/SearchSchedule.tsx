@@ -10,8 +10,8 @@ export const SearchSchedule = memo(() => {
   return (
     <div>
       <InputForm fetchByQuery={fetchByQuery} isLoading={isLoading} />
-      <FavoriteChoices />
       <QueryChoices data={data} />
+      <FavoriteChoices />
     </div>
   );
 });

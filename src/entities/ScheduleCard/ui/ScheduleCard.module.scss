@@ -51,11 +51,13 @@
   text-indent: 5px;
 }
 
-.accodion {
+.accordion {
   border-radius: var(--border-radius);
   background-color: #2c5282;
+  color: white
 }
 
-.accodionContent {
+.accordionContent {
   background-color: #2d3748;
+  color: white
 }

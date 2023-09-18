@@ -63,3 +63,11 @@ export const SELECT_VPK_ERROR: UseToastOptions = {
   duration: 3000,
   isClosable: true,
 };
+
+export const ERROR_SETTING_DEFAULT_GROUP: UseToastOptions = {
+  title: "Ошибка",
+  description: "Ошибка установки группы по умолчанию!",
+  status: "error",
+  duration: 3000,
+  isClosable: true,
+};

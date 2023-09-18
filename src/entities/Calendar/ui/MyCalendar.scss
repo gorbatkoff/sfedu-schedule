@@ -58,7 +58,7 @@
 
 .react-calendar__navigation button:enabled:hover,
 .react-calendar__navigation button:enabled:focus {
-  background-color: #e6e6e6;
+  background-color: var(--primary-color)
 }
 
 .react-calendar__month-view__weekdays {

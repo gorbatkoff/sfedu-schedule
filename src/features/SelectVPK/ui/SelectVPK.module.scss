@@ -1,6 +1,7 @@
 .SelectVPK {
   max-width: var(--app-width);
   margin: 5vh auto;
+  padding: 0 15px;
 
   h3 {
     text-align: center;
@@ -10,10 +11,20 @@
   }
 }
 
+.hideVPKList {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
+
+  button {
+    width:100%;
+  }
+}
+
 .vpkList {
   margin: 0 auto;
   color: #fff;
-  padding: 5vh 0;
+  padding: 2vh 0;
   display: grid;
   gap: 1em;
   grid-template-columns: repeat(auto-fit, 128px);
