@@ -13,10 +13,10 @@
 .vpkList {
   margin: 0 auto;
   color: #fff;
-  padding: 5vh 8vw;
+  padding: 5vh 0;
   display: grid;
   gap: 1em;
-  grid-template-columns: repeat(auto-fit, 150px);
+  grid-template-columns: repeat(auto-fit, 128px);
   justify-content: space-between;
 
   button:disabled {
@@ -24,4 +24,3 @@
     opacity: 1;
   }
 }
-
