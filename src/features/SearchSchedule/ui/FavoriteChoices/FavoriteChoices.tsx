@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import { FavoriteChoice } from "/src/shared/ui/FavoriteChoice/FavoriteChoice";
@@ -8,10 +8,10 @@ import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
 
-export const FavoriteChoices = () => {
+export const FavoriteChoices = memo(() => {
   const favoriteChoices = useSelector(getFavoriteSearch);
 
-  const [fetchGroup, { data, isLoading, status }] = useLazyFetchGroupQuery();
+  const [fetchGroup, { data, status }] = useLazyFetchGroupQuery();
 
   const dispatch = useAppDispatch();
 
@@ -20,7 +20,6 @@ export const FavoriteChoices = () => {
   }
 
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
-  const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
 
   const mergeVPKAndSchedule = () => {
     const header = data.table.table.slice(0, 2);
@@ -64,4 +63,4 @@ export const FavoriteChoices = () => {
       })}
     </div>
   );
-};
+});

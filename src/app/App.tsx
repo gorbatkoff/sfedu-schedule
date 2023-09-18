@@ -48,8 +48,6 @@ const App = () => {
     return <SearchSchedule />;
   };
 
-  console.log(savedUserSchedule?.table?.group);
-
   useEffect(() => {
     if (!isUserOnline) {
       toast(TOAST_NO_INTERNET);

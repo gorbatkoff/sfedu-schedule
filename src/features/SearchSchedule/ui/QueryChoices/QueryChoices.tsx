@@ -1,13 +1,14 @@
-import { FC, useEffect } from "react";
+import { FC, memo, useEffect } from "react";
 
 import { Button } from "@chakra-ui/react";
-import { IChoices } from "/src/features/SearchSchedule";
+
+import { IChoice, IChoices } from "/src/features/SearchSchedule";
+import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+import { useLazyFetchGroupQuery } from "/src/features/SearchSchedule/api";
 import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
+import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
 
 import styles from "../SearchSchedule.module.scss";
-import { useLazyFetchGroupQuery } from "/src/features/SearchSchedule/api";
-import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
 
 interface INoData {
   result: "no_entries";
@@ -17,7 +18,7 @@ interface IQueryChoicesProps {
   data: IChoices | IScheduleTable | INoData;
 }
 
-export const QueryChoices: FC<IQueryChoicesProps> = ({ data }) => {
+export const QueryChoices: FC<IQueryChoicesProps> = memo(({ data }) => {
   const [fetchChoice, { data: response, isLoading, status }] =
     useLazyFetchGroupQuery();
 
@@ -46,11 +47,11 @@ export const QueryChoices: FC<IQueryChoicesProps> = ({ data }) => {
 
   return (
     <div className={styles.choices}>
-      {data.choices.map((choice, index) => {
+      {data.choices.map((choice: IChoice) => {
         return (
           <Button
             className={styles.choice}
-            key={index}
+            key={choice.id}
             onClick={() => {
               fetchChoice(choice.group, true);
             }}
@@ -61,4 +62,4 @@ export const QueryChoices: FC<IQueryChoicesProps> = ({ data }) => {
       })}
     </div>
   );
-};
+});
