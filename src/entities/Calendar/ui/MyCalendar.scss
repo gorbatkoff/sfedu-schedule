@@ -53,7 +53,7 @@
 }
 
 .react-calendar__navigation button:disabled {
-  background-color: #f0f0f0;
+  background-color: var(--primary-color);
 }
 
 .react-calendar__navigation button:enabled:hover,
@@ -103,7 +103,7 @@
 }
 
 .react-calendar__tile:disabled {
-  background-color: #f0f0f0;
+  background-color: var(--primary-color)
 }
 
 .react-calendar__tile:enabled:hover,
