@@ -125,6 +125,11 @@ export function DrawerMenu() {
     }
   };
 
+  const handleAllowEdit = () => {
+    setButtonBlocked(false);
+    setInputBlocked(false);
+  };
+
   return (
     <>
       <HamburgerIcon
@@ -170,6 +175,12 @@ export function DrawerMenu() {
                 Сохранить
               </Button>
             </InputGroup>
+            <Button
+              onClick={handleAllowEdit}
+              sx={{ width: "100%", m: "1em 0" }}
+            >
+              Редактировать
+            </Button>
           </DrawerBody>
 
           <DrawerFooter>
