@@ -96,6 +96,8 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
       (item: IFavoriteChoice) => item.name === schedule.table?.name,
     ).length > 0;
 
+  console.log(favoriteChoices);
+
   const handleFavoriteSearch = (schedule: IScheduleTable) => {
     const favoriteSearch = {
       group: schedule.table.group,

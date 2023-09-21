@@ -45,7 +45,7 @@ export const InputForm: FC<IInputFormProps> = memo(
     }, 500);
 
     useEffect(() => {
-      input !== "" && debounceInput();
+      input.trim() !== "" && debounceInput();
     }, [input]);
 
     return (

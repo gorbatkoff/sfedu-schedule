@@ -49,10 +49,10 @@ export const VPK_SELECTED_SUCCESSFULLY: UseToastOptions = {
 };
 
 export const GROUP_SAVED_SUCCESSFULLY: UseToastOptions = {
-  title: "Успешно!",
-  description: "Вы успешно сохранили группу",
+  title: "Вы успешно сохранили группу!",
+  description: "Теперь вы можете просматривать расписание без интернета! 😊",
   status: "success",
-  duration: 3000,
+  duration: 4000,
   isClosable: true,
 };
 
@@ -65,8 +65,8 @@ export const SELECT_VPK_ERROR: UseToastOptions = {
 };
 
 export const ERROR_SETTING_DEFAULT_GROUP: UseToastOptions = {
-  title: "Ошибка",
-  description: "Ошибка установки группы по умолчанию!",
+  title: "Ошибка при установке группы!",
+  description: "Возможно такой группы не существует.",
   status: "error",
   duration: 3000,
   isClosable: true,

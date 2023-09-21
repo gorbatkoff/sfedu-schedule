@@ -78,10 +78,13 @@ export function DrawerMenu() {
 
       if (data.payload.table) {
         setGroupId(data.payload.table.group);
-        /*        localStorage.setItem("USER_SCHEDULE", data.payload);*/
       }
       if (data.payload.choices) {
         setGroupId(data.payload.data.choices[0].group);
+      }
+
+      if (data?.payload?.result === "no_entries") {
+        throw new Error();
       }
 
       onClose();
@@ -112,13 +115,14 @@ export function DrawerMenu() {
   };
 
   const saveInputValue = () => {
+    console.log(inputValue);
+
     if (
       inputValue.length >= 7 &&
       inputValue.length <= 8 &&
       inputValue.startsWith("КТ")
     ) {
       dispatch(userGroupActions.setUserGroup({ name: inputValue, groupId }));
-
       setButtonBlocked(true);
       setInputBlocked(true);
       toast(GROUP_SAVED_SUCCESSFULLY);
@@ -126,6 +130,7 @@ export function DrawerMenu() {
   };
 
   const handleAllowEdit = () => {
+    console.log("called");
     setButtonBlocked(false);
     setInputBlocked(false);
   };
