@@ -71,3 +71,11 @@ export const ERROR_SETTING_DEFAULT_GROUP: UseToastOptions = {
   duration: 3000,
   isClosable: true,
 };
+
+export const HELPFUL_MESSAGE: UseToastOptions = {
+  title: "Группы были изменены!",
+  description: "ИКТИБ сменил ID групп. Проверьте свой список избранных!",
+  status: "warning",
+  duration: 10000,
+  isClosable: true,
+};
