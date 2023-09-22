@@ -24,6 +24,7 @@ const App = () => {
   const toast = useToast();
   const dispatch = useAppDispatch();
   const [queryParameters] = useSearchParams();
+  // add 1 more parameter for this query. e.g. getting user group from L. S.
   const { data } = useFetchGroupQuery(queryParameters.get("group") || "");
 
   useEffect(() => {
