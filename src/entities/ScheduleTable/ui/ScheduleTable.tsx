@@ -4,11 +4,14 @@ import { useSelector } from "react-redux";
 import classNames from "classnames";
 
 import { fetchVPKByWeek } from "/src/features/SelectVPK";
-import { IScheduleTable } from "/src/entities/ScheduleTable";
-import { getScheduleTable } from "/src/entities/ScheduleTable";
-import { favoriteSearchActions } from "/src/entities/ScheduleTable";
+import {
+  favoriteSearchActions,
+  fetchScheduleByWeek,
+  getScheduleTable,
+  IScheduleTable,
+  tableActions,
+} from "/src/entities/ScheduleTable";
 import TableCell from "/src/entities/ScheduleTable/ui/TableCell/TableCell";
-import { fetchScheduleByWeek, tableActions } from "/src/entities/ScheduleTable";
 import { StarIcon } from "@chakra-ui/icons";
 import {
   Button,

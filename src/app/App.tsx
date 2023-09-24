@@ -16,7 +16,10 @@ import {
 import { UpcomingLessons } from "/src/entities/UpcomingLessons";
 import Loader from "/src/shared/ui/Loader/Loader";
 import MainColumns from "/src/shared/ui/MainColumns/MainColumns";
-import { TOAST_NO_INTERNET } from "/src/shared/const/toast/toast";
+import {
+  HELPFUL_MESSAGE,
+  TOAST_NO_INTERNET,
+} from "/src/shared/const/toast/toast";
 import {
   SAVED_SCHEDULE,
   USER_GROUP,

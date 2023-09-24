@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IFavoriteChoice } from "/src/entities/ScheduleTable/ui/ScheduleTable";
+import { IFavoriteChoice } from "/src/entities/ScheduleTable";
 import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorage/localStorageKeys";
 
 const initialState: IFavoriteChoice[] = JSON.parse(
