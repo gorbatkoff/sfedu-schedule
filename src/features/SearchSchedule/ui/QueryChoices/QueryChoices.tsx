@@ -1,15 +1,15 @@
 import { FC, memo, useEffect } from "react";
 
 import { Button, useToast } from "@chakra-ui/react";
-
 import { IChoice, IChoices, searchApi } from "/src/features/SearchSchedule";
+import { tableActions } from "/src/entities/ScheduleTable";
+import { IScheduleTable } from "/src/entities/ScheduleTable";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+
+import { GROUP_FETCH_SUCCESS } from "/src/shared/const/toast/toast";
 import { useLazyFetchGroupQuery } from "/src/features/SearchSchedule/api";
-import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
-import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
 
 import styles from "../SearchSchedule.module.scss";
-import { GROUP_FETCH_SUCCESS } from "/src/shared/const/toast/toast";
 
 interface INoData {
   result: "no_entries";
@@ -31,7 +31,7 @@ export const QueryChoices: FC<IQueryChoicesProps> = memo(
         window.history.pushState(
           null,
           "group",
-          `/?group=${response?.table?.group}`,
+          `/?group=${response?.table?.group}`
         );
         dispatch(tableActions.setSchedule(response));
         dispatch(searchApi.util?.resetApiState());
@@ -71,5 +71,5 @@ export const QueryChoices: FC<IQueryChoicesProps> = memo(
         })}
       </div>
     );
-  },
+  }
 );

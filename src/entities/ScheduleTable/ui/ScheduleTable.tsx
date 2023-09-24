@@ -1,6 +1,15 @@
 import { memo, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import classNames from "classnames";
+
+import { fetchVPKByWeek } from "/src/features/SelectVPK";
+import { IScheduleTable } from "/src/entities/ScheduleTable";
+import { getScheduleTable } from "/src/entities/ScheduleTable";
+import { favoriteSearchActions } from "/src/entities/ScheduleTable";
+import TableCell from "/src/entities/ScheduleTable/ui/TableCell/TableCell";
+import { fetchScheduleByWeek, tableActions } from "/src/entities/ScheduleTable";
+import { StarIcon } from "@chakra-ui/icons";
 import {
   Button,
   Heading,
@@ -14,23 +23,11 @@ import {
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
-import TableCell from "/src/entities/ScheduleTable/ui/TableCell/TableCell";
-
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
-import { StarIcon } from "@chakra-ui/icons";
+import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
 
-import { useSelector } from "react-redux";
-import { getScheduleTable } from "/src/entities/ScheduleTable/model/selectors/getSchedule";
-import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import {
-  fetchScheduleByWeek,
-  tableActions,
-} from "/src/entities/ScheduleTable/model/slice/tableSlice";
-import { favoriteSearchActions } from "/src/entities/ScheduleTable/model/slice/favoriteSearchSlice";
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
-import { fetchVPKByWeek } from "/src/features/SelectVPK/model/slice/selectVPKSlice";
-import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
 
 import styles from "./ScheduleTable.module.scss";
 
@@ -43,18 +40,13 @@ interface TableProps {
   className?: string;
 }
 
-export interface IFavoriteChoice {
-  group: string;
-  name: string;
-}
-
 const ScheduleTable = memo(({ className }: TableProps) => {
   const textColor = useColorModeValue("black", "white");
   const toast = useToast();
   const { week: currentWeek } = useCurrentWeek();
   const dispatch = useAppDispatch();
   const favoriteChoices = useSelector(
-    (state: StateSchema) => state.favoriteSearch,
+    (state: StateSchema) => state.favoriteSearch
   );
   const schedule = useSelector(getScheduleTable);
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
@@ -110,7 +102,7 @@ const ScheduleTable = memo(({ className }: TableProps) => {
       toast(ADD_TO_FAVORITE_SUCCESS);
     } else if (isFavorite) {
       dispatch(
-        favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name),
+        favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name)
       );
       toast(REMOVE_FROM_FAVORITE);
     }
@@ -126,7 +118,7 @@ const ScheduleTable = memo(({ className }: TableProps) => {
       fetchScheduleByWeek({
         week: week,
         group: schedule.table.group,
-      }),
+      })
     );
 
     await dispatch(
@@ -137,7 +129,7 @@ const ScheduleTable = memo(({ className }: TableProps) => {
           name: "", // should be fixed
           id: "",
         },
-      }),
+      })
     );
   };
 

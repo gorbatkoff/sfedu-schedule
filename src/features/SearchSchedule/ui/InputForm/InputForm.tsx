@@ -16,6 +16,7 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
+
 import { useDebounce } from "/src/shared/hooks/useDebounce";
 
 import styles from "../SearchSchedule.module.scss";
@@ -79,5 +80,5 @@ export const InputForm: FC<IInputFormProps> = memo(
         </Button>
       </div>
     );
-  },
+  }
 );

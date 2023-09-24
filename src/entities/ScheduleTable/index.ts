@@ -6,3 +6,4 @@ export * from "./model/slice/tableSlice";
 export * from "./model/slice/favoriteSearchSlice";
 export * from "./model/types/Table";
 export * from "./model/types/FavoriteSearch";
+export * from "./model/types/FavoriteChoice";

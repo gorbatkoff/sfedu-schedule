@@ -1,4 +1,5 @@
 import { FC, memo, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import {
   Button,
@@ -9,28 +10,31 @@ import {
 } from "@chakra-ui/react";
 import classNames from "classnames";
 
-import { ScheduleCard } from "/src/entities/ScheduleCard";
-import { weekDays } from "/src/shared/const/global/const";
-
-import styles from "./ScheduleCardsList.module.scss";
-import { Carousel } from "/src/features/Carousel/Carousel";
-import { StarIcon } from "@chakra-ui/icons";
-import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
-import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorage/localStorageKeys";
-import { useSelector } from "react-redux";
-import { getScheduleTable } from "/src/entities/ScheduleTable/model/selectors/getSchedule";
-import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
-import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import { favoriteSearchActions } from "/src/entities/ScheduleTable/model/slice/favoriteSearchSlice";
-import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
-import { IFavoriteChoice } from "/src/entities/ScheduleTable/ui/ScheduleTable";
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
-import { fetchVPKByWeek } from "/src/features/SelectVPK/model/slice/selectVPKSlice";
-import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
+
+import { StarIcon } from "@chakra-ui/icons";
+import { fetchVPKByWeek } from "/src/features/SelectVPK";
+import { Carousel } from "/src/features/Carousel/Carousel";
+import { ScheduleCard } from "/src/entities/ScheduleCard";
+import { tableActions } from "/src/entities/ScheduleTable";
+import { IScheduleTable } from "/src/entities/ScheduleTable";
+import { IFavoriteChoice } from "/src/entities/ScheduleTable";
+import { getScheduleTable } from "/src/entities/ScheduleTable";
+import { favoriteSearchActions } from "/src/entities/ScheduleTable";
+
+import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
+
 import {
   ADD_TO_FAVORITE_SUCCESS,
   REMOVE_FROM_FAVORITE,
 } from "/src/shared/const/toast/toast";
+import { weekDays } from "/src/shared/const/global/const";
+import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorage/localStorageKeys";
+
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
+import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+
+import styles from "./ScheduleCardsList.module.scss";
 
 interface TableProps {
   className?: string;

@@ -3,13 +3,16 @@ import classNames from "classnames";
 
 import { Box, IconButton } from "@chakra-ui/react";
 
-import { Logo } from "/src/shared/ui/Logo/Logo";
 import { DrawerMenu } from "/src/widgets/DrawerMenu";
+import { tableActions } from "/src/entities/ScheduleTable";
+import { Logo } from "/src/shared/ui/Logo/Logo";
 import { ThemeSwitcher } from "/src/shared/ui/ThemeSwitcher/ThemeSwitcher";
-import styles from "./Header.module.scss";
-import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
+
 import { defaultValue } from "/src/shared/const/global/const";
+
+import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+
+import styles from "./Header.module.scss";
 
 interface HeaderProps {
   className?: string;

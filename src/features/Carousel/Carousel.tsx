@@ -1,20 +1,19 @@
 import { FC, memo, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
+
 import classNames from "classnames";
 
+import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+
+import { fetchVPKByWeek } from "/src/features/SelectVPK";
+import { getSchedule } from "/src/entities/ScheduleTable";
+import { fetchScheduleByWeek, tableActions } from "/src/entities/ScheduleTable";
 import { Button } from "@chakra-ui/react";
 
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import {
-  fetchScheduleByWeek,
-  tableActions,
-} from "/src/entities/ScheduleTable/model/slice/tableSlice";
 
 import styles from "./Carousel.module.scss";
-import { fetchVPKByWeek } from "/src/features/SelectVPK/model/slice/selectVPKSlice";
-import { useSelector } from "react-redux";
-import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
-import { getSchedule } from "/src/entities/ScheduleTable/model/selectors/getSchedule";
 
 interface CarouselProps {
   carouselItems: number[];
@@ -76,5 +75,5 @@ export const Carousel: FC<CarouselProps> = memo(
         })}
       </div>
     );
-  },
+  }
 );

@@ -10,7 +10,6 @@ import {
   Box,
   useColorMode,
 } from "@chakra-ui/react";
-// import { AccordionTheme } from "/src/shared/ui/Accordion/AccordionTheme";
 import { getInfoAboutElement } from "/src/shared/lib/getInfoAboutElement";
 import { auditoryLMSRegex, groupRegex, subgroupRegex } from "/src/shared/regex";
 

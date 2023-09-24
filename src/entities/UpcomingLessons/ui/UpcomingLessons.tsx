@@ -1,11 +1,15 @@
-import styles from "./UpcomingLessons.module.scss";
-import { useFetchUpcomingLessonsQuery } from "../api";
-import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
-import { USER_GROUP } from "/src/shared/const/localStorage/localStorageKeys";
-import { Skeleton, Stack, useColorMode } from "@chakra-ui/react";
-import { ScheduleCard } from "/src/entities/ScheduleCard";
-import { lessonsTime } from "/src/shared/const/global/const";
 import { useEffect, useState } from "react";
+
+import { ScheduleCard } from "/src/entities/ScheduleCard";
+import { Skeleton, Stack, useColorMode } from "@chakra-ui/react";
+
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
+import { lessonsTime } from "/src/shared/const/global/const";
+import { USER_GROUP } from "/src/shared/const/localStorage/localStorageKeys";
+
+import { useFetchUpcomingLessonsQuery } from "../api";
+
+import styles from "./UpcomingLessons.module.scss";
 
 const UpcomingLessons = () => {
   const { week } = useCurrentWeek();

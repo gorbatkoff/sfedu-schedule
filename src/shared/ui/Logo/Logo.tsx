@@ -2,9 +2,9 @@ import { memo } from "react";
 import classNames from "classnames";
 
 import LogoIcon from "/src/shared/assets/Logo.svg";
+import { Heading, useColorMode } from "@chakra-ui/react";
 
 import styles from "./Logo.module.scss";
-import { Heading, useColorMode } from "@chakra-ui/react";
 
 interface LogoProps {
   className?: string;

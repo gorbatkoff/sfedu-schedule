@@ -16,19 +16,21 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import {
-  IS_BUTTONS_BLOCKED,
-  USER_GROUP,
-} from "/src/shared/const/localStorage/localStorageKeys";
-import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
-import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import { userGroupActions } from "/src/widgets/DrawerMenu/model/slice/userGroupSlice";
-import { fetchAndSaveUserGroup } from "/src/entities/ScheduleTable/model/slice/tableSlice";
+import { userGroupActions } from "/src/widgets/DrawerMenu";
+import { fetchAndSaveUserGroup } from "/src/entities/ScheduleTable";
+
 import {
   ERROR_SETTING_DEFAULT_GROUP,
   GROUP_NOT_FOUND,
   GROUP_SAVED_SUCCESSFULLY,
 } from "/src/shared/const/toast/toast";
+import {
+  IS_BUTTONS_BLOCKED,
+  USER_GROUP,
+} from "/src/shared/const/localStorage/localStorageKeys";
+
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
+import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 
 const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 const isButtonBlock =
