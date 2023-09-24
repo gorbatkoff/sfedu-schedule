@@ -46,7 +46,7 @@ const ScheduleTable = memo(({ className }: TableProps) => {
   const { week: currentWeek } = useCurrentWeek();
   const dispatch = useAppDispatch();
   const favoriteChoices = useSelector(
-    (state: StateSchema) => state.favoriteSearch
+    (state: StateSchema) => state.favoriteSearch,
   );
   const schedule = useSelector(getScheduleTable);
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
@@ -102,7 +102,7 @@ const ScheduleTable = memo(({ className }: TableProps) => {
       toast(ADD_TO_FAVORITE_SUCCESS);
     } else if (isFavorite) {
       dispatch(
-        favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name)
+        favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name),
       );
       toast(REMOVE_FROM_FAVORITE);
     }
@@ -118,7 +118,7 @@ const ScheduleTable = memo(({ className }: TableProps) => {
       fetchScheduleByWeek({
         week: week,
         group: schedule.table.group,
-      })
+      }),
     );
 
     await dispatch(
@@ -129,7 +129,7 @@ const ScheduleTable = memo(({ className }: TableProps) => {
           name: "", // should be fixed
           id: "",
         },
-      })
+      }),
     );
   };
 

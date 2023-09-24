@@ -75,5 +75,5 @@ export const Carousel: FC<CarouselProps> = memo(
         })}
       </div>
     );
-  }
+  },
 );

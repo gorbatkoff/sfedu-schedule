@@ -33,7 +33,7 @@ const App = () => {
   const [queryParameters] = useSearchParams();
   const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
   const { data } = useFetchGroupQuery(
-    queryParameters.get("group") || userGroup?.groupId || ""
+    queryParameters.get("group") || userGroup?.groupId || "",
   );
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const App = () => {
   }, [data]);
 
   const savedUserSchedule = JSON.parse(
-    localStorage.getItem(SAVED_SCHEDULE) || "{}"
+    localStorage.getItem(SAVED_SCHEDULE) || "{}",
   ) as IScheduleTable;
 
   const renderColumnsByViewPort = () => {

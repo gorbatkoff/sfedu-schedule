@@ -31,7 +31,7 @@ export const QueryChoices: FC<IQueryChoicesProps> = memo(
         window.history.pushState(
           null,
           "group",
-          `/?group=${response?.table?.group}`
+          `/?group=${response?.table?.group}`,
         );
         dispatch(tableActions.setSchedule(response));
         toast(GROUP_FETCH_SUCCESS(response?.table?.name));
@@ -70,5 +70,5 @@ export const QueryChoices: FC<IQueryChoicesProps> = memo(
         })}
       </div>
     );
-  }
+  },
 );

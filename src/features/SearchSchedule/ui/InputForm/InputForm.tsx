@@ -80,5 +80,5 @@ export const InputForm: FC<IInputFormProps> = memo(
         </Button>
       </div>
     );
-  }
+  },
 );
