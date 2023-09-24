@@ -51,7 +51,7 @@ const SelectVPK: FC<ISelectVPKProps> = memo(({ handleHideVPKList }) => {
     const mergedSchedule = slicedSchedule.map((row, rowIndex) => {
       return row.map((item, itemIndex) => {
         if (item.includes("Дисциплины ВПК")) {
-          item = slicedVPK[rowIndex][itemIndex];
+          item = slicedVPK[rowIndex][Number(itemIndex)];
           return item;
         }
         return item;

@@ -8,10 +8,10 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
+import { favoriteSearchActions } from "/src/entities/ScheduleTable";
 
 import { TOAST_SEARCH_REMOVED } from "/src/shared/const/toast/toast";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import { favoriteSearchActions } from "/src/entities/ScheduleTable/model/slice/favoriteSearchSlice";
 
 import styles from "./FavoriteChoice.module.scss";
 

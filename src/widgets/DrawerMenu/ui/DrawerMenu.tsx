@@ -16,19 +16,21 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import {
-  IS_BUTTONS_BLOCKED,
-  USER_GROUP,
-} from "/src/shared/const/localStorage/localStorageKeys";
-import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
-import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import { userGroupActions } from "/src/widgets/DrawerMenu/model/slice/userGroupSlice";
-import { fetchAndSaveUserGroup } from "/src/entities/ScheduleTable/model/slice/tableSlice";
+import { userGroupActions } from "/src/widgets/DrawerMenu";
+import { fetchAndSaveUserGroup } from "/src/entities/ScheduleTable";
+
 import {
   ERROR_SETTING_DEFAULT_GROUP,
   GROUP_NOT_FOUND,
   GROUP_SAVED_SUCCESSFULLY,
 } from "/src/shared/const/toast/toast";
+import {
+  IS_BUTTONS_BLOCKED,
+  USER_GROUP,
+} from "/src/shared/const/localStorage/localStorageKeys";
+
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
+import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 
 const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 const isButtonBlock =
@@ -78,14 +80,19 @@ export function DrawerMenu() {
 
       if (data.payload.table) {
         setGroupId(data.payload.table.group);
-        /*        localStorage.setItem("USER_SCHEDULE", data.payload);*/
       }
-      if (data.payload.choices) {
-        setGroupId(data.payload.data.choices[0].group);
+
+      if (data.payload?.choices) {
+        setGroupId(data.payload.choices[0].group);
+      }
+
+      if (data?.payload?.result === "no_entries") {
+        throw new Error();
       }
 
       onClose();
     } catch (error) {
+      console.log(error);
       toast(ERROR_SETTING_DEFAULT_GROUP);
     }
   }
@@ -118,11 +125,15 @@ export function DrawerMenu() {
       inputValue.startsWith("КТ")
     ) {
       dispatch(userGroupActions.setUserGroup({ name: inputValue, groupId }));
-
       setButtonBlocked(true);
       setInputBlocked(true);
       toast(GROUP_SAVED_SUCCESSFULLY);
     }
+  };
+
+  const handleAllowEdit = () => {
+    setButtonBlocked(false);
+    setInputBlocked(false);
   };
 
   return (
@@ -170,6 +181,12 @@ export function DrawerMenu() {
                 Сохранить
               </Button>
             </InputGroup>
+            <Button
+              onClick={handleAllowEdit}
+              sx={{ width: "100%", m: "1em 0" }}
+            >
+              Редактировать
+            </Button>
           </DrawerBody>
 
           <DrawerFooter>

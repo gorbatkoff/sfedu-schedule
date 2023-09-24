@@ -1,5 +1,5 @@
 import { USER_FAVORITE_SEARCH } from "../const/localStorage/localStorageKeys";
-import { IFavoriteChoice } from "/src/entities/ScheduleTable/ui/ScheduleTable";
+import { IFavoriteChoice } from "/src/entities/ScheduleTable";
 
 export const addSearchToFavorite = (
   favoriteSearch: IFavoriteChoice,

@@ -1,9 +1,11 @@
 import { memo, Suspense, useCallback, useState } from "react";
-import { Box, Button } from "@chakra-ui/react";
-import Loader from "/src/shared/ui/Loader/Loader";
-import { SelectVPK } from "/src/features/SelectVPK";
 import { useSelector } from "react-redux";
+
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+
+import { Box, Button } from "@chakra-ui/react";
+import { SelectVPK } from "/src/features/SelectVPK";
+import Loader from "/src/shared/ui/Loader/Loader";
 
 export const ShowVPK = memo(() => {
   const [showVPKGroups, setShowVPKGroups] = useState(false);
