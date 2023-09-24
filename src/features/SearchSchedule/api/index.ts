@@ -4,7 +4,6 @@ import { __API_URL__ } from "/src/shared/api/api";
 export const searchApi = createApi({
   reducerPath: "searchApi",
   baseQuery: fetchBaseQuery({ baseUrl: __API_URL__ }),
-  tagTypes: ["DATA"],
   endpoints: (builder) => ({
     fetchChoices: builder.query({
       query: (query: string) => `/?query=${query}`,
