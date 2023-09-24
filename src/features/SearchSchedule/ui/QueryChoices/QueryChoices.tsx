@@ -34,7 +34,6 @@ export const QueryChoices: FC<IQueryChoicesProps> = memo(
           `/?group=${response?.table?.group}`
         );
         dispatch(tableActions.setSchedule(response));
-        dispatch(searchApi.util?.resetApiState());
         toast(GROUP_FETCH_SUCCESS(response?.table?.name));
       }
     }, [status]);

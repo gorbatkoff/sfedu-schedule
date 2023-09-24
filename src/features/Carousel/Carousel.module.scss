@@ -1,3 +1,7 @@
+.CarouselWrapper {
+  display: flex;
+}
+
 .Carousel {
   display: flex;
   overflow-x: scroll;
@@ -17,6 +21,6 @@
 
 .weekButton:disabled {
   background: #4e776a;
-  color: black;
-  opacity: 1;
+  opacity: 1 !important;
 }
+

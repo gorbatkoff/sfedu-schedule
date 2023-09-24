@@ -22,6 +22,11 @@
   column-gap: 1em;
 }
 
+.weekDayButton:disabled {
+  background: #4e776a;
+  opacity: 1 !important;
+}
+
 .groupTitle {
   text-align: center;
 }
@@ -40,3 +45,4 @@
   font-weight: bold;
   border: 3px dashed var(--chakra-colors-gray-300);
 }
+
