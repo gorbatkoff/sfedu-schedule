@@ -1,10 +1,34 @@
-import { useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 
 import styles from "./ErrorPage.module.scss";
 
-export const ErrorPage = () => {
+interface IErrorPageProps {
+  error: string;
+}
+
+export const ErrorPage: FC<IErrorPageProps> = ({ error }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [isMessageSent, setMessageSent] = useState<boolean>(false);
+  const token = "6609085481:AAFdsGSUbKzsM_zB-pEz9x5j809R2CnTM5U";
+  const chat_id = "-1001670491337";
+
+  const immediatelySendRequest = async () => {
+    const errorText = sessionStorage.getItem("ERROR");
+
+    try {
+      if (!window.location.href.includes("localhost")) {
+        await fetch(
+          `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&parse_mode=html&text=${errorText}`,
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    immediatelySendRequest();
+  }, []);
 
   const handleSendMessage = async () => {
     if (inputRef.current?.value.length === 0) return;
@@ -14,8 +38,6 @@ export const ErrorPage = () => {
       inputRef.current?.value;
 
     try {
-      const token = "6609085481:AAFdsGSUbKzsM_zB-pEz9x5j809R2CnTM5U";
-      const chat_id = "-1001670491337";
       await fetch(
         `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&parse_mode=html&text=${messageText}`,
       );
@@ -24,7 +46,7 @@ export const ErrorPage = () => {
 
       setTimeout(() => {
         window.location.href = "/";
-      }, 10000);
+      }, 4000);
     } catch (error) {
       console.log(error);
     }
@@ -53,7 +75,7 @@ export const ErrorPage = () => {
             </h2>
 
             <p>
-              Через 10 секунд вы будете перенаправлены на главную страницу..
+              Через 4 секунды вы будете перенаправлены на главную страницу..
             </p>
           </div>
         )}

@@ -1,4 +1,5 @@
 import { FC, memo, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import {
   Button,
@@ -9,45 +10,57 @@ import {
 } from "@chakra-ui/react";
 import classNames from "classnames";
 
-import { ScheduleCard } from "/src/entities/ScheduleCard";
-import { weekDays } from "/src/shared/const/global/const";
-
-import styles from "./ScheduleCardsList.module.scss";
-import Carousel from "/src/features/Carousel/Carousel";
-import { StarIcon } from "@chakra-ui/icons";
-import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
-import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorage/localStorageKeys";
-import { useSelector } from "react-redux";
-import { getScheduleTable } from "/src/entities/ScheduleTable/model/selectors/getSchedule";
-import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
-import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import { favoriteSearchActions } from "/src/entities/ScheduleTable/model/slice/favoriteSearchSlice";
-import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
-import { IFavoriteChoice } from "/src/entities/ScheduleTable/ui/ScheduleTable";
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
-import { fetchVPKByWeek } from "/src/features/SelectVPK/model/slice/selectVPKSlice";
-import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
+
+import { StarIcon } from "@chakra-ui/icons";
+import { fetchVPKByWeek } from "/src/features/SelectVPK";
+import { Carousel } from "/src/features/Carousel/Carousel";
+import { ScheduleCard } from "/src/entities/ScheduleCard";
+import { tableActions } from "/src/entities/ScheduleTable";
+import { IScheduleTable } from "/src/entities/ScheduleTable";
+import { IFavoriteChoice } from "/src/entities/ScheduleTable";
+import { getScheduleTable } from "/src/entities/ScheduleTable";
+import { favoriteSearchActions } from "/src/entities/ScheduleTable";
+
+import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
+
 import {
   ADD_TO_FAVORITE_SUCCESS,
   REMOVE_FROM_FAVORITE,
 } from "/src/shared/const/toast/toast";
+import { weekDays } from "/src/shared/const/global/const";
+import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorage/localStorageKeys";
+
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
+import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+
+import styles from "./ScheduleCardsList.module.scss";
 
 interface TableProps {
   className?: string;
 }
 
-const favoriteChoices = JSON.parse(
-  localStorage.getItem(USER_FAVORITE_SEARCH) || "[]",
-);
-
 const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
   const [day, setDay] = useState<number>(0);
+
   const toast = useToast();
+  const dispatch = useAppDispatch();
   const { week } = useCurrentWeek();
+  const { colorMode } = useColorMode();
+
   const schedule = useSelector(getScheduleTable);
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
   const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
-  const dispatch = useAppDispatch();
+
+  const favoriteChoices = JSON.parse(
+    localStorage.getItem(USER_FAVORITE_SEARCH) || "[]",
+  ) as IFavoriteChoice[];
+
+  const defaultFavorite = favoriteChoices.some(
+    (choice: IFavoriteChoice) => choice.group === schedule?.table?.group,
+  );
+
+  const [isFavorite, setFavorite] = useState(defaultFavorite);
 
   useEffect(() => {
     if (vpkInfo.group) {
@@ -55,16 +68,24 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
     }
 
     const currentDay = new Date().getDay();
-    0 < currentDay && currentDay < 7 ? setDay(currentDay - 1) : setDay(0);
+    0 < currentDay && currentDay < 7 ? setDay(currentDay - 1) : setDay(5);
   }, []);
+
+  useEffect(() => {
+    if (schedule?.result !== null) {
+      setFavorite(
+        favoriteChoices.some(
+          (choice: IFavoriteChoice) => choice.group === schedule?.table?.group,
+        ),
+      );
+    }
+  }, [schedule]);
 
   useEffect(() => {
     if (vpkData) {
       mergeVPKAndSchedule();
     }
   }, [vpkData]);
-
-  const { colorMode } = useColorMode();
 
   const dayHandler = (index: number) => {
     setDay(index);
@@ -91,11 +112,6 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
     }
   };
 
-  const isFavorite =
-    favoriteChoices.filter(
-      (item: IFavoriteChoice) => item.name === schedule.table?.name,
-    ).length > 0;
-
   const handleFavoriteSearch = (schedule: IScheduleTable) => {
     const favoriteSearch = {
       group: schedule.table.group,
@@ -107,11 +123,13 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
     if (response) {
       dispatch(favoriteSearchActions.addSearchToFavorite(favoriteSearch));
       toast(ADD_TO_FAVORITE_SUCCESS);
-    } else if (isFavorite) {
+      setFavorite(true);
+    } else {
       dispatch(
         favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name),
       );
       toast(REMOVE_FROM_FAVORITE);
+      setFavorite(false);
     }
   };
 
@@ -119,7 +137,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
   if (schedule.table.table.length == 0) return null;
 
   return (
-    <div className={classNames("", {}, [className])}>
+    <div className={styles.wrapper}>
       <div className={styles.groupActions}>
         <div className={styles.groupActionsFirst}>
           <Heading
@@ -153,6 +171,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
               onClick={() => dayHandler(index)}
               isDisabled={day === index}
               colorScheme={day === index ? "green" : "gray"}
+              className={styles.weekDayButton}
             >
               {dayItem}
             </Button>
@@ -176,7 +195,9 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
                   day={weekDay}
                   key={index}
                   element={item}
-                  className={colorMode === "light" ? styles.whiteMode : ""}
+                  className={
+                    colorMode === "light" ? styles.whiteMode : styles.darkMode
+                  }
                 />
               );
             })}

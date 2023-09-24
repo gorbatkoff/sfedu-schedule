@@ -9,6 +9,7 @@ import {
 import {
   SAVED_SCHEDULE,
   USER_GROUP,
+  USER_VPK,
 } from "/src/shared/const/localStorage/localStorageKeys";
 
 export const fetchAndSaveUserGroup = createAsyncThunk(
@@ -142,6 +143,14 @@ export const tableSlice = createSlice({
     setSchedule: (state, action: PayloadAction<IScheduleTable>) => {
       state.schedule = action.payload;
       state.choices = null;
+
+      const userGroup = JSON.parse(localStorage.getItem(USER_GROUP)!);
+      const userVPK = JSON.parse(localStorage.getItem(USER_VPK)!);
+
+      if (!userGroup || userVPK) return;
+      if (userGroup.groupId === state.schedule.table.group) {
+        localStorage.setItem(SAVED_SCHEDULE, JSON.stringify(state.schedule));
+      }
     },
     mergeScheduleAndVPK: (state, action: PayloadAction<any>) => {
       state.schedule.table.table = action.payload;

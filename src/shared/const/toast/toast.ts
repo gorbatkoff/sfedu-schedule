@@ -8,11 +8,19 @@ export const TOAST_NO_INTERNET: UseToastOptions = {
   isClosable: true,
 };
 
+export const GROUP_FETCH_SUCCESS = (name: string): UseToastOptions => ({
+  title: "Успех!",
+  description: `Расписание группы ${name} загружено успешно!`,
+  status: "success",
+  duration: 800,
+  isClosable: true,
+});
+
 export const ADD_TO_FAVORITE_SUCCESS: UseToastOptions = {
   title: "Добавлено! ",
   description: "Успех! Данное расписание было добавлено в список избранных.",
   status: "success",
-  duration: 3000,
+  duration: 1000,
   isClosable: true,
 };
 
@@ -20,7 +28,7 @@ export const REMOVE_FROM_FAVORITE: UseToastOptions = {
   title: "Удалено!",
   description: "Данное расписание было удалено из списка избранных.",
   status: "error",
-  duration: 3000,
+  duration: 1000,
   isClosable: true,
 };
 
@@ -49,10 +57,10 @@ export const VPK_SELECTED_SUCCESSFULLY: UseToastOptions = {
 };
 
 export const GROUP_SAVED_SUCCESSFULLY: UseToastOptions = {
-  title: "Успешно!",
-  description: "Вы успешно сохранили группу",
+  title: "Вы успешно сохранили группу!",
+  description: "Теперь вы можете просматривать расписание без интернета! 😊",
   status: "success",
-  duration: 3000,
+  duration: 4000,
   isClosable: true,
 };
 
@@ -65,8 +73,8 @@ export const SELECT_VPK_ERROR: UseToastOptions = {
 };
 
 export const ERROR_SETTING_DEFAULT_GROUP: UseToastOptions = {
-  title: "Ошибка",
-  description: "Ошибка установки группы по умолчанию!",
+  title: "Ошибка при установке группы!",
+  description: "Возможно такой группы не существует.",
   status: "error",
   duration: 3000,
   isClosable: true,
