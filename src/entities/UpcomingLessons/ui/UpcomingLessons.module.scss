@@ -16,3 +16,9 @@
 .currentLesson {
   background-color: var(--input-color);
 }
+
+@media screen and (width <= 768px) {
+  .UpcomingLessonsList {
+    display: none;
+  }
+}
