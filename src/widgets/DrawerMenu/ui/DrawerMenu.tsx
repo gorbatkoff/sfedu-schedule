@@ -79,8 +79,9 @@ export function DrawerMenu() {
       if (data.payload.table) {
         setGroupId(data.payload.table.group);
       }
-      if (data.payload.choices) {
-        setGroupId(data.payload.data.choices[0].group);
+
+      if (data.payload?.choices) {
+        setGroupId(data.payload.choices[0].group);
       }
 
       if (data?.payload?.result === "no_entries") {
@@ -89,6 +90,7 @@ export function DrawerMenu() {
 
       onClose();
     } catch (error) {
+      console.log(error);
       toast(ERROR_SETTING_DEFAULT_GROUP);
     }
   }

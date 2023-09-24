@@ -7,12 +7,13 @@ import { useLazyFetchGroupQuery } from "/src/features/SearchSchedule/api";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+import { GROUP_FETCH_SUCCESS } from "/src/shared/const/toast/toast";
+import { useToast } from "@chakra-ui/react";
 
 export const FavoriteChoices = memo(() => {
   const favoriteChoices = useSelector(getFavoriteSearch);
-
   const [fetchGroup, { data, status }] = useLazyFetchGroupQuery();
-
+  const toast = useToast();
   const dispatch = useAppDispatch();
 
   if (data) {
@@ -47,6 +48,7 @@ export const FavoriteChoices = memo(() => {
     if (status === "fulfilled") {
       dispatch(tableActions.setSchedule(data));
       mergeVPKAndSchedule();
+      toast(GROUP_FETCH_SUCCESS(data?.table?.name));
     }
   }, [status]);
 

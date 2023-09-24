@@ -36,7 +36,7 @@ const UpcomingLessons = () => {
     if (currentDay > 0 && currentDay < 7) {
       setDay(currentDay - 1);
     } else {
-      setDay(0);
+      setDay(5);
     }
   }, []);
 

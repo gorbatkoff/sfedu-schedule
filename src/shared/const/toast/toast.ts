@@ -8,11 +8,19 @@ export const TOAST_NO_INTERNET: UseToastOptions = {
   isClosable: true,
 };
 
+export const GROUP_FETCH_SUCCESS = (name: string): UseToastOptions => ({
+  title: "Успех!",
+  description: `Расписание группы ${name} загружено успешно!`,
+  status: "success",
+  duration: 800,
+  isClosable: true,
+});
+
 export const ADD_TO_FAVORITE_SUCCESS: UseToastOptions = {
   title: "Добавлено! ",
   description: "Успех! Данное расписание было добавлено в список избранных.",
   status: "success",
-  duration: 3000,
+  duration: 1000,
   isClosable: true,
 };
 
@@ -20,7 +28,7 @@ export const REMOVE_FROM_FAVORITE: UseToastOptions = {
   title: "Удалено!",
   description: "Данное расписание было удалено из списка избранных.",
   status: "error",
-  duration: 3000,
+  duration: 1000,
   isClosable: true,
 };
 

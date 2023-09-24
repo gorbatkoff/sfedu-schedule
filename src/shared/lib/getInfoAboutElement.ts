@@ -14,7 +14,8 @@ export enum TableCellColor {
 export const getInfoAboutElement = (element: string) => {
   if (element.length === 0) return TableCellColor.DEFAULT_COLOR;
   if (element.match(VPKRegex)) return TableCellColor.VPK_COLOR;
-  if (weekDays.includes(element.slice(0, 3))) return TableCellColor.DAY_COLOR;
+  if ([...weekDays, "Вск"].includes(element.slice(0, 3)))
+    return TableCellColor.DAY_COLOR;
   if (element.match(LMSRegex)) return TableCellColor.LMS_COLOR;
   if (element.includes("Военная подготовка"))
     return TableCellColor.MILITARY_COLOR;
