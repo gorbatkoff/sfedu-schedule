@@ -26,6 +26,11 @@ export const QueryChoices: FC<IQueryChoicesProps> = memo(({ data }) => {
 
   useEffect(() => {
     if (status === "fulfilled") {
+      window.history.pushState(
+        null,
+        "group",
+        `/?group=${response?.table?.group}`,
+      );
       dispatch(tableActions.setSchedule(response));
     }
   }, [status]);

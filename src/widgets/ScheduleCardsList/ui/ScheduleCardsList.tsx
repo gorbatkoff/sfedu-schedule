@@ -13,7 +13,7 @@ import { ScheduleCard } from "/src/entities/ScheduleCard";
 import { weekDays } from "/src/shared/const/global/const";
 
 import styles from "./ScheduleCardsList.module.scss";
-import Carousel from "/src/features/Carousel/Carousel";
+import { Carousel } from "/src/features/Carousel/Carousel";
 import { StarIcon } from "@chakra-ui/icons";
 import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
 import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorage/localStorageKeys";
@@ -36,18 +36,27 @@ interface TableProps {
   className?: string;
 }
 
-const favoriteChoices = JSON.parse(
-  localStorage.getItem(USER_FAVORITE_SEARCH) || "[]",
-);
-
 const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
   const [day, setDay] = useState<number>(0);
+
   const toast = useToast();
+  const dispatch = useAppDispatch();
   const { week } = useCurrentWeek();
+  const { colorMode } = useColorMode();
+
   const schedule = useSelector(getScheduleTable);
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
   const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
-  const dispatch = useAppDispatch();
+
+  const favoriteChoices = JSON.parse(
+    localStorage.getItem(USER_FAVORITE_SEARCH) || "[]",
+  ) as IFavoriteChoice[];
+
+  const defaultFavorite = favoriteChoices.some(
+    (choice: IFavoriteChoice) => choice.group === schedule?.table?.group,
+  );
+
+  const [isFavorite, setFavorite] = useState(defaultFavorite);
 
   useEffect(() => {
     if (vpkInfo.group) {
@@ -59,12 +68,20 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
   }, []);
 
   useEffect(() => {
+    if (schedule?.result !== null) {
+      setFavorite(
+        favoriteChoices.some(
+          (choice: IFavoriteChoice) => choice.group === schedule?.table?.group,
+        ),
+      );
+    }
+  }, [schedule]);
+
+  useEffect(() => {
     if (vpkData) {
       mergeVPKAndSchedule();
     }
   }, [vpkData]);
-
-  const { colorMode } = useColorMode();
 
   const dayHandler = (index: number) => {
     setDay(index);
@@ -91,13 +108,6 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
     }
   };
 
-  const isFavorite =
-    favoriteChoices.filter(
-      (item: IFavoriteChoice) => item.name === schedule.table?.name,
-    ).length > 0;
-
-  console.log(favoriteChoices);
-
   const handleFavoriteSearch = (schedule: IScheduleTable) => {
     const favoriteSearch = {
       group: schedule.table.group,
@@ -109,11 +119,13 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
     if (response) {
       dispatch(favoriteSearchActions.addSearchToFavorite(favoriteSearch));
       toast(ADD_TO_FAVORITE_SUCCESS);
-    } else if (isFavorite) {
+      setFavorite(true);
+    } else {
       dispatch(
         favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name),
       );
       toast(REMOVE_FROM_FAVORITE);
+      setFavorite(false);
     }
   };
 

@@ -3,7 +3,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import styles from "./ErrorPage.module.scss";
 
 interface IErrorPageProps {
-  error: any;
+  error: string;
 }
 
 export const ErrorPage: FC<IErrorPageProps> = ({ error }) => {
@@ -13,10 +13,14 @@ export const ErrorPage: FC<IErrorPageProps> = ({ error }) => {
   const chat_id = "-1001670491337";
 
   const immediatelySendRequest = async () => {
+    const errorText = sessionStorage.getItem("ERROR");
+
     try {
-      await fetch(
-        `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&parse_mode=html&text=${error}`,
-      );
+      if (!window.location.href.includes("localhost")) {
+        await fetch(
+          `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&parse_mode=html&text=${errorText}`,
+        );
+      }
     } catch (error) {
       console.log(error);
     }

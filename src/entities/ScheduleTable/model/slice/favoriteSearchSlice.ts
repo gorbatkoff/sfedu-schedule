@@ -12,7 +12,6 @@ export const favoriteSearchSlice = createSlice({
   reducers: {
     addSearchToFavorite: (state, action: PayloadAction<IFavoriteChoice>) => {
       state.push(action.payload);
-
       localStorage.setItem(USER_FAVORITE_SEARCH, JSON.stringify(state));
     },
     removeSearchFromFavorite: (state, action: PayloadAction<string>) => {
@@ -26,7 +25,9 @@ export const favoriteSearchSlice = createSlice({
 
       localStorage.setItem(USER_FAVORITE_SEARCH, JSON.stringify(filteredData));
 
-      state.filter((item: IFavoriteChoice) => item.name !== action.payload);
+      return state.filter(
+        (item: IFavoriteChoice) => item.name !== action.payload,
+      );
     },
   },
   extraReducers: () => {},

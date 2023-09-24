@@ -57,9 +57,12 @@ const ScheduleTable = memo(({ className }: TableProps) => {
     (state: StateSchema) => state.favoriteSearch,
   );
   const schedule = useSelector(getScheduleTable);
-
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
   const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
+
+  const isFavorite =
+    favoriteChoices.filter((item) => item.name === schedule.table?.name)
+      .length > 0;
 
   useEffect(() => {
     if (vpkInfo.group) {
@@ -93,10 +96,6 @@ const ScheduleTable = memo(({ className }: TableProps) => {
       dispatch(tableActions.mergeScheduleAndVPK(header.concat(mergedSchedule)));
     }
   };
-
-  const isFavorite =
-    favoriteChoices.filter((item) => item.name === schedule.table?.name)
-      .length > 0;
 
   const handleFavoriteSearch = (schedule: IScheduleTable) => {
     const favoriteSearch = {
@@ -141,8 +140,6 @@ const ScheduleTable = memo(({ className }: TableProps) => {
       }),
     );
   };
-
-  console.log(schedule?.result === null);
 
   if (!schedule?.table?.name || schedule?.result === null) return null;
 

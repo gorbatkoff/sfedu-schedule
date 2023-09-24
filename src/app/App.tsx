@@ -12,7 +12,10 @@ import { ScheduleCardsList } from "/src/widgets/ScheduleCardsList";
 import { UpcomingLessons } from "/src/entities/UpcomingLessons";
 import { useToast } from "@chakra-ui/react";
 import { TOAST_NO_INTERNET } from "/src/shared/const/toast/toast";
-import { SAVED_SCHEDULE } from "/src/shared/const/localStorage/localStorageKeys";
+import {
+  SAVED_SCHEDULE,
+  USER_GROUP,
+} from "/src/shared/const/localStorage/localStorageKeys";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
 import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
@@ -24,7 +27,10 @@ const App = () => {
   const toast = useToast();
   const dispatch = useAppDispatch();
   const [queryParameters] = useSearchParams();
-  const { data } = useFetchGroupQuery(queryParameters.get("group") || "");
+  const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
+  const { data } = useFetchGroupQuery(
+    queryParameters.get("group") || userGroup?.groupId || "",
+  );
 
   useEffect(() => {
     if (data?.table?.group) {

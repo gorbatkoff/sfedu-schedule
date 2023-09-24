@@ -29,15 +29,13 @@ const updateSW = registerSW({
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <ErrorBoundary>
-      <StoreProvider>
-        <BrowserRouter>
-          <ChakraProvider theme={theme}>
-            <App />
-          </ChakraProvider>
-        </BrowserRouter>
-      </StoreProvider>
-    </ErrorBoundary>
-  </StrictMode>,
+  <ErrorBoundary>
+    <StoreProvider>
+      <BrowserRouter>
+        <ChakraProvider theme={theme}>
+          <App />
+        </ChakraProvider>
+      </BrowserRouter>
+    </StoreProvider>
+  </ErrorBoundary>,
 );

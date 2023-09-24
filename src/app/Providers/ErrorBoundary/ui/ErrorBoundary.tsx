@@ -8,6 +8,7 @@ interface ErrorBoundaryProps {
 
 interface ErrorBoundaryState {
   hasError: boolean;
+  error: string | null;
 }
 
 class ErrorBoundary extends React.Component<
@@ -16,30 +17,27 @@ class ErrorBoundary extends React.Component<
 > {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { hasError: false, error: null };
   }
-  errorInfoText: any;
-
   static getDerivedStateFromError(error: Error) {
     // Обновить состояние с тем, чтобы следующий рендер показал запасной UI.
-    return { hasError: true };
+    return { hasError: true, error: error.message };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     // Можно также сохранить информацию об ошибке в соответствующую службу журнала ошибок
-    console.log(error, errorInfo);
-    this.errorInfoText = error.message;
+    sessionStorage.setItem("ERROR", JSON.stringify(errorInfo.componentStack));
   }
 
   render() {
-    const { hasError } = this.state;
+    const { hasError, error } = this.state;
     const { children } = this.props;
 
     if (hasError) {
       // Можно отрендерить запасной UI произвольного вида
       return (
         <Suspense fallback={<Loader />}>
-          <ErrorPage error={this.errorInfoText} />
+          <ErrorPage error={String(error)} />
         </Suspense>
       );
     }

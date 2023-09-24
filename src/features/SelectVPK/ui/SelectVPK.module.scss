@@ -34,4 +34,9 @@
     background: var(--primary-color);
     opacity: 1;
   }
+
+  button:disabled:hover {
+    background: var(--primary-color);
+    opacity: 1;
+  }
 }

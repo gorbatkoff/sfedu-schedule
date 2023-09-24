@@ -115,8 +115,6 @@ export function DrawerMenu() {
   };
 
   const saveInputValue = () => {
-    console.log(inputValue);
-
     if (
       inputValue.length >= 7 &&
       inputValue.length <= 8 &&
@@ -130,7 +128,6 @@ export function DrawerMenu() {
   };
 
   const handleAllowEdit = () => {
-    console.log("called");
     setButtonBlocked(false);
     setInputBlocked(false);
   };
