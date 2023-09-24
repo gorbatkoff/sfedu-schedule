@@ -67,6 +67,17 @@ const App = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const isHelpToastShowed = JSON.parse(
+      localStorage.getItem("TOAST_SHOWED") || "false",
+    );
+
+    if (!isHelpToastShowed) {
+      toast(HELPFUL_MESSAGE);
+      localStorage.setItem("TOAST_SHOWED", "true");
+    }
+  }, []);
+
   return (
     <Suspense fallback={<Loader />}>
       <div className="App">
