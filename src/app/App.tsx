@@ -2,13 +2,13 @@ import { Suspense, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { Header } from "/src/widgets/Header";
+import { ShowVPK } from "/src/widgets/ShowVPK";
+import { ScheduleCardsList } from "/src/widgets/ScheduleCardsList";
+import { Calendar } from "/src/entities/Calendar";
 import { ScheduleTable } from "/src/entities/ScheduleTable";
 import { SearchSchedule } from "/src/features/SearchSchedule";
 import Loader from "/src/shared/ui/Loader/Loader";
 import MainColumns from "/src/shared/ui/MainColumns/MainColumns";
-import { Calendar } from "/src/entities/Calendar";
-import { ShowVPK } from "/src/widgets/ShowVPK";
-import { ScheduleCardsList } from "/src/widgets/ScheduleCardsList";
 import { UpcomingLessons } from "/src/entities/UpcomingLessons";
 import { useToast } from "@chakra-ui/react";
 import { TOAST_NO_INTERNET } from "/src/shared/const/toast/toast";

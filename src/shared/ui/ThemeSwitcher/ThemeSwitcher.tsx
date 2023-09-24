@@ -2,11 +2,7 @@ import { FC, memo } from "react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { useColorMode } from "@chakra-ui/react";
 
-interface ThemeSwitcherProps {
-  className?: string;
-}
-
-export const ThemeSwitcher: FC<ThemeSwitcherProps> = memo(({ className }) => {
+export const ThemeSwitcher: FC = memo(() => {
   const { toggleColorMode } = useColorMode();
   const localStorageTheme = localStorage.getItem("chakra-ui-color-mode");
 
@@ -20,9 +16,9 @@ export const ThemeSwitcher: FC<ThemeSwitcherProps> = memo(({ className }) => {
   return (
     <>
       {localStorageTheme === "light" ? (
-        <SunIcon {...props} />
+        <SunIcon {...props} aria-label="Светлая тема" />
       ) : (
-        <MoonIcon {...props} />
+        <MoonIcon {...props} aria-label="Темная тема" />
       )}
     </>
   );
