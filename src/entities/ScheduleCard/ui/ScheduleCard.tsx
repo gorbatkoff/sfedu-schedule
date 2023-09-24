@@ -26,7 +26,6 @@ interface ScheduleCardProps {
 
 export const ScheduleCard = (props: ScheduleCardProps) => {
   const { className, lessonNumber: index, lessonTime, day, element } = props;
-  const { colorMode } = useColorMode();
 
   const groups =
     element.match(groupRegex) || element.match(subgroupRegex) || [];

@@ -49,11 +49,11 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
   const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
 
   const favoriteChoices = JSON.parse(
-    localStorage.getItem(USER_FAVORITE_SEARCH) || "[]"
+    localStorage.getItem(USER_FAVORITE_SEARCH) || "[]",
   ) as IFavoriteChoice[];
 
   const defaultFavorite = favoriteChoices.some(
-    (choice: IFavoriteChoice) => choice.group === schedule?.table?.group
+    (choice: IFavoriteChoice) => choice.group === schedule?.table?.group,
   );
 
   const [isFavorite, setFavorite] = useState(defaultFavorite);
@@ -64,15 +64,15 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
     }
 
     const currentDay = new Date().getDay();
-    0 < currentDay && currentDay < 7 ? setDay(currentDay - 1) : setDay(0);
+    0 < currentDay && currentDay < 7 ? setDay(currentDay - 1) : setDay(5);
   }, []);
 
   useEffect(() => {
     if (schedule?.result !== null) {
       setFavorite(
         favoriteChoices.some(
-          (choice: IFavoriteChoice) => choice.group === schedule?.table?.group
-        )
+          (choice: IFavoriteChoice) => choice.group === schedule?.table?.group,
+        ),
       );
     }
   }, [schedule]);
@@ -122,7 +122,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
       setFavorite(true);
     } else {
       dispatch(
-        favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name)
+        favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name),
       );
       toast(REMOVE_FROM_FAVORITE);
       setFavorite(false);
@@ -167,6 +167,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
               onClick={() => dayHandler(index)}
               isDisabled={day === index}
               colorScheme={day === index ? "green" : "gray"}
+              className={styles.weekDayButton}
             >
               {dayItem}
             </Button>
@@ -190,7 +191,9 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
                   day={weekDay}
                   key={index}
                   element={item}
-                  className={colorMode === "light" ? styles.whiteMode : ""}
+                  className={
+                    colorMode === "light" ? styles.whiteMode : styles.darkMode
+                  }
                 />
               );
             })}
