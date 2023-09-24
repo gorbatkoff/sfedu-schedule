@@ -1,18 +1,24 @@
+.wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 5px;
+}
+
 .ScheduleCardList {
   display: flex;
   align-items: center;
   flex-direction: column;
   row-gap: 20px;
-  padding: 0 5px;
   margin-bottom: 50px;
 }
 
 .weekDayBtns {
+  margin: 0 auto;
   display: flex;
   overflow-x: scroll;
   width: 100%;
   justify-content: space-between;
-  padding: 1em 5px;
+  padding: 1em 0;
   column-gap: 1em;
 }
 
@@ -21,7 +27,6 @@
 }
 
 .groupActions {
-  padding: 0 5px;
   display: flex;
   justify-content: space-between;
   align-items: center;
