@@ -49,11 +49,11 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
   const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
 
   const favoriteChoices = JSON.parse(
-    localStorage.getItem(USER_FAVORITE_SEARCH) || "[]",
+    localStorage.getItem(USER_FAVORITE_SEARCH) || "[]"
   ) as IFavoriteChoice[];
 
   const defaultFavorite = favoriteChoices.some(
-    (choice: IFavoriteChoice) => choice.group === schedule?.table?.group,
+    (choice: IFavoriteChoice) => choice.group === schedule?.table?.group
   );
 
   const [isFavorite, setFavorite] = useState(defaultFavorite);
@@ -71,8 +71,8 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
     if (schedule?.result !== null) {
       setFavorite(
         favoriteChoices.some(
-          (choice: IFavoriteChoice) => choice.group === schedule?.table?.group,
-        ),
+          (choice: IFavoriteChoice) => choice.group === schedule?.table?.group
+        )
       );
     }
   }, [schedule]);
@@ -122,7 +122,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
       setFavorite(true);
     } else {
       dispatch(
-        favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name),
+        favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name)
       );
       toast(REMOVE_FROM_FAVORITE);
       setFavorite(false);
@@ -133,7 +133,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
   if (schedule.table.table.length == 0) return null;
 
   return (
-    <div className={classNames("", {}, [className])}>
+    <div className={styles.wrapper}>
       <div className={styles.groupActions}>
         <div className={styles.groupActionsFirst}>
           <Heading
