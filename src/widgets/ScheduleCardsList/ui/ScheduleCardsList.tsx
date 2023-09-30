@@ -29,7 +29,10 @@ import {
   REMOVE_FROM_FAVORITE,
 } from "/src/shared/const/toast/toast";
 import { weekDays } from "/src/shared/const/global/const";
-import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorage/localStorageKeys";
+import {
+  SHOW_EMPTY_LESSONS,
+  USER_FAVORITE_SEARCH,
+} from "/src/shared/const/localStorage/localStorageKeys";
 
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
@@ -51,6 +54,9 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
   const schedule = useSelector(getScheduleTable);
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
   const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
+  const isShowEmptyLessons = useSelector(
+    (state: StateSchema) => state.userGroup.userSettings.isShowEmptyLessons,
+  );
 
   const favoriteChoices = JSON.parse(
     localStorage.getItem(USER_FAVORITE_SEARCH) || "[]",
@@ -187,6 +193,8 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
             [day].slice(1)
             .map((item: string, index: number) => {
               const weekDay = schedule.table.table.slice(2)[day][0];
+
+              if (!isShowEmptyLessons && item === "") return null;
 
               return (
                 <ScheduleCard
