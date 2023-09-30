@@ -57,13 +57,13 @@ export function DrawerMenu() {
   const dispatch = useAppDispatch();
 
   const handleShowEmptyLessons = (e: ChangeEvent<HTMLInputElement>) => {
-    const isShow = e.target.checked;
-    localStorage.setItem(SHOW_EMPTY_LESSONS, JSON.stringify(isShow));
+    const checked = e.target.checked; // true -> показывать
+    localStorage.setItem(SHOW_EMPTY_LESSONS, JSON.stringify(checked));
   };
 
   const handleSaveSettings = () => {
     const newSettings = JSON.parse(
-      localStorage.getItem(SHOW_EMPTY_LESSONS) || "false",
+      localStorage.getItem(SHOW_EMPTY_LESSONS) || "true",
     );
     dispatch(userGroupActions.setUserSettings(newSettings));
   };

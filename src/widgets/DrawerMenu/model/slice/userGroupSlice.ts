@@ -7,7 +7,7 @@ import {
 } from "/src/shared/const/localStorage/localStorageKeys";
 
 const isShowEmptyLessons = JSON.parse(
-  localStorage.getItem(SHOW_EMPTY_LESSONS) || "false",
+  localStorage.getItem(SHOW_EMPTY_LESSONS) || "true",
 );
 
 const initialState: UserGroupSchema = {
