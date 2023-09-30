@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 import {
+  Box,
   Button,
   Drawer,
   DrawerBody,
@@ -12,6 +13,7 @@ import {
   Heading,
   Input,
   InputGroup,
+  Switch,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -26,11 +28,13 @@ import {
 } from "/src/shared/const/toast/toast";
 import {
   IS_BUTTONS_BLOCKED,
+  SHOW_EMPTY_LESSONS,
   USER_GROUP,
 } from "/src/shared/const/localStorage/localStorageKeys";
-
-import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
 
 const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 const isButtonBlock =
@@ -39,14 +43,30 @@ const isButtonBlock =
 export function DrawerMenu() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
-  const { week } = useCurrentWeek();
+  const location = useLocation();
   const [isButtonBlocked, setButtonBlocked] = useState<boolean>(isButtonBlock);
   const [isInputBlocked, setInputBlocked] = useState<boolean>(isButtonBlock);
   const [inputValue, setInputValue] = useState<string>(userGroup.name || "КТ");
   const [groupId, setGroupId] = useState(userGroup.groupId || "");
   const [isSetted, setIsSetted] = useState<boolean>(false);
 
+  const isShowEmptyLessons = useSelector(
+    (state: StateSchema) => state.userGroup.userSettings.isShowEmptyLessons,
+  );
+
   const dispatch = useAppDispatch();
+
+  const handleShowEmptyLessons = (e: ChangeEvent<HTMLInputElement>) => {
+    const isShow = e.target.checked;
+    localStorage.setItem(SHOW_EMPTY_LESSONS, JSON.stringify(isShow));
+  };
+
+  const handleSaveSettings = () => {
+    const newSettings = JSON.parse(
+      localStorage.getItem(SHOW_EMPTY_LESSONS) || "false",
+    );
+    dispatch(userGroupActions.setUserSettings(newSettings));
+  };
 
   const checkGroupId = () => {
     if (groupId == "" && isSetted) {
@@ -150,12 +170,15 @@ export function DrawerMenu() {
         size="xs"
         isOpen={isOpen}
         placement="left"
-        onClose={onClose}
+        onClose={() => {
+          onClose();
+          handleSaveSettings();
+        }}
         finalFocusRef={btnRef}
       >
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerCloseButton />
+          <DrawerCloseButton onClick={handleSaveSettings} />
           <DrawerHeader>Выберите вашу группу</DrawerHeader>
 
           <DrawerBody>
@@ -187,15 +210,23 @@ export function DrawerMenu() {
             >
               Редактировать
             </Button>
-          </DrawerBody>
 
-          <DrawerFooter>
-            {/*<Button variant="outline" mr={3} onClick={onClose}>
-              Отмена
-            </Button>
-            <Button colorScheme="blue">Сохранить</Button>
-            */}
-          </DrawerFooter>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Switch
+                onChange={(e) => handleShowEmptyLessons(e)}
+                defaultChecked={isShowEmptyLessons}
+              />
+              <Heading as="h6" size="md" my={5}>
+                Показывать все пары
+              </Heading>
+            </Box>
+          </DrawerBody>
         </DrawerContent>
       </Drawer>
     </>
