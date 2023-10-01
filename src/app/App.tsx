@@ -5,7 +5,10 @@ import { useToast } from "@chakra-ui/react";
 
 import { Header } from "/src/widgets/Header";
 import { ShowVPK } from "/src/widgets/ShowVPK";
-import { SearchSchedule } from "/src/features/SearchSchedule";
+import {
+  SearchSchedule,
+  useFetchGroupByWeekQuery,
+} from "/src/features/SearchSchedule";
 import { Calendar } from "/src/entities/Calendar";
 import { IScheduleTable, tableActions } from "/src/entities/ScheduleTable";
 import { UpcomingLessons } from "/src/entities/UpcomingLessons";
@@ -17,9 +20,8 @@ import {
   USER_GROUP,
 } from "/src/shared/const/localStorage/localStorageKeys";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-
-import { useFetchGroupQuery } from "/src/features/SearchSchedule/api";
 import { RenderTable } from "/src/processes/RenderTable";
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
 const isUserOnline = navigator.onLine;
 
@@ -35,24 +37,26 @@ const renderColumnsByViewPort = () => {
   return <SearchSchedule />;
 };
 
+const savedUserSchedule = JSON.parse(
+  localStorage.getItem(SAVED_SCHEDULE) || "{}",
+) as IScheduleTable;
+
 const App = () => {
   const toast = useToast();
+  const { week } = useCurrentWeek();
   const dispatch = useAppDispatch();
   const [queryParameters] = useSearchParams();
   const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
-  const { data } = useFetchGroupQuery(
-    queryParameters.get("group") || userGroup?.groupId || "",
-  );
+  const { data } = useFetchGroupByWeekQuery({
+    group: queryParameters.get("group") || userGroup?.groupId || "",
+    week: week,
+  });
 
   useEffect(() => {
     if (data?.table?.group) {
       dispatch(tableActions.setSchedule(data));
     }
   }, [data]);
-
-  const savedUserSchedule = JSON.parse(
-    localStorage.getItem(SAVED_SCHEDULE) || "{}",
-  ) as IScheduleTable;
 
   useEffect(() => {
     if (!isUserOnline) {

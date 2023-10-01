@@ -82,15 +82,13 @@ export function DrawerMenu() {
     );
 
     if (isShowEmptyLessons !== showEmptyLessons) {
-      console.log("called lessons");
       dispatch(userGroupActions.setShowEmptyLessons(showEmptyLessons));
     }
 
     if (showScheduleAsCards !== scheduleAsCards) {
-      console.log("called cards");
       dispatch(userGroupActions.setShowScheduleAsCards(scheduleAsCards));
-      onClose();
     }
+    onClose();
   };
 
   const checkGroupId = () => {

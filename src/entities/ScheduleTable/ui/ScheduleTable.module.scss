@@ -1,9 +1,8 @@
 .Table {
-  margin: 0 auto;
+  margin: 0 auto 70px auto;
   max-width: var(--app-width);
   font-size: 12px;
   width: 100%;
-  margin-bottom: 100px;
 
   .tableTitle {
     text-align: center;
@@ -12,8 +11,17 @@
   thead {
     position: sticky;
     top: 0;
-    background: #262d3f;
     z-index: 1;
+    color: white;
+  }
+
+  .light {
+    background: #3182ce;
+    color: white;
+  }
+
+  .dark {
+    background: #262d3f;
     color: white;
   }
 
@@ -67,7 +75,7 @@
 
   .weekButton:disabled {
     background: #5b32e2;
-    color: black;
+    color: white;
     opacity: 1;
   }
 
