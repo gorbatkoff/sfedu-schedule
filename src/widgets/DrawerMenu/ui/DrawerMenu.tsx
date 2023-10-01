@@ -7,7 +7,6 @@ import {
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   Heading,
@@ -29,12 +28,15 @@ import {
 import {
   IS_BUTTONS_BLOCKED,
   SHOW_EMPTY_LESSONS,
+  SHOW_SCHEDULE_AS_CARDS,
   USER_GROUP,
 } from "/src/shared/const/localStorage/localStorageKeys";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+
+import styles from "./DrawerMenu.module.scss";
 
 const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 const isButtonBlock =
@@ -54,6 +56,10 @@ export function DrawerMenu() {
     (state: StateSchema) => state.userGroup.userSettings.isShowEmptyLessons,
   );
 
+  const showScheduleAsCards = useSelector(
+    (state: StateSchema) => state.userGroup.userSettings.showScheduleAsCards,
+  );
+
   const dispatch = useAppDispatch();
 
   const handleShowEmptyLessons = (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,11 +67,30 @@ export function DrawerMenu() {
     localStorage.setItem(SHOW_EMPTY_LESSONS, JSON.stringify(checked));
   };
 
+  const handleShowScheduleAsCards = (e: ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked; // true -> показывать
+    localStorage.setItem(SHOW_SCHEDULE_AS_CARDS, JSON.stringify(checked));
+  };
+
   const handleSaveSettings = () => {
-    const newSettings = JSON.parse(
+    const showEmptyLessons = JSON.parse(
       localStorage.getItem(SHOW_EMPTY_LESSONS) || "true",
     );
-    dispatch(userGroupActions.setUserSettings(newSettings));
+
+    const scheduleAsCards = JSON.parse(
+      localStorage.getItem(SHOW_SCHEDULE_AS_CARDS) || "true",
+    );
+
+    if (isShowEmptyLessons !== showEmptyLessons) {
+      console.log("called lessons");
+      dispatch(userGroupActions.setShowEmptyLessons(showEmptyLessons));
+    }
+
+    if (showScheduleAsCards !== scheduleAsCards) {
+      console.log("called cards");
+      dispatch(userGroupActions.setShowScheduleAsCards(scheduleAsCards));
+      onClose();
+    }
   };
 
   const checkGroupId = () => {
@@ -172,12 +197,12 @@ export function DrawerMenu() {
         placement="left"
         onClose={() => {
           onClose();
-          handleSaveSettings();
         }}
+        onCloseComplete={() => handleSaveSettings()}
         finalFocusRef={btnRef}
       >
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent className={styles.Drawer}>
           <DrawerCloseButton onClick={handleSaveSettings} />
           <DrawerHeader>Выберите вашу группу</DrawerHeader>
 
@@ -211,21 +236,28 @@ export function DrawerMenu() {
               Редактировать
             </Button>
 
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Switch
-                onChange={(e) => handleShowEmptyLessons(e)}
-                defaultChecked={isShowEmptyLessons}
-              />
-              <Heading as="h6" size="md" my={5}>
-                Показывать все пары
-              </Heading>
-            </Box>
+            {window.screen.width <= 768 && (
+              <>
+                <Box className={styles.tableFilterSettings}>
+                  <Switch
+                    onChange={(e) => handleShowEmptyLessons(e)}
+                    defaultChecked={isShowEmptyLessons}
+                  />
+                  <Heading as="h6" size="md" my={5}>
+                    Показывать все пары
+                  </Heading>
+                </Box>
+                <Box className={styles.tableSwitcher}>
+                  <Switch
+                    onChange={(e) => handleShowScheduleAsCards(e)}
+                    defaultChecked={showScheduleAsCards}
+                  />
+                  <Heading as="h6" size="md" my={5}>
+                    Расписание в виде карточек
+                  </Heading>
+                </Box>
+              </>
+            )}
           </DrawerBody>
         </DrawerContent>
       </Drawer>
