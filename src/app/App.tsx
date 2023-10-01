@@ -75,7 +75,7 @@ const App = () => {
       <div className="App">
         <Header />
         {renderColumnsByViewPort()}
-        {window.screen.width > 768 ? <ScheduleTable /> : <ScheduleCardsList />}
+        <ScheduleTable />
         <ShowVPK />
       </div>
     </Suspense>

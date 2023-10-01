@@ -141,12 +141,10 @@ const ScheduleTable = memo(({ className }: TableProps) => {
   return (
     <div className={classNames(styles.Table, {}, [className])}>
       <div className={styles.groupActions}>
-        <div className={styles.groupActionsFirst}>
-          <Heading color="white" className={styles.tableTitle}>
-            Расписание {schedule.table.name}{" "}
-            <span className={styles.week}>Неделя {schedule.table.week}</span>
-          </Heading>
-        </div>
+        <Heading color="white" className={styles.tableTitle}>
+          Расписание {schedule.table.name}{" "}
+          <span className={styles.week}>Неделя {schedule.table.week}</span>
+        </Heading>
         <IconButton
           aria-label="Добавить в избранное"
           onClick={() => handleFavoriteSearch(schedule)}

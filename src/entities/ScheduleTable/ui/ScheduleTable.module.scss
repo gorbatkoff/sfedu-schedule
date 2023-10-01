@@ -82,6 +82,15 @@
   }
 
   @media (width <= 768px) {
+
+    .groupActions {
+      align-items: flex-end;
+
+      h2 {
+        font-size: 18px;
+      }
+    }
+
     .weeksList {
       display: flex;
       width: 100%;
