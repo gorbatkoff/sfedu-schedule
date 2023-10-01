@@ -5,6 +5,7 @@ export interface IUserGroup {
 
 export interface IUserSettings {
   isShowEmptyLessons: boolean;
+  showScheduleAsCards: boolean;
 }
 
 export interface UserGroupSchema {

@@ -3,11 +3,16 @@ import { IUserGroup, UserGroupSchema } from "../types/UserGroup";
 import {
   IS_BUTTONS_BLOCKED,
   SHOW_EMPTY_LESSONS,
+  SHOW_SCHEDULE_AS_CARDS,
   USER_GROUP,
 } from "/src/shared/const/localStorage/localStorageKeys";
 
 const isShowEmptyLessons = JSON.parse(
   localStorage.getItem(SHOW_EMPTY_LESSONS) || "true",
+);
+
+const isScheduleAsCards = JSON.parse(
+  localStorage.getItem(SHOW_SCHEDULE_AS_CARDS) || "true",
 );
 
 const initialState: UserGroupSchema = {
@@ -17,6 +22,7 @@ const initialState: UserGroupSchema = {
   },
   userSettings: {
     isShowEmptyLessons: isShowEmptyLessons,
+    showScheduleAsCards: isScheduleAsCards,
   },
 };
 
@@ -29,8 +35,11 @@ export const userGroupSlice = createSlice({
       localStorage.setItem(USER_GROUP, JSON.stringify(action.payload));
       localStorage.setItem(IS_BUTTONS_BLOCKED, "true");
     },
-    setUserSettings: (state, action: PayloadAction<boolean>) => {
+    setShowEmptyLessons: (state, action: PayloadAction<boolean>) => {
       state.userSettings.isShowEmptyLessons = action.payload;
+    },
+    setShowScheduleAsCards: (state, action: PayloadAction<boolean>) => {
+      state.userSettings.showScheduleAsCards = action.payload;
     },
   },
 });

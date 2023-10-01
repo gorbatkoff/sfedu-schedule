@@ -91,6 +91,13 @@
       }
     }
 
+    .tableBody {
+      td:hover {
+        opacity: 0.8;
+        transform: none;
+      }
+    }
+
     .weeksList {
       display: flex;
       width: 100%;
