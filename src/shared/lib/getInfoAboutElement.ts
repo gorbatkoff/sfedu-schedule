@@ -11,11 +11,18 @@ export enum TableCellColor {
   VPK_COLOR = "#3182ce",
 }
 
-export const getInfoAboutElement = (element: string) => {
+type Themes = "dark" | "light";
+
+export const getInfoAboutElement = (element: string, theme?: Themes) => {
   if (element.length === 0) return TableCellColor.DEFAULT_COLOR;
   if (element.match(VPKRegex)) return TableCellColor.VPK_COLOR;
-  if ([...weekDays, "Вск"].includes(element.slice(0, 3)))
+  if ([...weekDays, "Вск"].includes(element.slice(0, 3))) {
+    if (theme === "light") {
+      return TableCellColor.VPK_COLOR;
+    }
     return TableCellColor.DAY_COLOR;
+  }
+
   if (element.match(LMSRegex)) return TableCellColor.LMS_COLOR;
   if (element.includes("Военная подготовка"))
     return TableCellColor.MILITARY_COLOR;
