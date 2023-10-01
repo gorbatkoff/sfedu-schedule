@@ -3,6 +3,12 @@ export interface IUserGroup {
   groupId: string;
 }
 
+export interface IUserSettings {
+  isShowEmptyLessons: boolean;
+  showScheduleAsCards: boolean;
+}
+
 export interface UserGroupSchema {
   userGroup: IUserGroup;
+  userSettings: IUserSettings;
 }

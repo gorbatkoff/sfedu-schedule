@@ -23,6 +23,7 @@ import {
   Td,
   Thead,
   Tr,
+  useColorMode,
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react";
@@ -45,6 +46,7 @@ interface TableProps {
 
 const ScheduleTable = memo(({ className }: TableProps) => {
   const textColor = useColorModeValue("black", "white");
+  const { colorMode } = useColorMode();
   const toast = useToast();
   const { week: currentWeek } = useCurrentWeek();
   const dispatch = useAppDispatch();
@@ -141,12 +143,10 @@ const ScheduleTable = memo(({ className }: TableProps) => {
   return (
     <div className={classNames(styles.Table, {}, [className])}>
       <div className={styles.groupActions}>
-        <div className={styles.groupActionsFirst}>
-          <Heading color="white" className={styles.tableTitle}>
-            Расписание {schedule.table.name}{" "}
-            <span className={styles.week}>Неделя {schedule.table.week}</span>
-          </Heading>
-        </div>
+        <Heading color={textColor} className={styles.tableTitle}>
+          Расписание {schedule.table.name}{" "}
+          <span className={styles.week}>Неделя {schedule.table.week}</span>
+        </Heading>
         <IconButton
           aria-label="Добавить в избранное"
           onClick={() => handleFavoriteSearch(schedule)}
@@ -175,7 +175,7 @@ const ScheduleTable = memo(({ className }: TableProps) => {
       </div>
       <TableContainer sx={{ height: "100%", overflowY: "auto" }}>
         <Table variant="simple" sx={{ color: textColor }}>
-          <Thead className={styles.tableHead}>
+          <Thead className={classNames(styles.tableHead, styles[colorMode])}>
             {schedule.table.table.slice(0, 2).map((row, index) => {
               return (
                 <Tr key={index}>

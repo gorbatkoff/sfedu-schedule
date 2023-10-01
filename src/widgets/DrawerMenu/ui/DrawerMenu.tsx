@@ -1,17 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 import {
+  Box,
   Button,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   Heading,
   Input,
   InputGroup,
+  Switch,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -26,11 +27,16 @@ import {
 } from "/src/shared/const/toast/toast";
 import {
   IS_BUTTONS_BLOCKED,
+  SHOW_EMPTY_LESSONS,
+  SHOW_SCHEDULE_AS_CARDS,
   USER_GROUP,
 } from "/src/shared/const/localStorage/localStorageKeys";
-
-import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+
+import styles from "./DrawerMenu.module.scss";
 
 const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 const isButtonBlock =
@@ -39,14 +45,51 @@ const isButtonBlock =
 export function DrawerMenu() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
-  const { week } = useCurrentWeek();
+  const location = useLocation();
   const [isButtonBlocked, setButtonBlocked] = useState<boolean>(isButtonBlock);
   const [isInputBlocked, setInputBlocked] = useState<boolean>(isButtonBlock);
   const [inputValue, setInputValue] = useState<string>(userGroup.name || "КТ");
   const [groupId, setGroupId] = useState(userGroup.groupId || "");
   const [isSetted, setIsSetted] = useState<boolean>(false);
 
+  const isShowEmptyLessons = useSelector(
+    (state: StateSchema) => state.userGroup.userSettings.isShowEmptyLessons,
+  );
+
+  const showScheduleAsCards = useSelector(
+    (state: StateSchema) => state.userGroup.userSettings.showScheduleAsCards,
+  );
+
   const dispatch = useAppDispatch();
+
+  const handleShowEmptyLessons = (e: ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked; // true -> показывать
+    localStorage.setItem(SHOW_EMPTY_LESSONS, JSON.stringify(checked));
+  };
+
+  const handleShowScheduleAsCards = (e: ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked; // true -> показывать
+    localStorage.setItem(SHOW_SCHEDULE_AS_CARDS, JSON.stringify(checked));
+  };
+
+  const handleSaveSettings = () => {
+    const showEmptyLessons = JSON.parse(
+      localStorage.getItem(SHOW_EMPTY_LESSONS) || "true",
+    );
+
+    const scheduleAsCards = JSON.parse(
+      localStorage.getItem(SHOW_SCHEDULE_AS_CARDS) || "true",
+    );
+
+    if (isShowEmptyLessons !== showEmptyLessons) {
+      dispatch(userGroupActions.setShowEmptyLessons(showEmptyLessons));
+    }
+
+    if (showScheduleAsCards !== scheduleAsCards) {
+      dispatch(userGroupActions.setShowScheduleAsCards(scheduleAsCards));
+    }
+    onClose();
+  };
 
   const checkGroupId = () => {
     if (groupId == "" && isSetted) {
@@ -150,12 +193,15 @@ export function DrawerMenu() {
         size="xs"
         isOpen={isOpen}
         placement="left"
-        onClose={onClose}
+        onClose={() => {
+          onClose();
+        }}
+        onCloseComplete={() => handleSaveSettings()}
         finalFocusRef={btnRef}
       >
         <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
+        <DrawerContent className={styles.Drawer}>
+          <DrawerCloseButton onClick={handleSaveSettings} />
           <DrawerHeader>Выберите вашу группу</DrawerHeader>
 
           <DrawerBody>
@@ -187,15 +233,30 @@ export function DrawerMenu() {
             >
               Редактировать
             </Button>
-          </DrawerBody>
 
-          <DrawerFooter>
-            {/*<Button variant="outline" mr={3} onClick={onClose}>
-              Отмена
-            </Button>
-            <Button colorScheme="blue">Сохранить</Button>
-            */}
-          </DrawerFooter>
+            {window.screen.width <= 768 && (
+              <>
+                <Box className={styles.tableFilterSettings}>
+                  <Switch
+                    onChange={(e) => handleShowEmptyLessons(e)}
+                    defaultChecked={isShowEmptyLessons}
+                  />
+                  <Heading as="h6" size="md" my={5}>
+                    Показывать все пары
+                  </Heading>
+                </Box>
+                <Box className={styles.tableSwitcher}>
+                  <Switch
+                    onChange={(e) => handleShowScheduleAsCards(e)}
+                    defaultChecked={showScheduleAsCards}
+                  />
+                  <Heading as="h6" size="md" my={5}>
+                    Расписание в виде карточек
+                  </Heading>
+                </Box>
+              </>
+            )}
+          </DrawerBody>
         </DrawerContent>
       </Drawer>
     </>
