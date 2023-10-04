@@ -16,7 +16,7 @@ export const Logo = memo(({ className }: LogoProps) => {
   return (
     <div
       className={classNames(styles.Logo, {}, [className])}
-      style={{ padding: "5px" }}
+      style={{ paddingRight: "5px" }}
     >
       <img src={LogoIcon} alt="Logo" className={styles.logoIcon} />
       <Heading size="16px" className={styles.title}>

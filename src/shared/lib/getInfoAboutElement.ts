@@ -9,6 +9,7 @@ export enum TableCellColor {
   MILITARY_COLOR = "#1c523b",
   EXAM_COLOR = "#8b1111",
   VPK_COLOR = "#3182ce",
+  UNKNOWN_COLOR = "#720e8e",
 }
 
 type Themes = "dark" | "light";
@@ -29,5 +30,5 @@ export const getInfoAboutElement = (element: string, theme?: Themes) => {
   if (element.match(auditoryRegex)) return TableCellColor.AUDIENCE_COLOR;
   if (element.includes("ТК ИТА ЮФУ")) return TableCellColor.AUDIENCE_COLOR;
   if (element.startsWith("экз.")) return TableCellColor.EXAM_COLOR;
-  return TableCellColor.DEFAULT_COLOR;
+  return TableCellColor.UNKNOWN_COLOR;
 };

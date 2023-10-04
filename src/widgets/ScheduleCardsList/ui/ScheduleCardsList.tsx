@@ -203,9 +203,10 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
                   day={weekDay}
                   key={index}
                   element={item}
-                  className={
-                    colorMode === "light" ? styles.whiteMode : styles.darkMode
-                  }
+                  className={classNames(
+                    colorMode === "light" ? styles.whiteMode : styles.darkMode,
+                    item === "" && styles.emptyLesson,
+                  )}
                 />
               );
             })}

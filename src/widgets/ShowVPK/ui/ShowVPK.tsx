@@ -16,6 +16,10 @@ export const ShowVPK = memo(() => {
     setShowVPKGroups(false);
   }, []);
 
+  const scheduleCourse = +schedule?.schedule?.table?.name.charAt(4);
+
+  if (scheduleCourse < 3) return null;
+
   return (
     <div>
       {!showVPKGroups && schedule?.schedule?.table?.name && (
