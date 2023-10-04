@@ -9,7 +9,7 @@ export enum TableCellColor {
   MILITARY_COLOR = "#1c523b",
   EXAM_COLOR = "#8b1111",
   VPK_COLOR = "#3182ce",
-  UNKNOWN_COLOR = "#720e8e",
+  UNKNOWN_COLOR = "#5b32e2",
 }
 
 type Themes = "dark" | "light";

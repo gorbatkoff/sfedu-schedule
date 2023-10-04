@@ -79,6 +79,12 @@
     opacity: 1;
   }
 
+  .weekButton:disabled:hover {
+    background: #5b32e2;
+    color: white;
+    opacity: 0.6;
+  }
+
   .groupActions {
     display: flex;
     justify-content: space-between;
