@@ -37,7 +37,11 @@ export const Carousel: FC<CarouselProps> = memo(
 
     const executeScroll = () => {
       if (myRef.current !== null) {
-        myRef.current.scrollIntoView({ behavior: "smooth" });
+        myRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "center",
+        });
       }
     };
 

@@ -1,4 +1,3 @@
-import { memo } from "react";
 import classNames from "classnames";
 
 import { Box, IconButton } from "@chakra-ui/react";
@@ -18,7 +17,7 @@ interface HeaderProps {
   className?: string;
 }
 
-export const Header = memo(({ className }: HeaderProps) => {
+export const Header = ({ className }: HeaderProps) => {
   const dispatch = useAppDispatch();
 
   const handleUpdateData = () => {
@@ -49,4 +48,4 @@ export const Header = memo(({ className }: HeaderProps) => {
       </div>
     </Box>
   );
-});
+};
