@@ -1,0 +1,16 @@
+.LeaveFeedback {
+  width: 50%;
+  margin: 0 auto;
+  padding: 0 30px
+}
+
+.formElement {
+  margin: 1.5em 0;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .LeaveFeedback {
+    width: 100%;
+  }
+}

@@ -6,11 +6,12 @@ interface IErrorPageProps {
   error: string;
 }
 
+export const token = "6609085481:AAFdsGSUbKzsM_zB-pEz9x5j809R2CnTM5U";
+export const chat_id = "-1001670491337";
+
 export const ErrorPage: FC<IErrorPageProps> = ({ error }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [isMessageSent, setMessageSent] = useState<boolean>(false);
-  const token = "6609085481:AAFdsGSUbKzsM_zB-pEz9x5j809R2CnTM5U";
-  const chat_id = "-1001670491337";
 
   const immediatelySendRequest = async () => {
     const errorText = sessionStorage.getItem("ERROR");
