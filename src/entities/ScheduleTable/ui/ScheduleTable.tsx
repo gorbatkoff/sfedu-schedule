@@ -31,7 +31,7 @@ import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
 
-import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+import { StateSchema } from "/src/app/Providers";
 
 import styles from "./ScheduleTable.module.scss";
 

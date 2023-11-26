@@ -31,12 +31,11 @@ export const FavoriteChoice = memo(
     };
 
     return (
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div className={styles.ChoiceWrapper}>
         <Button
           type="reset"
           className={styles.FavoriteChoice}
           onClick={onClick}
-          sx={{ justifyContent: "flex-start" }}
         >
           <Heading
             size="md"

@@ -1,4 +1,4 @@
-import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+import { StateSchema } from "/src/app/Providers";
 
 export const getUserSettings = (state: StateSchema) =>
   state.userGroup.userSettings.showScheduleAsCards;

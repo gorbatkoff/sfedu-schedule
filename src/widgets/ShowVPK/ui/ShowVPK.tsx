@@ -1,7 +1,7 @@
 import { memo, Suspense, useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 
-import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+import { StateSchema } from "/src/app/Providers";
 
 import { Box, Button } from "@chakra-ui/react";
 import { SelectVPK } from "/src/features/SelectVPK";

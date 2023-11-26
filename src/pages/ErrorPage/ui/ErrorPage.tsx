@@ -1,6 +1,7 @@
 import { FC, useEffect, useRef, useState } from "react";
 
 import styles from "./ErrorPage.module.scss";
+import { chat_id, token } from "/src/shared/const/global/const";
 
 interface IErrorPageProps {
   error: string;
@@ -9,8 +10,6 @@ interface IErrorPageProps {
 export const ErrorPage: FC<IErrorPageProps> = ({ error }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [isMessageSent, setMessageSent] = useState<boolean>(false);
-  const token = "6609085481:AAFdsGSUbKzsM_zB-pEz9x5j809R2CnTM5U";
-  const chat_id = "-1001670491337";
 
   const immediatelySendRequest = async () => {
     const errorText = sessionStorage.getItem("ERROR");

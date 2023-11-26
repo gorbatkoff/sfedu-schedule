@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import classNames from "classnames";
 
-import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+import { StateSchema } from "/src/app/Providers";
 
 import { fetchVPKByWeek } from "/src/features/SelectVPK";
 import { getSchedule } from "/src/entities/ScheduleTable";

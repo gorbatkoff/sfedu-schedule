@@ -1,4 +1,5 @@
 import { StrictMode } from "react";
+import { BrowserRouter } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import App from "/src/app/App";
 import { registerSW } from "virtual:pwa-register";
@@ -7,14 +8,15 @@ import { ErrorBoundary } from "/src/app/Providers/ErrorBoundary";
 
 import { ChakraProvider, extendTheme, ThemeConfig } from "@chakra-ui/react";
 
-import "./app/styles/index.scss";
 import StoreProvider from "/src/app/Providers/StoreProvider/ui/ProviderOfStore";
-import { BrowserRouter } from "react-router-dom";
+
+import "./app/styles/index.scss";
 
 const theme: ThemeConfig = extendTheme({
   config: {
     initialColorMode: "dark",
   },
+  colors: {},
 });
 
 const updateSW = registerSW({

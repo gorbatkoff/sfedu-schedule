@@ -3,7 +3,7 @@ import { ScheduleSchema } from "/src/entities/ScheduleTable";
 import { IFavoriteChoice } from "/src/entities/ScheduleTable";
 import { VPKSchema } from "/src/features/SelectVPK";
 
-export default interface StateSchema {
+export interface StateSchema {
   userGroup: UserGroupSchema;
   schedule: ScheduleSchema;
   favoriteSearch: IFavoriteChoice[];

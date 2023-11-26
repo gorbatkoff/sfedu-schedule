@@ -1,4 +1,6 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import {
   Box,
@@ -32,9 +34,8 @@ import {
   USER_GROUP,
 } from "/src/shared/const/localStorage/localStorageKeys";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+
+import { StateSchema } from "/src/app/Providers";
 
 import styles from "./DrawerMenu.module.scss";
 
@@ -140,7 +141,7 @@ export function DrawerMenu() {
     }
   }
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const cleanedValue = e.target.value.replace(/[^КТА-Яа-я1-6-0-9]+/g, "");
 
     if (!cleanedValue.startsWith("КТ")) {
