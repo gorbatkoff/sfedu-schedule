@@ -1,15 +1,14 @@
 import { Button, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
+import styles from "./ThankYouPage.module.scss";
+
 export const ThankYouPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div style={{ width: "100%" }}>
-      <Text
-        style={{ margin: "100px auto", textAlign: "center", color: "white" }}
-        fontSize="3xl"
-      >
+    <div className={styles.ThankYouPageWrapper}>
+      <Text fontSize="3xl" className={styles.thankHeader}>
         Благодарим за отзыв!
       </Text>
 

@@ -1,13 +1,11 @@
 import { FC, useEffect, useRef, useState } from "react";
 
 import styles from "./ErrorPage.module.scss";
+import { chat_id, token } from "/src/shared/const/global/const";
 
 interface IErrorPageProps {
   error: string;
 }
-
-export const token = "6609085481:AAFdsGSUbKzsM_zB-pEz9x5j809R2CnTM5U";
-export const chat_id = "-1001670491337";
 
 export const ErrorPage: FC<IErrorPageProps> = ({ error }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);

@@ -1,8 +1,8 @@
 import styles from "./LeaveFeedback.module.scss";
 import { Button, FormControl, Input, Textarea } from "@chakra-ui/react";
 import { useRef } from "react";
-import { chat_id, token } from "/src/pages/ErrorPage/ui/ErrorPage";
 import { useNavigate } from "react-router-dom";
+import { chat_id, token } from "/src/shared/const/global/const";
 
 const LeaveFeedback = () => {
   const navigate = useNavigate();

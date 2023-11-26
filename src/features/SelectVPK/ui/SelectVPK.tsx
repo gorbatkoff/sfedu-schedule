@@ -11,7 +11,7 @@ import {
   fetchVPKByWeek,
   selectVPKActions,
 } from "/src/features/SelectVPK/model/slice/selectVPKSlice";
-import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+import { StateSchema } from "/src/app/Providers";
 import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
 
 import styles from "./SelectVPK.module.scss";

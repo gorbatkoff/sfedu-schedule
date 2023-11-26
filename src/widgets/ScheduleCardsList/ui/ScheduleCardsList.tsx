@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import classNames from "classnames";
 
-import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+import { StateSchema } from "/src/app/Providers";
 
 import { StarIcon } from "@chakra-ui/icons";
 import { fetchVPKByWeek } from "/src/features/SelectVPK";

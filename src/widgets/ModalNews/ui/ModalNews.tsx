@@ -19,18 +19,14 @@ interface IModalNews {
   navigateToFeedback: () => void;
 }
 
+const isMobileDevice = window.screen.width <= 768;
+
 export const ModalNews: FC<IModalNews> = ({
   isOpen,
   onClose,
   navigateToFeedback,
 }) => {
   const navigate = useNavigate();
-  const isMobileDevice = window.screen.width <= 768;
-
-  const leaveFeedback = () => {
-    navigate("/leave-feedback");
-    handleClose();
-  };
 
   const handleClose = () => {
     onClose();

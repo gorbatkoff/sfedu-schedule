@@ -1,7 +1,7 @@
 import { memo, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+import { StateSchema } from "/src/app/Providers";
 
 import { tableActions } from "/src/entities/ScheduleTable";
 import { getFavoriteSearch } from "/src/entities/ScheduleTable";

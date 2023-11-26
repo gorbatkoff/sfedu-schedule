@@ -1,10 +1,13 @@
+.ChoiceWrapper {
+  display: flex;
+  align-items: center;
+}
 .FavoriteChoice {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   padding: 3px 15px;
   margin: 0.25em 0;
   width: 100%;
-/*  border-radius: var(--border-radius);*/
   background-color: var(--secondary-color);
 }
