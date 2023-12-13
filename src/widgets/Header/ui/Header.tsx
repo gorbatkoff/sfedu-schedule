@@ -1,3 +1,4 @@
+import { useState } from "react";
 import classNames from "classnames";
 
 import { Box, Icon, IconButton } from "@chakra-ui/react";
@@ -12,10 +13,9 @@ import { defaultValue } from "/src/shared/const/global/const";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 
 import styles from "./Header.module.scss";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { EmailIcon } from "@chakra-ui/icons";
 import { ModalNews } from "/src/widgets/ModalNews/ui/ModalNews";
-import { useState } from "react";
 
 interface HeaderProps {
   className?: string;
@@ -59,10 +59,6 @@ export const Header = ({ className }: HeaderProps) => {
         >
           <Logo />
         </IconButton>
-
-        <div className={styles.links}>
-          <Link to="/about"></Link>
-        </div>
 
         <div className={styles.menuBlock}>
           <div className={styles.themeSwitcher}>
