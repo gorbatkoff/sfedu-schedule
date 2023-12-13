@@ -37,7 +37,7 @@ class ErrorBoundary extends React.Component<
       // Можно отрендерить запасной UI произвольного вида
       return (
         <Suspense fallback={<Loader />}>
-          <ErrorPage error={String(error)} />
+          <ErrorPage />
         </Suspense>
       );
     }

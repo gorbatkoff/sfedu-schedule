@@ -16,11 +16,13 @@ import { StarIcon } from "@chakra-ui/icons";
 import { fetchVPKByWeek } from "/src/features/SelectVPK";
 import { Carousel } from "/src/features/Carousel/Carousel";
 import { ScheduleCard } from "/src/entities/ScheduleCard";
-import { tableActions } from "/src/entities/ScheduleTable";
-import { IScheduleTable } from "/src/entities/ScheduleTable";
-import { IFavoriteChoice } from "/src/entities/ScheduleTable";
-import { getScheduleTable } from "/src/entities/ScheduleTable";
-import { favoriteSearchActions } from "/src/entities/ScheduleTable";
+import {
+  favoriteSearchActions,
+  getScheduleTable,
+  IFavoriteChoice,
+  IScheduleTable,
+  tableActions,
+} from "/src/entities/ScheduleTable";
 
 import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
 
@@ -29,10 +31,7 @@ import {
   REMOVE_FROM_FAVORITE,
 } from "/src/shared/const/toast/toast";
 import { weekDays } from "/src/shared/const/global/const";
-import {
-  SHOW_EMPTY_LESSONS,
-  USER_FAVORITE_SEARCH,
-} from "/src/shared/const/localStorage/localStorageKeys";
+import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorage/localStorageKeys";
 
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";

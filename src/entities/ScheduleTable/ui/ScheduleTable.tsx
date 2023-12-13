@@ -131,7 +131,7 @@ const ScheduleTable = memo(({ className }: TableProps) => {
         week: week,
         vpk: {
           group: userVPK.group,
-          name: "", // should be fixed
+          name: "", // TODO should be fixed
           id: "",
         },
       }),
@@ -158,15 +158,13 @@ const ScheduleTable = memo(({ className }: TableProps) => {
         {schedule.weeks.map((week, index) => {
           return (
             <Button
+              key={index}
               className={styles.weekButton}
               onClick={() => fetchDataByWeek(week)}
-              key={index}
-              backgroundColor={week === currentWeek ? "#3be7cb" : ""}
-              isDisabled={schedule.table.week === index + 1}
+              isDisabled={schedule.table.week === week}
               opacity={week < currentWeek ? "0.5" : "1"}
-              colorScheme={
-                schedule.table.week === index + 1 ? "green" : "twitter"
-              }
+              backgroundColor={week === currentWeek ? "#3be7cb" : ""}
+              colorScheme={schedule.table.week === week ? "green" : "twitter"}
             >
               {week}
             </Button>
