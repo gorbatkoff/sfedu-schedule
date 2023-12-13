@@ -1,24 +1,25 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
+
+import { chat_id, token } from "/src/shared/const/global/const";
+import Loader from "/src/shared/ui/Loader/Loader";
 
 import styles from "./ErrorPage.module.scss";
-import { chat_id, token } from "/src/shared/const/global/const";
 
-interface IErrorPageProps {
-  error: string;
-}
-
-export const ErrorPage: FC<IErrorPageProps> = ({ error }) => {
-  const inputRef = useRef<HTMLTextAreaElement>(null);
-  const [isMessageSent, setMessageSent] = useState<boolean>(false);
-
+export const ErrorPage = () => {
   const immediatelySendRequest = async () => {
     const errorText = sessionStorage.getItem("ERROR");
-
+    const isProdMode = !window.location.hostname.includes("localhost");
     try {
       if (!window.location.href.includes("localhost")) {
         await fetch(
           `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&parse_mode=html&text=${errorText}`,
         );
+      }
+
+      if (isProdMode) {
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 2000);
       }
     } catch (error) {
       console.log(error);
@@ -29,74 +30,13 @@ export const ErrorPage: FC<IErrorPageProps> = ({ error }) => {
     immediatelySendRequest();
   }, []);
 
-  const handleSendMessage = async () => {
-    if (inputRef.current?.value.length === 0) return;
-
-    const messageText =
-      `‼️ Ошибка в приложении. Текст сообщения: ${"_".repeat(67)} ` +
-      inputRef.current?.value;
-
-    try {
-      await fetch(
-        `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&parse_mode=html&text=${messageText}`,
-      );
-
-      setMessageSent(true);
-
-      setTimeout(() => {
-        window.location.href = "/";
-      }, 4000);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fullReload = () => {
-    localStorage.clear();
-    window.location.href = "/";
-  };
-
   return (
     <div className={styles.ErrorPage}>
       <div className={styles.content}>
         <h1>Упс.. Что-то пошло не так.</h1>
-
-        <h2>Расскажите, что вы делали прежде чем это произошло?</h2>
-
-        <textarea ref={inputRef}></textarea>
-
-        {isMessageSent && (
-          <div className={styles.helpfulText}>
-            <h2>
-              Большое спасибо за обратную связь! Если хотите помочь ещё больше
-              -- напишите нам по контактам.
-              <a href="https://vk.com/http_401">(https://vk.com/http_401)</a>
-            </h2>
-
-            <p>
-              Через 4 секунды вы будете перенаправлены на главную страницу..
-            </p>
-          </div>
-        )}
-
-        <div className={styles.sendButton}>
-          <button
-            style={{ backgroundColor: "green" }}
-            onClick={handleSendMessage}
-            disabled={isMessageSent}
-          >
-            Отправить отчёт и вернуться на главную
-          </button>
-        </div>
-
-        <div className={styles.reloadButton}>
-          <button onClick={() => location.reload()}>
-            Вернуться на главную
-          </button>
-          <button onClick={fullReload} style={{ backgroundColor: "#df5858" }}>
-            Очистить кэш (не рекомендуется)
-          </button>
-        </div>
+        <h2>
+          Возвращаемся на главную. <Loader />
+        </h2>
       </div>
     </div>
   );
