@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import classNames from "classnames";
 
 import { ScheduleCard } from "/src/entities/ScheduleCard";
 import { Skeleton, Stack, useColorMode } from "@chakra-ui/react";
@@ -15,7 +16,7 @@ const UpcomingLessons = () => {
   const { week } = useCurrentWeek();
   const { colorMode } = useColorMode();
 
-  const [day, setDay] = useState<number>(0);
+  const [day, setDay] = useState(0);
 
   const currentTime = new Date();
   const currentDay = currentTime.getDay();
@@ -46,24 +47,26 @@ const UpcomingLessons = () => {
 
   const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 
-  if (!userGroup.groupId) return null;
+  if (!userGroup?.groupId || +currentHour > 21) return null;
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { data, isLoading, status } = useFetchUpcomingLessonsQuery({
-    group: userGroup.groupId,
+    group: userGroup?.groupId,
     week: week,
   });
 
   if (isLoading) {
     return (
       <Stack>
-        <Skeleton height="150px" width="100%" borderRadius={10} />
-        <Skeleton height="150px" width="100%" borderRadius={10} />
+        <Skeleton height="152.225px" width="100%" borderRadius={10} />
+        {+currentHour < 18 && (
+          <Skeleton height="152.225px" width="100%" borderRadius={10} />
+        )}
       </Stack>
     );
   }
 
-  if (status === "rejected") return null;
+  if (status === "rejected" || !data?.table?.table) return null;
 
   return (
     <div className={styles.UpcomingLessonsList}>
@@ -75,15 +78,15 @@ const UpcomingLessons = () => {
         .map((item: string, index: number) => {
           return (
             <ScheduleCard
-              lessonTime={data.table.table[1][currentLesson + index + 1]}
+              lessonTime={data.table.table[1]?.[currentLesson + index + 1]}
               lessonNumber={currentLesson + index + 1}
-              day={data.table.table.slice(2)[day][0]}
+              day={data.table.table.slice(2)?.[day]?.[0]}
               key={index}
               element={item}
-              className={String([
-                colorMode === "light" ? styles.whiteMode : "",
-                index === 0 ? styles.currentLesson : "",
-              ])}
+              className={classNames({
+                [styles.whiteMode]: colorMode === "light",
+                [styles.currentLesson]: index === 0,
+              })}
             />
           );
         })}
