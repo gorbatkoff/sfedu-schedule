@@ -164,7 +164,7 @@ export const tableSlice = createSlice({
     updateScheduleByNewVPKData: (state, action: PayloadAction<any>) => {
       const header = state.schedule.table.table.slice(0, 2);
       const slicedSchedule = state.schedule.table.table.slice(2);
-      const slicedVPK = action.payload.table.table.slice(2);
+      const slicedVPK = action.payload?.table?.table?.slice(2);
 
       const mergedSchedule = slicedSchedule.map((row, rowIndex) => {
         return row.map((item, itemIndex) => {

@@ -66,12 +66,12 @@ export const Carousel: FC<CarouselProps> = memo(
               className={styles.weekButton}
               onClick={() => fetchDataByWeek(item)}
               key={index}
-              isDisabled={week === index + 1}
+              isDisabled={week === item}
               // @ts-ignore
-              ref={week === index + 1 ? myRef : null}
-              backgroundColor={index + 1 === currentWeek ? "#5b32e2" : ""}
+              ref={week === item ? myRef : null}
+              backgroundColor={item === currentWeek ? "#5b32e2" : ""}
               opacity={item < currentWeek ? "0.5" : "1"}
-              colorScheme={week === index + 1 ? "green" : "twitter"}
+              colorScheme={week === item ? "green" : "twitter"}
             >
               {item}
             </Button>
