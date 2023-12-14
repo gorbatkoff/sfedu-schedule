@@ -23,12 +23,11 @@ export const getInfoAboutElement = (element: string, theme?: Themes) => {
     }
     return TableCellColor.DAY_COLOR;
   }
-
+  if (element.startsWith("экз.")) return TableCellColor.EXAM_COLOR;
   if (element.match(LMSRegex)) return TableCellColor.LMS_COLOR;
   if (element.includes("Военная подготовка"))
     return TableCellColor.MILITARY_COLOR;
   if (element.match(auditoryRegex)) return TableCellColor.AUDIENCE_COLOR;
   if (element.includes("ТК ИТА ЮФУ")) return TableCellColor.AUDIENCE_COLOR;
-  if (element.startsWith("экз.")) return TableCellColor.EXAM_COLOR;
   return TableCellColor.UNKNOWN_COLOR;
 };
