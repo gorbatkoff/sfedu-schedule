@@ -1,6 +1,8 @@
 import { StrictMode } from "react";
 import { BrowserRouter } from "react-router-dom";
 import ReactDOM from "react-dom/client";
+import Snowfall from "react-snowfall";
+
 import App from "/src/app/App";
 import { registerSW } from "virtual:pwa-register";
 
@@ -37,6 +39,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <BrowserRouter>
           <ChakraProvider theme={theme}>
             <App />
+            <Snowfall />
           </ChakraProvider>
         </BrowserRouter>
       </StoreProvider>

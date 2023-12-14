@@ -20,12 +20,12 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 5px solid #FFF;
+  border: 5px solid #5b32e2;
   animation: prixClipFix 2s linear infinite ;
 }
 
 .loader::after{
-  border-color: var(--chakra-colors-blue-500);;
+  border-color: white;
   animation: prixClipFix 2s linear infinite , rotate 0.5s linear infinite reverse;
   inset: 6px;
 }
