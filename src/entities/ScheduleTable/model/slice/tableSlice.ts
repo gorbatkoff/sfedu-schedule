@@ -224,7 +224,6 @@ export const tableSlice = createSlice({
         (state, action: PayloadAction<IScheduleTable>) => {
           state.schedule = action.payload;
           state.choices = null;
-          /*          state.schedule.table.table = mergeVPKAndSchedule(state);*/
         },
       );
   },

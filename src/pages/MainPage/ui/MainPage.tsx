@@ -18,6 +18,8 @@ import {
 import { useEffect } from "react";
 import { IScheduleTable, tableActions } from "/src/entities/ScheduleTable";
 import { TOAST_NO_INTERNET } from "/src/shared/const/toast/toast";
+import { useSelector } from "react-redux";
+import { StateSchema } from "/src/app/Providers";
 
 const isUserOnline = navigator.onLine;
 
@@ -35,12 +37,36 @@ const MainPage = () => {
     group: queryParameters.get("group") || userGroup?.groupId || "",
     week: week,
   });
+  const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
 
   useEffect(() => {
     if (data?.table?.group) {
       dispatch(tableActions.setSchedule(data));
+      mergeVPKAndSchedule();
     }
   }, [data]);
+
+  const mergeVPKAndSchedule = () => {
+    const header = data.table.table.slice(0, 2);
+    const slicedSchedule = data.table.table.slice(2);
+
+    if (vpkData?.table?.group) {
+      const slicedVPK = vpkData.table.table.slice(2);
+
+      const mergedSchedule = slicedSchedule.map(
+        (row: any, rowIndex: number) => {
+          return row.map((item: any, itemIndex: number) => {
+            if (item.includes("Дисциплины ВПК")) {
+              item = slicedVPK[rowIndex][itemIndex];
+              return item;
+            }
+            return item;
+          });
+        },
+      );
+      dispatch(tableActions.mergeScheduleAndVPK(header.concat(mergedSchedule)));
+    }
+  };
 
   useEffect(() => {
     if (!isUserOnline) {

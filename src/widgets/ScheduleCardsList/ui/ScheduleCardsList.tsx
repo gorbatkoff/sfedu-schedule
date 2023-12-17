@@ -168,7 +168,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
         group={schedule.table.group}
       />
 
-      <div className={classNames(styles.weekDayBtns)}>
+      <div className={styles.weekDayBtns}>
         {weekDays.map((dayItem, index) => {
           return (
             <Button
