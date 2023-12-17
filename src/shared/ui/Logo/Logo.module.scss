@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-right: 5px;
+  padding-left: 10px;
 
   .logoIcon {
     height: 45px;
@@ -15,5 +15,6 @@
   color: var(--white-color);
   font-size: var(--font-size-m);
   font-weight:bold;
-  margin-left: 10px;
+  margin-left: 5px;
+  color: var(--white-color);
 }
