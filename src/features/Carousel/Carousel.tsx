@@ -6,8 +6,11 @@ import classNames from "classnames";
 import { StateSchema } from "/src/app/Providers";
 
 import { fetchVPKByWeek } from "/src/features/SelectVPK";
-import { getSchedule } from "/src/entities/ScheduleTable";
-import { fetchScheduleByWeek, tableActions } from "/src/entities/ScheduleTable";
+import {
+  fetchScheduleByWeek,
+  getSchedule,
+  tableActions,
+} from "/src/entities/ScheduleTable";
 import { Button } from "@chakra-ui/react";
 
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
@@ -45,8 +48,11 @@ export const Carousel: FC<CarouselProps> = memo(
       }
     };
 
-    const fetchDataByWeek = async (week: number) => {
+    const fetchDataByWeek = async (week: number, propWeek: number) => {
+      if (week === propWeek) return;
+
       await dispatch(fetchScheduleByWeek({ week, group }));
+
       if (vpkInfo.group) {
         await dispatch(fetchVPKByWeek({ week: currentWeek, vpk: vpkInfo }));
       }
@@ -64,9 +70,8 @@ export const Carousel: FC<CarouselProps> = memo(
           return (
             <Button
               className={styles.weekButton}
-              onClick={() => fetchDataByWeek(item)}
+              onClick={() => fetchDataByWeek(item, week)}
               key={index}
-              isDisabled={week === item}
               // @ts-ignore
               ref={week === item ? myRef : null}
               backgroundColor={item === currentWeek ? "#5b32e2" : ""}
