@@ -51,10 +51,10 @@ export const FavoriteChoices = memo(() => {
   useEffect(() => {
     if (status === "fulfilled") {
       dispatch(tableActions.setSchedule(data));
-      mergeVPKAndSchedule();
       toast(GROUP_FETCH_SUCCESS(data?.table?.name));
+      mergeVPKAndSchedule();
     }
-  }, [status]);
+  }, [data, status]);
 
   return (
     <div style={{ marginTop: "1em" }}>

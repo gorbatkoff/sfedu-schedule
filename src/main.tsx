@@ -39,7 +39,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <BrowserRouter>
           <ChakraProvider theme={theme}>
             <App />
-            <Snowfall />
+            <Snowfall snowflakeCount={115} />
           </ChakraProvider>
         </BrowserRouter>
       </StoreProvider>

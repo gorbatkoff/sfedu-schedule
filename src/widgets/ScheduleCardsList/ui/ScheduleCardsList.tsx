@@ -43,7 +43,7 @@ interface TableProps {
 }
 
 const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
-  const [day, setDay] = useState<number>(0);
+  const [day, setDay] = useState(0);
 
   const toast = useToast();
   const dispatch = useAppDispatch();
@@ -93,7 +93,9 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
   }, [vpkData]);
 
   const dayHandler = (index: number) => {
-    setDay(index);
+    if (day !== index) {
+      setDay(index);
+    }
   };
 
   const mergeVPKAndSchedule = () => {
@@ -168,13 +170,12 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
         group={schedule.table.group}
       />
 
-      <div className={classNames(styles.weekDayBtns)}>
+      <div className={styles.weekDayBtns}>
         {weekDays.map((dayItem, index) => {
           return (
             <Button
               key={index}
               onClick={() => dayHandler(index)}
-              isDisabled={day === index}
               colorScheme={day === index ? "green" : "gray"}
               className={styles.weekDayButton}
             >

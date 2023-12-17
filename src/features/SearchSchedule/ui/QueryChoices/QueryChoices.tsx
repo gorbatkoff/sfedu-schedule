@@ -1,9 +1,8 @@
 import { FC, memo, useEffect } from "react";
 
 import { Button, useToast } from "@chakra-ui/react";
-import { IChoice, IChoices, searchApi } from "/src/features/SearchSchedule";
-import { tableActions } from "/src/entities/ScheduleTable";
-import { IScheduleTable } from "/src/entities/ScheduleTable";
+import { IChoice, IChoices } from "/src/features/SearchSchedule";
+import { IScheduleTable, tableActions } from "/src/entities/ScheduleTable";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 
 import { GROUP_FETCH_SUCCESS } from "/src/shared/const/toast/toast";
