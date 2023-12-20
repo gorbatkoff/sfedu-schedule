@@ -180,6 +180,34 @@ export function DrawerMenu() {
     setInputBlocked(false);
   };
 
+  useEffect(() => {
+    let deferredPrompt: any;
+
+    window.addEventListener("beforeinstallprompt", (e) => {
+      deferredPrompt = e;
+    });
+
+    const installApp = document.getElementById("download-button");
+
+    if (!installApp) return;
+
+    installApp.addEventListener("click", async () => {
+      if (deferredPrompt !== null) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === "accepted") {
+          deferredPrompt = null;
+        }
+      }
+    });
+
+    return () => {
+      window.removeEventListener("beforeinstallprompt", (e) => {
+        deferredPrompt = e;
+      });
+    };
+  }, []);
+
   return (
     <>
       <HamburgerIcon
@@ -254,6 +282,9 @@ export function DrawerMenu() {
                   <Heading as="h6" size="md" my={5}>
                     Расписание в виде карточек
                   </Heading>
+                </Box>
+                <Box>
+                  <Button id="download-button">Установить приложение</Button>
                 </Box>
               </>
             )}
