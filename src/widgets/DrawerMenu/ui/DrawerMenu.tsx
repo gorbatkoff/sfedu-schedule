@@ -38,6 +38,7 @@ import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { StateSchema } from "/src/app/Providers";
 
 import styles from "./DrawerMenu.module.scss";
+import { DownloadButton } from "/src/widgets/DrawerMenu/ui/DownloadButton/DownloadButton";
 
 const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 const isButtonBlock =
@@ -180,34 +181,6 @@ export function DrawerMenu() {
     setInputBlocked(false);
   };
 
-  useEffect(() => {
-    let deferredPrompt: any;
-
-    window.addEventListener("beforeinstallprompt", (e) => {
-      deferredPrompt = e;
-    });
-
-    const installApp = document.getElementById("download-button");
-
-    if (!installApp) return;
-
-    installApp.addEventListener("click", async () => {
-      if (deferredPrompt !== null) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === "accepted") {
-          deferredPrompt = null;
-        }
-      }
-    });
-
-    return () => {
-      window.removeEventListener("beforeinstallprompt", (e) => {
-        deferredPrompt = e;
-      });
-    };
-  }, []);
-
   return (
     <>
       <HamburgerIcon
@@ -284,7 +257,7 @@ export function DrawerMenu() {
                   </Heading>
                 </Box>
                 <Box>
-                  <Button id="download-button">Установить приложение</Button>
+                  <DownloadButton />
                 </Box>
               </>
             )}
