@@ -1,30 +1,37 @@
-import { RenderTable } from "/src/processes/RenderTable";
+import { useEffect } from "react";
+
+import { useToast } from "@chakra-ui/react";
+import { useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+
+import { StateSchema } from "/src/app/Providers";
+
 import { ShowVPK } from "/src/widgets/ShowVPK";
-import MainColumns from "/src/shared/ui/MainColumns/MainColumns";
-import { Calendar } from "/src/entities/Calendar";
+
 import {
   SearchSchedule,
   useFetchGroupByWeekQuery,
 } from "/src/features/SearchSchedule";
+
+import { Calendar } from "/src/entities/Calendar";
+import { IScheduleTable, tableActions } from "/src/entities/ScheduleTable";
 import { UpcomingLessons } from "/src/entities/UpcomingLessons";
-import { useToast } from "@chakra-ui/react";
-import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
-import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import { useSearchParams } from "react-router-dom";
+
 import {
   SAVED_SCHEDULE,
   USER_GROUP,
 } from "/src/shared/const/localStorage/localStorageKeys";
-import { useEffect } from "react";
-import { IScheduleTable, tableActions } from "/src/entities/ScheduleTable";
 import { TOAST_NO_INTERNET } from "/src/shared/const/toast/toast";
-import { useSelector } from "react-redux";
-import { StateSchema } from "/src/app/Providers";
+import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
+import MainColumns from "/src/shared/ui/MainColumns/MainColumns";
+
+import { RenderTable } from "/src/processes/RenderTable";
 
 const isUserOnline = navigator.onLine;
 
 const savedUserSchedule = JSON.parse(
-  localStorage.getItem(SAVED_SCHEDULE) || "{}",
+  localStorage.getItem(SAVED_SCHEDULE) || "{}"
 ) as IScheduleTable;
 
 const MainPage = () => {
@@ -62,7 +69,7 @@ const MainPage = () => {
             }
             return item;
           });
-        },
+        }
       );
       dispatch(tableActions.mergeScheduleAndVPK(header.concat(mergedSchedule)));
     }

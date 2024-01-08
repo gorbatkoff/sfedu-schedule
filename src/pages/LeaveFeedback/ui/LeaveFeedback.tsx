@@ -1,8 +1,11 @@
-import styles from "./LeaveFeedback.module.scss";
-import { Button, FormControl, Input, Textarea } from "@chakra-ui/react";
 import { useRef } from "react";
+
+import { Button, FormControl, Input, Textarea } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+
 import { chat_id, token } from "/src/shared/const/global/const";
+
+import styles from "./LeaveFeedback.module.scss";
 
 const LeaveFeedback = () => {
   const navigate = useNavigate();
@@ -14,7 +17,7 @@ const LeaveFeedback = () => {
     try {
       const feedBackText = `${nameRef.current?.value} написал отзыв! ======================================================= Связаться: с пользователем ${contactRef.current?.value} ======================================================= Отзыв: ${feedbackRef.current?.value}`;
       await fetch(
-        `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&parse_mode=html&text=${feedBackText}`,
+        `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&parse_mode=html&text=${feedBackText}`
       );
 
       navigate("/thanks-page", { replace: true });

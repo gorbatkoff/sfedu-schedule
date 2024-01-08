@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IUserGroup, UserGroupSchema } from "../types/UserGroup";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+
 import {
   IS_BUTTONS_BLOCKED,
   SHOW_EMPTY_LESSONS,
@@ -7,12 +7,14 @@ import {
   USER_GROUP,
 } from "/src/shared/const/localStorage/localStorageKeys";
 
+import { IUserGroup, UserGroupSchema } from "../types/UserGroup";
+
 const isShowEmptyLessons = JSON.parse(
-  localStorage.getItem(SHOW_EMPTY_LESSONS) || "true",
+  localStorage.getItem(SHOW_EMPTY_LESSONS) || "true"
 );
 
 const isScheduleAsCards = JSON.parse(
-  localStorage.getItem(SHOW_SCHEDULE_AS_CARDS) || "true",
+  localStorage.getItem(SHOW_SCHEDULE_AS_CARDS) || "true"
 );
 
 const initialState: UserGroupSchema = {

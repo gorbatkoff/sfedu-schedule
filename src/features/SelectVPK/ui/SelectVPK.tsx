@@ -1,25 +1,29 @@
 import { FC, memo, useEffect, useMemo } from "react";
 
 import { Button, Heading, useToast } from "@chakra-ui/react";
-import { IVPK } from "/src/features/SelectVPK/model/types/VPK";
-import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useSelector } from "react-redux";
-import { getSchedule } from "/src/entities/ScheduleTable/model/selectors/getSchedule";
-import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+
+import { StateSchema } from "/src/app/Providers";
+
 import {
   fetchVPK,
   fetchVPKByWeek,
   selectVPKActions,
 } from "/src/features/SelectVPK/model/slice/selectVPKSlice";
-import { StateSchema } from "/src/app/Providers";
+import { IVPK } from "/src/features/SelectVPK/model/types/VPK";
+
+import { getSchedule } from "/src/entities/ScheduleTable/model/selectors/getSchedule";
 import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
 
-import styles from "./SelectVPK.module.scss";
-import { VPKSort } from "/src/shared/lib/vpkSort";
 import {
   SELECT_VPK_ERROR,
   VPK_SELECTED_SUCCESSFULLY,
 } from "/src/shared/const/toast/toast";
+import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
+import { VPKSort } from "/src/shared/lib/vpkSort";
+
+import styles from "./SelectVPK.module.scss";
 
 interface ISelectVPKProps {
   handleHideVPKList: () => void;

@@ -1,5 +1,6 @@
 import { IChoice } from "/src/features/SearchSchedule";
 import { IVPK } from "/src/features/SelectVPK/model/types/VPK";
+
 import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
 
 export interface VPKSchema {

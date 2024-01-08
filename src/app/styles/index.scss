@@ -11,13 +11,14 @@ body {
 
 .App {
   font: var(--font-m);
-  min-height:100vh;
+  min-height: 100vh;
   color: var(--secondary-color);
 }
 
 .sfeduSchedule {
   font-weight: bold;
-  background-image: -webkit-linear-gradient(0deg, #d391ff 35%, #0be7a9 45%);  -webkit-background-clip: text;
+  background-image: -webkit-linear-gradient(0deg, #d391ff 35%, #0be7a9 45%);
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

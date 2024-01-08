@@ -12,5 +12,5 @@ export const VPK_FROM_LOCALSTORAGE = JSON.parse(
       group: "",
       name: "",
       id: "",
-    }),
+    })
 );

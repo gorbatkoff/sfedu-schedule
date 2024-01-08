@@ -12,7 +12,7 @@ export const ErrorPage = () => {
     try {
       if (!window.location.href.includes("localhost")) {
         await fetch(
-          `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&parse_mode=html&text=${errorText}`,
+          `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&parse_mode=html&text=${errorText}`
         );
       }
 

@@ -1,11 +1,12 @@
-import { USER_FAVORITE_SEARCH } from "../const/localStorage/localStorageKeys";
 import { IFavoriteChoice } from "/src/entities/ScheduleTable";
 
+import { USER_FAVORITE_SEARCH } from "../const/localStorage/localStorageKeys";
+
 export const addSearchToFavorite = (
-  favoriteSearch: IFavoriteChoice,
+  favoriteSearch: IFavoriteChoice
 ): boolean => {
   const localStorageGroups = JSON.parse(
-    localStorage.getItem(USER_FAVORITE_SEARCH) || "[]",
+    localStorage.getItem(USER_FAVORITE_SEARCH) || "[]"
   ) as IFavoriteChoice[];
 
   if (
@@ -15,8 +16,8 @@ export const addSearchToFavorite = (
     localStorage.setItem(
       USER_FAVORITE_SEARCH,
       JSON.stringify(
-        localStorageGroups.filter((item) => item.name !== favoriteSearch.name),
-      ),
+        localStorageGroups.filter((item) => item.name !== favoriteSearch.name)
+      )
     );
     return false;
   } else {
@@ -24,7 +25,7 @@ export const addSearchToFavorite = (
 
     localStorage.setItem(
       USER_FAVORITE_SEARCH,
-      JSON.stringify(localStorageGroups),
+      JSON.stringify(localStorageGroups)
     );
     return true;
   }

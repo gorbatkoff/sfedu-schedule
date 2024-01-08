@@ -42,7 +42,7 @@
       /* cursor: pointer; */
       cursor: default;
       transition: all 0.3s ease-in-out;
-      border-right: 1px solid  var(--chakra-colors-chakra-border-color);
+      border-right: 1px solid var(--chakra-colors-chakra-border-color);
     }
 
     td:hover {
@@ -92,7 +92,6 @@
   }
 
   @media (width <= 768px) {
-
     .groupActions {
       align-items: flex-end;
 

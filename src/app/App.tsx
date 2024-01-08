@@ -1,11 +1,14 @@
 import { Suspense } from "react";
+
 import { Route, Routes } from "react-router-dom";
 
-import { Header } from "/src/widgets/Header";
-import { MainPage } from "/src/pages/MainPage";
 import { LeaveFeedbackPage } from "/src/pages/LeaveFeedback";
-import Loader from "/src/shared/ui/Loader/Loader";
+import { MainPage } from "/src/pages/MainPage";
 import { ThankYouPage } from "/src/pages/ThankYouPage";
+
+import { Header } from "/src/widgets/Header";
+
+import Loader from "/src/shared/ui/Loader/Loader";
 
 const App = () => {
   return (

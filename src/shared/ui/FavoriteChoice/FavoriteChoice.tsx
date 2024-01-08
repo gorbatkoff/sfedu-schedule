@@ -1,5 +1,6 @@
 import { ButtonHTMLAttributes, memo } from "react";
 
+import { StarIcon } from "@chakra-ui/icons";
 import {
   Button,
   Heading,
@@ -7,7 +8,7 @@ import {
   useColorMode,
   useToast,
 } from "@chakra-ui/react";
-import { StarIcon } from "@chakra-ui/icons";
+
 import { favoriteSearchActions } from "/src/entities/ScheduleTable";
 
 import { TOAST_SEARCH_REMOVED } from "/src/shared/const/toast/toast";
@@ -54,5 +55,5 @@ export const FavoriteChoice = memo(
         </IconButton>
       </div>
     );
-  },
+  }
 );

@@ -1,4 +1,5 @@
 import { memo } from "react";
+
 import classNames from "classnames";
 
 import styles from "./ScheduleCard.module.scss";
@@ -19,5 +20,5 @@ export const ScheduleCardVisual = memo(
         + Нажмите, чтобы выбрать свою группу
       </button>
     );
-  },
+  }
 );

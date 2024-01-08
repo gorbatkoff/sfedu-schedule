@@ -1,20 +1,21 @@
 import { FC, memo, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
 
+import { Button } from "@chakra-ui/react";
 import classNames from "classnames";
+import { useSelector } from "react-redux";
 
 import { StateSchema } from "/src/app/Providers";
 
 import { fetchVPKByWeek } from "/src/features/SelectVPK";
+
 import {
   fetchScheduleByWeek,
   getSchedule,
   tableActions,
 } from "/src/entities/ScheduleTable";
-import { Button } from "@chakra-ui/react";
 
-import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
 import styles from "./Carousel.module.scss";
 
@@ -74,7 +75,6 @@ export const Carousel: FC<CarouselProps> = memo(
               key={index}
               // @ts-ignore
               ref={week === item ? myRef : null}
-              backgroundColor={item === currentWeek ? "#5b32e2" : ""}
               opacity={item < currentWeek ? "0.5" : "1"}
               colorScheme={week === item ? "green" : "twitter"}
             >
@@ -84,5 +84,5 @@ export const Carousel: FC<CarouselProps> = memo(
         })}
       </div>
     );
-  },
+  }
 );

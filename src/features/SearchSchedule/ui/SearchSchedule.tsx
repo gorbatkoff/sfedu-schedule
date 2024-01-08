@@ -1,10 +1,10 @@
 import { memo } from "react";
 
+import { useLazyFetchChoicesQuery } from "/src/features/SearchSchedule/api";
+
+import { FavoriteChoices } from "./FavoriteChoices/FavoriteChoices";
 import { InputForm } from "./InputForm/InputForm";
 import { QueryChoices } from "./QueryChoices/QueryChoices";
-import { FavoriteChoices } from "./FavoriteChoices/FavoriteChoices";
-
-import { useLazyFetchChoicesQuery } from "/src/features/SearchSchedule/api";
 
 export const SearchSchedule = memo(() => {
   const [fetchByQuery, { data, isLoading }] = useLazyFetchChoicesQuery();

@@ -1,3 +1,5 @@
+import { FC, useEffect, useState } from "react";
+
 import {
   Button,
   Modal,
@@ -10,7 +12,6 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { FC, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface IModalNews {

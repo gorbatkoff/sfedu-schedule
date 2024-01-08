@@ -1,7 +1,9 @@
 import { memo } from "react";
-import classNames from "classnames";
-import WinterHat from "/src/shared/assets/WinterHat.svg";
+
 import { Heading, useColorMode } from "@chakra-ui/react";
+import classNames from "classnames";
+
+import WinterHat from "/src/shared/assets/WinterHat.svg";
 
 import styles from "./Logo.module.scss";
 
