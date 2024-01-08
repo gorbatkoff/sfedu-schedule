@@ -72,15 +72,15 @@ export const InputForm: FC<IInputFormProps> = memo(
               borderColor="gray.200"
               color={colorMode === "light" ? "black" : "white"}
             />
-            <InputRightElement>
-              {input && (
+            {input && (
+              <InputRightElement>
                 <CloseIcon
                   onClick={handleClearInput}
                   color="gray.500"
                   style={{ cursor: "pointer" }}
                 />
-              )}
-            </InputRightElement>
+              </InputRightElement>
+            )}
           </InputGroup>
         </FormControl>
         <Button
