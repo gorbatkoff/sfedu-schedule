@@ -66,14 +66,6 @@ export const Header = ({ className }: HeaderProps) => {
           </div>
           <button className={styles.emailIcon} onClick={onOpen}>
             <EmailIcon w={22} h={22} as="button" />
-            <div className={styles.badge}>
-              <Icon viewBox="0 0 200 200" color="red.500">
-                <path
-                  fill="#e88358"
-                  d="M 100, 100 m -75, 0 a 75,75 0 1,0 150,0 a 75,75 0 1,0 -150,0"
-                />
-              </Icon>
-            </div>
           </button>
           <DrawerMenu />
         </div>
