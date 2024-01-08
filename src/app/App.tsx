@@ -6,6 +6,8 @@ import { LeaveFeedbackPage } from "/src/pages/LeaveFeedback";
 import { MainPage } from "/src/pages/MainPage";
 import { ThankYouPage } from "/src/pages/ThankYouPage";
 
+import { RenderFooter } from "/src/processes/RenderFooter";
+
 import { Header } from "/src/widgets/Header";
 
 import Loader from "/src/shared/ui/Loader/Loader";
@@ -20,6 +22,7 @@ const App = () => {
           <Route element={<ThankYouPage />} path="thanks-page" />
           <Route element={<LeaveFeedbackPage />} path="/leave-feedback" />
         </Routes>
+        <RenderFooter />
       </div>
     </Suspense>
   );

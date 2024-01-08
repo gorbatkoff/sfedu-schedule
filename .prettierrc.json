@@ -9,6 +9,7 @@
     "<THIRD_PARTY_MODULES>",
     "^/src/app/(.*)$",
     "^/src/pages/(.*)$",
+    "^/src/processes/(.*)$",
     "^/src/widgets/(.*)$",
     "^/src/features/(.*)$",
     "^/src/entities/(.*)$",

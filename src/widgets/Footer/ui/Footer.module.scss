@@ -1,0 +1,23 @@
+.footer {
+    max-width: var(--app-width);
+    width: 100%;
+    margin: 0 auto;
+    align-items: center;
+
+    h5 {
+        text-align: center;
+        margin-bottom: 1em;
+    }
+
+    a {
+        width: fit-content;
+        display: flex;
+        margin: 0 auto;
+        justify-content: center;
+        align-items: flex-end;
+
+        h6 {
+            margin-right: 1em;
+        }
+    }
+}
