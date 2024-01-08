@@ -1,5 +1,5 @@
 :root {
-  --font-family-main: 'Inter', sans-serif;
+  --font-family-main: "Inter", sans-serif;
 
   // Fonts
   --font-size-m: 16px;
@@ -13,17 +13,17 @@
   --font-xl: var(--font-size-xl) / var(--font-line-xl) var(--font-family-main);
 
   // Colors
-  --primary-color: #316BFE;
-  --secondary-color: #262D3F;
+  --primary-color: #316bfe;
+  --secondary-color: #262d3f;
   --white-color: #fff;
   --black-color: #000;
   --inverted-secondary-color: #a8a8a8;
-  --inverted-white-color: #E7EBF3;
-  --success-color: #25CA5D;
-  --danger-color: #EF4D2A;
-  --inverted-danger-color: #FFDEDE;
-  --tile-link-bg: #777F95;
-  --tile-article-bg: #D7DEEF;
+  --inverted-white-color: #e7ebf3;
+  --success-color: #25ca5d;
+  --danger-color: #ef4d2a;
+  --inverted-danger-color: #ffdede;
+  --tile-link-bg: #777f95;
+  --tile-article-bg: #d7deef;
 
   // width, indent
   --app-width: 1440px;
@@ -31,10 +31,10 @@
   --indent: 20px;
 
   // Input
-  --input-dark-bg: #40485A;
-  --input-color: #7E8497;
-  --input-light-bg: #E8EDF5;
+  --input-dark-bg: #40485a;
+  --input-color: #7e8497;
+  --input-light-bg: #e8edf5;
 
   // border-radius:
-  --border-radius: 7px;
+  --border-radius: 12px;
 }

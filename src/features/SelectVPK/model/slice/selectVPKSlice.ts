@@ -1,14 +1,17 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { $api } from "/src/shared/api/api";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
 import { IChoices } from "/src/features/SearchSchedule";
-import { IVPK } from "/src/features/SelectVPK/model/types/VPK";
-import { VPKSchema } from "/src/features/SelectVPK/model/types/VPKSchema";
+import { IVPK } from "/src/features/SelectVPK";
+import { VPKSchema } from "/src/features/SelectVPK";
+
+import { IScheduleTable } from "/src/entities/ScheduleTable";
+
+import { $api } from "/src/shared/api/api";
+import { defaultValue } from "/src/shared/const/global/const";
 import {
   USER_VPK,
   VPK_FROM_LOCALSTORAGE,
 } from "/src/shared/const/localStorage/localStorageKeys";
-import { defaultValue } from "/src/shared/const/global/const";
-import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
 
 export const fetchVPK = createAsyncThunk(
   "vpk/fetchVPK",
@@ -22,7 +25,7 @@ export const fetchVPK = createAsyncThunk(
         return rejectWithValue(error.message);
       }
     }
-  },
+  }
 );
 
 interface IFetchVPKByWeek {
@@ -47,7 +50,7 @@ export const fetchVPKByWeek = createAsyncThunk(
         return rejectWithValue(error.message);
       }
     }
-  },
+  }
 );
 
 const initialState: VPKSchema = {
@@ -76,9 +79,9 @@ export const selectVPKSlice = createSlice({
           state.VPKData = action.payload;
           localStorage.setItem(
             "VPK_LOCALSTORAGE",
-            JSON.stringify(action.payload),
+            JSON.stringify(action.payload)
           );
-        },
+        }
       );
   },
 });

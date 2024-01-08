@@ -1,27 +1,26 @@
 import { useEffect, useState } from "react";
+
+import { Skeleton, Stack, useColorMode } from "@chakra-ui/react";
 import classNames from "classnames";
 
 import { ScheduleCard } from "/src/entities/ScheduleCard";
-import { Skeleton, Stack, useColorMode } from "@chakra-ui/react";
 
-import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { lessonsTime } from "/src/shared/const/global/const";
 import { USER_GROUP } from "/src/shared/const/localStorage/localStorageKeys";
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
 import { useFetchUpcomingLessonsQuery } from "../api";
-
 import styles from "./UpcomingLessons.module.scss";
+
+const currentTime = new Date();
+const currentDay = currentTime.getDay();
+const currentHour = currentTime.getHours();
+const currentMinute = currentTime.getMinutes();
 
 const UpcomingLessons = () => {
   const { week } = useCurrentWeek();
   const { colorMode } = useColorMode();
-
   const [day, setDay] = useState(0);
-
-  const currentTime = new Date();
-  const currentDay = currentTime.getDay();
-  const currentHour = +currentTime.getHours();
-  const currentMinute = +currentTime.getMinutes();
 
   let currentLesson = 0;
 
@@ -66,7 +65,7 @@ const UpcomingLessons = () => {
     );
   }
 
-  if (status === "rejected" || !data?.table?.table) return null;
+  if (status === "rejected" || !data?.table?.table?.group) return null;
 
   return (
     <div className={styles.UpcomingLessonsList}>

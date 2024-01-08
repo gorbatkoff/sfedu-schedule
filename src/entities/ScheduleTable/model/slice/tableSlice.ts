@@ -1,11 +1,11 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { defaultValue } from "/src/shared/const/global/const";
-import { $api } from "/src/shared/api/api";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
 import { IChoices } from "/src/features/SearchSchedule";
-import {
-  IScheduleTable,
-  ScheduleSchema,
-} from "/src/entities/ScheduleTable/model/types/Table";
+
+import { IScheduleTable, ScheduleSchema } from "/src/entities/ScheduleTable";
+
+import { $api } from "/src/shared/api/api";
+import { defaultValue } from "/src/shared/const/global/const";
 import {
   SAVED_SCHEDULE,
   USER_GROUP,
@@ -29,7 +29,7 @@ export const fetchAndSaveUserGroup = createAsyncThunk(
         return rejectWithValue(error.message);
       }
     }
-  },
+  }
 );
 
 export const fetchScheduleByQuery = createAsyncThunk(
@@ -49,7 +49,7 @@ export const fetchScheduleByQuery = createAsyncThunk(
         return rejectWithValue(error.message);
       }
     }
-  },
+  }
 );
 
 export const fetchScheduleByGroup = createAsyncThunk(
@@ -68,7 +68,7 @@ export const fetchScheduleByGroup = createAsyncThunk(
         return rejectWithValue(error.message);
       }
     }
-  },
+  }
 );
 
 interface IFetchScheduleByURL {
@@ -93,7 +93,7 @@ export const fetchScheduleByURL = createAsyncThunk(
         return rejectWithValue(error.message);
       }
     }
-  },
+  }
 );
 
 interface IFetchScheduleByWeekProps {
@@ -105,7 +105,7 @@ export const fetchScheduleByWeek = createAsyncThunk(
   "schedule/fetchScheduleByWeek",
   async function (
     { group, week }: IFetchScheduleByWeekProps,
-    { rejectWithValue },
+    { rejectWithValue }
   ) {
     try {
       const request = await $api.get("/", {
@@ -121,7 +121,7 @@ export const fetchScheduleByWeek = createAsyncThunk(
         return rejectWithValue(error.message);
       }
     }
-  },
+  }
 );
 
 const initialState: ScheduleSchema = {
@@ -194,10 +194,10 @@ export const tableSlice = createSlice({
             window.history.pushState(
               null,
               "group",
-              `/?group=${action.payload.table.group}`,
+              `/?group=${action.payload.table.group}`
             );
           }
-        },
+        }
       )
       .addCase(
         fetchScheduleByGroup.fulfilled,
@@ -207,16 +207,16 @@ export const tableSlice = createSlice({
           window.history.pushState(
             null,
             "group",
-            `/?group=${action.payload.table.group}`,
+            `/?group=${action.payload.table.group}`
           );
-        },
+        }
       )
       .addCase(
         fetchScheduleByURL.fulfilled,
         (state, action: PayloadAction<IScheduleTable>) => {
           state.schedule = action.payload;
           state.choices = null;
-        },
+        }
       )
       .addCase(
         // Корень проблемы здесь
@@ -224,7 +224,7 @@ export const tableSlice = createSlice({
         (state, action: PayloadAction<IScheduleTable>) => {
           state.schedule = action.payload;
           state.choices = null;
-        },
+        }
       );
   },
 });

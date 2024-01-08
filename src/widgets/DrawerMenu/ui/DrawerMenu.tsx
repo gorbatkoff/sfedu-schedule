@@ -1,7 +1,6 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
 
+import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -18,24 +17,27 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { HamburgerIcon } from "@chakra-ui/icons";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+
+import { StateSchema } from "/src/app/Providers";
+
 import { userGroupActions } from "/src/widgets/DrawerMenu";
+
 import { fetchAndSaveUserGroup } from "/src/entities/ScheduleTable";
 
-import {
-  ERROR_SETTING_DEFAULT_GROUP,
-  GROUP_NOT_FOUND,
-  GROUP_SAVED_SUCCESSFULLY,
-} from "/src/shared/const/toast/toast";
 import {
   IS_BUTTONS_BLOCKED,
   SHOW_EMPTY_LESSONS,
   SHOW_SCHEDULE_AS_CARDS,
   USER_GROUP,
 } from "/src/shared/const/localStorage/localStorageKeys";
+import {
+  ERROR_SETTING_DEFAULT_GROUP,
+  GROUP_NOT_FOUND,
+  GROUP_SAVED_SUCCESSFULLY,
+} from "/src/shared/const/toast/toast";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-
-import { StateSchema } from "/src/app/Providers";
 
 import styles from "./DrawerMenu.module.scss";
 
@@ -54,11 +56,11 @@ export function DrawerMenu() {
   const [isSetted, setIsSetted] = useState<boolean>(false);
 
   const isShowEmptyLessons = useSelector(
-    (state: StateSchema) => state.userGroup.userSettings.isShowEmptyLessons,
+    (state: StateSchema) => state.userGroup.userSettings.isShowEmptyLessons
   );
 
   const showScheduleAsCards = useSelector(
-    (state: StateSchema) => state.userGroup.userSettings.showScheduleAsCards,
+    (state: StateSchema) => state.userGroup.userSettings.showScheduleAsCards
   );
 
   const dispatch = useAppDispatch();
@@ -75,11 +77,11 @@ export function DrawerMenu() {
 
   const handleSaveSettings = () => {
     const showEmptyLessons = JSON.parse(
-      localStorage.getItem(SHOW_EMPTY_LESSONS) || "true",
+      localStorage.getItem(SHOW_EMPTY_LESSONS) || "true"
     );
 
     const scheduleAsCards = JSON.parse(
-      localStorage.getItem(SHOW_SCHEDULE_AS_CARDS) || "true",
+      localStorage.getItem(SHOW_SCHEDULE_AS_CARDS) || "true"
     );
 
     if (isShowEmptyLessons !== showEmptyLessons) {

@@ -1,18 +1,18 @@
 import { memo, useEffect } from "react";
+
+import { useToast } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 import { StateSchema } from "/src/app/Providers";
 
+import { useLazyFetchGroupQuery } from "/src/features/SearchSchedule/api";
+
 import { tableActions } from "/src/entities/ScheduleTable";
 import { getFavoriteSearch } from "/src/entities/ScheduleTable";
-import { FavoriteChoice } from "/src/shared/ui/FavoriteChoice/FavoriteChoice";
 
 import { GROUP_FETCH_SUCCESS } from "/src/shared/const/toast/toast";
-
-import { useLazyFetchGroupQuery } from "/src/features/SearchSchedule/api";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-
-import { useToast } from "@chakra-ui/react";
+import { FavoriteChoice } from "/src/shared/ui/FavoriteChoice/FavoriteChoice";
 
 export const FavoriteChoices = memo(() => {
   const favoriteChoices = useSelector(getFavoriteSearch);

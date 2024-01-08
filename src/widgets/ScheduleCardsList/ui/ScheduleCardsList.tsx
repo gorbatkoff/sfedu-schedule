@@ -1,6 +1,6 @@
 import { FC, memo, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
+import { StarIcon } from "@chakra-ui/icons";
 import {
   Button,
   Heading,
@@ -9,32 +9,31 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import classNames from "classnames";
+import { useSelector } from "react-redux";
 
 import { StateSchema } from "/src/app/Providers";
 
-import { StarIcon } from "@chakra-ui/icons";
-import { fetchVPKByWeek } from "/src/features/SelectVPK";
 import { Carousel } from "/src/features/Carousel/Carousel";
+import { fetchVPKByWeek } from "/src/features/SelectVPK";
+
 import { ScheduleCard } from "/src/entities/ScheduleCard";
 import {
-  favoriteSearchActions,
-  getScheduleTable,
   IFavoriteChoice,
   IScheduleTable,
+  favoriteSearchActions,
+  getScheduleTable,
   tableActions,
 } from "/src/entities/ScheduleTable";
 
-import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
-
+import { weekDays } from "/src/shared/const/global/const";
+import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorage/localStorageKeys";
 import {
   ADD_TO_FAVORITE_SUCCESS,
   REMOVE_FROM_FAVORITE,
 } from "/src/shared/const/toast/toast";
-import { weekDays } from "/src/shared/const/global/const";
-import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorage/localStorageKeys";
-
-import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
+import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
 
 import styles from "./ScheduleCardsList.module.scss";
 
@@ -54,15 +53,15 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
   const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
   const isShowEmptyLessons = useSelector(
-    (state: StateSchema) => state.userGroup.userSettings.isShowEmptyLessons,
+    (state: StateSchema) => state.userGroup.userSettings.isShowEmptyLessons
   );
 
   const favoriteChoices = JSON.parse(
-    localStorage.getItem(USER_FAVORITE_SEARCH) || "[]",
+    localStorage.getItem(USER_FAVORITE_SEARCH) || "[]"
   ) as IFavoriteChoice[];
 
   const defaultFavorite = favoriteChoices.some(
-    (choice: IFavoriteChoice) => choice.group === schedule?.table?.group,
+    (choice: IFavoriteChoice) => choice.group === schedule?.table?.group
   );
 
   const [isFavorite, setFavorite] = useState(defaultFavorite);
@@ -80,8 +79,8 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
     if (schedule?.result !== null) {
       setFavorite(
         favoriteChoices.some(
-          (choice: IFavoriteChoice) => choice.group === schedule?.table?.group,
-        ),
+          (choice: IFavoriteChoice) => choice.group === schedule?.table?.group
+        )
       );
     }
   }, [schedule]);
@@ -133,7 +132,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
       setFavorite(true);
     } else {
       dispatch(
-        favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name),
+        favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name)
       );
       toast(REMOVE_FROM_FAVORITE);
       setFavorite(false);
@@ -205,7 +204,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
                   element={item}
                   className={classNames(
                     colorMode === "light" ? styles.whiteMode : styles.darkMode,
-                    item === "" && styles.emptyLesson,
+                    item === "" && styles.emptyLesson
                   )}
                 />
               );

@@ -5,7 +5,7 @@
   max-width: 600px;
   width: 100%;
   color: aliceblue;
-  border-radius: var(--border-radius);
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
   padding: 10px;
   row-gap: 30px;
   background: linear-gradient(180deg, #008038 45px, #2d3748 45px);
@@ -52,10 +52,10 @@
 .accordion {
   border-radius: var(--border-radius);
   background-color: #2c5282;
-  color: white
+  color: white;
 }
 
 .accordionContent {
   background-color: #2d3748;
-  color: white
+  color: white;
 }

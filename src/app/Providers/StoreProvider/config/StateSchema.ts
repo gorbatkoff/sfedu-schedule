@@ -1,7 +1,9 @@
 import { UserGroupSchema } from "/src/widgets/DrawerMenu";
+
+import { VPKSchema } from "/src/features/SelectVPK";
+
 import { ScheduleSchema } from "/src/entities/ScheduleTable";
 import { IFavoriteChoice } from "/src/entities/ScheduleTable";
-import { VPKSchema } from "/src/features/SelectVPK";
 
 export interface StateSchema {
   userGroup: UserGroupSchema;

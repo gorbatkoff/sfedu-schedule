@@ -7,15 +7,16 @@ import {
   useState,
 } from "react";
 
+import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
 import {
   Button,
   FormControl,
   Input,
   InputGroup,
   InputLeftElement,
+  InputRightElement,
   useColorMode,
 } from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
 
 import { useDebounce } from "/src/shared/hooks/useDebounce";
 
@@ -31,6 +32,10 @@ export const InputForm: FC<IInputFormProps> = memo(
     const [input, setInput] = useState("");
     const { colorMode } = useColorMode();
 
+    useEffect(() => {
+      input.trim() !== "" && debounceInput();
+    }, [input]);
+
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
       setInput(e.target.value);
     };
@@ -45,9 +50,9 @@ export const InputForm: FC<IInputFormProps> = memo(
       fetchByQuery(input, true);
     }, 500);
 
-    useEffect(() => {
-      input.trim() !== "" && debounceInput();
-    }, [input]);
+    const handleClearInput = () => {
+      setInput("");
+    };
 
     return (
       <div className={styles.form}>
@@ -67,6 +72,15 @@ export const InputForm: FC<IInputFormProps> = memo(
               borderColor="gray.200"
               color={colorMode === "light" ? "black" : "white"}
             />
+            {input && (
+              <InputRightElement>
+                <CloseIcon
+                  onClick={handleClearInput}
+                  color="gray.500"
+                  style={{ cursor: "pointer" }}
+                />
+              </InputRightElement>
+            )}
           </InputGroup>
         </FormControl>
         <Button
@@ -80,5 +94,5 @@ export const InputForm: FC<IInputFormProps> = memo(
         </Button>
       </div>
     );
-  },
+  }
 );

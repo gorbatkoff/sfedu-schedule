@@ -1,15 +1,13 @@
 import { StrictMode } from "react";
-import { BrowserRouter } from "react-router-dom";
-import ReactDOM from "react-dom/client";
-import Snowfall from "react-snowfall";
 
-import App from "/src/app/App";
+import { ChakraProvider, ThemeConfig, extendTheme } from "@chakra-ui/react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import Snowfall from "react-snowfall";
 import { registerSW } from "virtual:pwa-register";
 
+import App from "/src/app/App";
 import { ErrorBoundary } from "/src/app/Providers/ErrorBoundary";
-
-import { ChakraProvider, extendTheme, ThemeConfig } from "@chakra-ui/react";
-
 import StoreProvider from "/src/app/Providers/StoreProvider/ui/ProviderOfStore";
 
 import "./app/styles/index.scss";
@@ -39,10 +37,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <BrowserRouter>
           <ChakraProvider theme={theme}>
             <App />
-            <Snowfall snowflakeCount={115} />
+            <Snowfall snowflakeCount={75} />
           </ChakraProvider>
         </BrowserRouter>
       </StoreProvider>
     </ErrorBoundary>
-  </StrictMode>,
+  </StrictMode>
 );

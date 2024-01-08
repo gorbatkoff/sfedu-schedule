@@ -1,27 +1,28 @@
-# React + TypeScript + Vite
+# SFEDU SCHEDULE (Production Ready)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[Ссылка на сайт (Кликабельно)](https://ictis.netlify.app)
 
-Currently, two official plugins are available:
+#### Для оттачивания навыков и всвязи с тем, что текущие расписания института ИКТИБ не являются удобными (по моему мнению) -- я принял решение написать своё.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+##### Получилось или нет -- можно посмотреть по ссылке выше.
 
-## Expanding the ESLint configuration
+## Запуск
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. Склонировать проект на рабочий стол или в любую другую удобную для вас директорию
+2. Перейти в данную директорию используя командную строку, либо открыть данный проект с использованием вашей IDE
+3. Написать в консоли ```npm install```
+4. После установки модулей прописать ```npm start```, для запуска проекта
 
-- Configure the top-level `parserOptions` property like this:
+`На данный момент проект обладает следующими технологиями:`
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+- SCSS
+- Vite
+- React
+- React Router Dom
+- TypeScript
+- Redux Toolkit
+- RTK Query
+- PWA (Vite PWA)
+- Eslint, Prettier, Stylelint
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+

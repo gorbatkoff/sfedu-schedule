@@ -1,4 +1,5 @@
 import { Td, useColorMode } from "@chakra-ui/react";
+
 import { getInfoAboutElement } from "/src/shared/lib/getInfoAboutElement";
 
 interface ITableCell {
@@ -6,7 +7,7 @@ interface ITableCell {
   textColor: string;
 }
 
-const TableCell = ({ element, textColor }: ITableCell) => {
+export const TableCell = ({ element, textColor }: ITableCell) => {
   const { colorMode } = useColorMode();
 
   return (
@@ -20,5 +21,3 @@ const TableCell = ({ element, textColor }: ITableCell) => {
     </Td>
   );
 };
-
-export default TableCell;

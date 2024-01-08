@@ -1,5 +1,3 @@
-import classNames from "classnames";
-
 import { TimeIcon } from "@chakra-ui/icons";
 import {
   Accordion,
@@ -8,8 +6,9 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  useColorMode,
 } from "@chakra-ui/react";
+import classNames from "classnames";
+
 import { getInfoAboutElement } from "/src/shared/lib/getInfoAboutElement";
 import { auditoryLMSRegex, groupRegex, subgroupRegex } from "/src/shared/regex";
 
