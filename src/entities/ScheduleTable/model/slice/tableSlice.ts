@@ -2,10 +2,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { IChoices } from "/src/features/SearchSchedule";
 
-import {
-  IScheduleTable,
-  ScheduleSchema,
-} from "/src/entities/ScheduleTable/model/types/Table";
+import { IScheduleTable, ScheduleSchema } from "/src/entities/ScheduleTable";
 
 import { $api } from "/src/shared/api/api";
 import { defaultValue } from "/src/shared/const/global/const";

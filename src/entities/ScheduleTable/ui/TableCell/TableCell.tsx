@@ -7,7 +7,7 @@ interface ITableCell {
   textColor: string;
 }
 
-const TableCell = ({ element, textColor }: ITableCell) => {
+export const TableCell = ({ element, textColor }: ITableCell) => {
   const { colorMode } = useColorMode();
 
   return (
@@ -21,5 +21,3 @@ const TableCell = ({ element, textColor }: ITableCell) => {
     </Td>
   );
 };
-
-export default TableCell;

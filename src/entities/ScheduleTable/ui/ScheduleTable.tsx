@@ -24,12 +24,13 @@ import { fetchVPKByWeek } from "/src/features/SelectVPK";
 
 import {
   IScheduleTable,
+  TableCell,
   favoriteSearchActions,
   fetchScheduleByWeek,
+  getFavoriteSearch,
   getScheduleTable,
   tableActions,
 } from "/src/entities/ScheduleTable";
-import TableCell from "/src/entities/ScheduleTable/ui/TableCell/TableCell";
 
 import {
   ADD_TO_FAVORITE_SUCCESS,
@@ -51,9 +52,7 @@ const ScheduleTable = memo(({ className }: TableProps) => {
   const toast = useToast();
   const { week: currentWeek } = useCurrentWeek();
   const dispatch = useAppDispatch();
-  const favoriteChoices = useSelector(
-    (state: StateSchema) => state.favoriteSearch
-  );
+  const favoriteChoices = useSelector(getFavoriteSearch);
   const schedule = useSelector(getScheduleTable);
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
   const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);

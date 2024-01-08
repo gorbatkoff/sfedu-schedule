@@ -1,10 +1,10 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { IChoices } from "/src/features/SearchSchedule";
-import { IVPK } from "/src/features/SelectVPK/model/types/VPK";
-import { VPKSchema } from "/src/features/SelectVPK/model/types/VPKSchema";
+import { IVPK } from "/src/features/SelectVPK";
+import { VPKSchema } from "/src/features/SelectVPK";
 
-import { IScheduleTable } from "/src/entities/ScheduleTable/model/types/Table";
+import { IScheduleTable } from "/src/entities/ScheduleTable";
 
 import { $api } from "/src/shared/api/api";
 import { defaultValue } from "/src/shared/const/global/const";

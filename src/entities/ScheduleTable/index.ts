@@ -1,4 +1,5 @@
 export { ScheduleTableAsync as ScheduleTable } from "./ui/ScheduleTable.async";
+export * from "./ui/TableCell/TableCell";
 export * from "./api";
 export * from "./model/selectors/getSchedule";
 export * from "./model/selectors/getFavoriteSearch";

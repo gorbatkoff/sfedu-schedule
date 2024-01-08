@@ -9,11 +9,11 @@ import {
   fetchVPK,
   fetchVPKByWeek,
   selectVPKActions,
-} from "/src/features/SelectVPK/model/slice/selectVPKSlice";
-import { IVPK } from "/src/features/SelectVPK/model/types/VPK";
+} from "/src/features/SelectVPK";
+import { IVPK } from "/src/features/SelectVPK";
 
-import { getSchedule } from "/src/entities/ScheduleTable/model/selectors/getSchedule";
-import { tableActions } from "/src/entities/ScheduleTable/model/slice/tableSlice";
+import { getSchedule } from "/src/entities/ScheduleTable";
+import { tableActions } from "/src/entities/ScheduleTable";
 
 import {
   SELECT_VPK_ERROR,
