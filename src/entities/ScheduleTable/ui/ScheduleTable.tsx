@@ -175,11 +175,19 @@ const ScheduleTable = memo(({ className }: TableProps) => {
             })}
           </Thead>
           <Tbody className={styles.tableBody}>
-            {schedule.table.table.slice(2).map((row, index) => {
+            {schedule.table.table.slice(2).map((row, rowIndex) => {
               return (
-                <Tr key={index}>
+                <Tr key={rowIndex}>
                   {row.map((element, index) => {
-                    return <TableCell key={index} element={element} />;
+                    return (
+                      <TableCell
+                        key={index}
+                        element={element}
+                        indexOfCell={index}
+                        indexOfRow={rowIndex}
+                        tableHead={schedule.table.table.slice(1, 2)[0].slice(1)}
+                      />
+                    );
                   })}
                 </Tr>
               );

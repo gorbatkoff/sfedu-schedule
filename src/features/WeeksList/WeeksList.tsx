@@ -63,12 +63,9 @@ export const WeeksList: FC<WeeksListProps> = memo(({ weeks, group, week }) => {
     setTimeout(() => executeScroll(), 500);
   }, []);
 
-  console.log(currentWeek);
-
   return (
     <div className={styles.WeeksList}>
       {weeks.map((item, index) => {
-        console.log("week", week, "item", item);
         return (
           <Button
             key={index}
