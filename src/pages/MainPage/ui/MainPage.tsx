@@ -6,6 +6,8 @@ import { useSearchParams } from "react-router-dom";
 
 import { StateSchema } from "/src/app/Providers";
 
+import { RenderTable } from "/src/processes/RenderTable";
+
 import { ShowVPK } from "/src/widgets/ShowVPK";
 
 import {
@@ -25,8 +27,6 @@ import { TOAST_NO_INTERNET } from "/src/shared/const/toast/toast";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import MainColumns from "/src/shared/ui/MainColumns/MainColumns";
-
-import { RenderTable } from "/src/processes/RenderTable";
 
 const isUserOnline = navigator.onLine;
 

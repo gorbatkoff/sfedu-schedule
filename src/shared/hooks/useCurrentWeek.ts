@@ -7,15 +7,15 @@ const getCurrentDate = () => {
   return `${year}-${month}-${day}`;
 };
 
+const startDate = new Date("2024-02-01"); // Год-месяц-день
+const currentDate = new Date(getCurrentDate()); // Год-месяц-день
+
+// Вычисляем разницу между датами в миллисекундах
+const currentWeekDate = +currentDate - +startDate;
+
+// Конвертируем миллисекунды в недели
+const currentWeek = Math.ceil(currentWeekDate / (1000 * 60 * 60 * 24 * 7));
+
 export default function useCurrentWeek() {
-  const startDate = new Date("2023-08-27"); // Год-месяц-день
-  const currentDate = new Date(getCurrentDate()); // Год-месяц-день
-
-  // Вычисляем разницу между датами в миллисекундах
-  const currentWeekDate = +currentDate - +startDate;
-
-  // Конвертируем миллисекунды в недели
-  const currentWeek = currentWeekDate / (1000 * 60 * 60 * 24 * 7);
-
-  return { week: Math.ceil(currentWeek) };
+  return { week: currentWeek };
 }

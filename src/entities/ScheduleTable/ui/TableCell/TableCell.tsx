@@ -4,10 +4,9 @@ import { getInfoAboutElement } from "/src/shared/lib/getInfoAboutElement";
 
 interface ITableCell {
   element: string;
-  textColor: string;
 }
 
-export const TableCell = ({ element, textColor }: ITableCell) => {
+export const TableCell = ({ element }: ITableCell) => {
   const { colorMode } = useColorMode();
 
   return (
@@ -17,7 +16,7 @@ export const TableCell = ({ element, textColor }: ITableCell) => {
         color: "white",
       }}
     >
-      {element}
+      {element.replaceAll(/_/g, "")}
     </Td>
   );
 };

@@ -1,8 +1,8 @@
-.CarouselWrapper {
+.WeeksListWrapper {
   display: flex;
 }
 
-.Carousel {
+.WeeksList {
   display: flex;
   overflow-x: scroll;
   width: 100%;
@@ -16,5 +16,6 @@
 }
 
 .weekButton:disabled {
-  background: #0be7a9;
+  background: #3be7cb;
+  opacity: 0.45 !important;
 }

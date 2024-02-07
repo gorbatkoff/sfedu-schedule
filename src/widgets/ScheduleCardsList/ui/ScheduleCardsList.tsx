@@ -13,8 +13,8 @@ import { useSelector } from "react-redux";
 
 import { StateSchema } from "/src/app/Providers";
 
-import { Carousel } from "/src/features/Carousel/Carousel";
 import { fetchVPKByWeek } from "/src/features/SelectVPK";
+import { WeeksList } from "/src/features/WeeksList/WeeksList";
 
 import { ScheduleCard } from "/src/entities/ScheduleCard";
 import {
@@ -163,8 +163,8 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
         </IconButton>
       </div>
 
-      <Carousel
-        carouselItems={schedule.weeks}
+      <WeeksList
+        weeks={schedule.weeks}
         week={schedule.table.week}
         group={schedule.table.group}
       />

@@ -2,7 +2,7 @@ import { memo, useEffect } from "react";
 
 import { StarIcon } from "@chakra-ui/icons";
 import {
-  Button,
+  Box,
   Heading,
   IconButton,
   Table,
@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import { StateSchema } from "/src/app/Providers";
 
 import { fetchVPKByWeek } from "/src/features/SelectVPK";
+import { WeeksList } from "/src/features/WeeksList/WeeksList";
 
 import {
   IScheduleTable,
@@ -113,10 +114,9 @@ const ScheduleTable = memo(({ className }: TableProps) => {
     }
   };
 
-  if (schedule.result === "no_entries") return null;
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const userVPK = useSelector((state: StateSchema) => state.selectVPK.VPK);
+
+  if (schedule.result === "no_entries") return null;
 
   const fetchDataByWeek = async (week: number) => {
     await dispatch(
@@ -142,7 +142,7 @@ const ScheduleTable = memo(({ className }: TableProps) => {
 
   return (
     <div className={classNames(styles.Table, {}, [className])}>
-      <div className={styles.groupActions}>
+      <Box className={styles.groupActions}>
         <Heading color={textColor} className={styles.tableTitle}>
           Расписание {schedule.table.name}{" "}
           <span className={styles.week}>Неделя {schedule.table.week}</span>
@@ -153,24 +153,14 @@ const ScheduleTable = memo(({ className }: TableProps) => {
         >
           <StarIcon color={isFavorite ? "yellow" : ""} />
         </IconButton>
-      </div>
-      <div className={styles.weeksList}>
-        {schedule.weeks.map((week, index) => {
-          return (
-            <Button
-              key={index}
-              className={styles.weekButton}
-              onClick={() => fetchDataByWeek(week)}
-              isDisabled={schedule.table.week === week}
-              opacity={week < currentWeek ? "0.5" : "1"}
-              backgroundColor={week === currentWeek ? "#3be7cb" : ""}
-              colorScheme={schedule.table.week === week ? "green" : "twitter"}
-            >
-              {week}
-            </Button>
-          );
-        })}
-      </div>
+      </Box>
+
+      <WeeksList
+        weeks={schedule.weeks}
+        week={schedule.table.week}
+        group={schedule.table.group}
+      />
+
       <TableContainer sx={{ height: "100%", overflowY: "auto" }}>
         <Table variant="simple" sx={{ color: textColor }}>
           <Thead className={classNames(styles.tableHead, styles[colorMode])}>
@@ -189,13 +179,7 @@ const ScheduleTable = memo(({ className }: TableProps) => {
               return (
                 <Tr key={index}>
                   {row.map((element, index) => {
-                    return (
-                      <TableCell
-                        key={index}
-                        element={element}
-                        textColor={textColor}
-                      />
-                    );
+                    return <TableCell key={index} element={element} />;
                   })}
                 </Tr>
               );
