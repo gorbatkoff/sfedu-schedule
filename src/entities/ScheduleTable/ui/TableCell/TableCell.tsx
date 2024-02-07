@@ -29,8 +29,8 @@ export const TableCell: FC<ITableCell> = ({
   const startTime = time && Number(time[0].replace(":", ""));
   const endTime = time && Number(time[1].replace(":", ""));
   const isCurrentCell =
-    startTime + 200 <= currentTime &&
-    currentTime <= endTime + 200 &&
+    startTime <= currentTime &&
+    currentTime <= endTime &&
     indexOfRow === currentDate.getUTCDay();
 
   return (
