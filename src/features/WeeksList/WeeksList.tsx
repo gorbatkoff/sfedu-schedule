@@ -53,7 +53,7 @@ export const WeeksList: FC<WeeksListProps> = memo(({ weeks, group, week }) => {
     await dispatch(fetchScheduleByWeek({ week, group }));
 
     if (vpkInfo.group) {
-      await dispatch(fetchVPKByWeek({ week: currentWeek, vpk: vpkInfo }));
+      await dispatch(fetchVPKByWeek({ week, vpk: vpkInfo }));
     }
 
     dispatch(tableActions.updateScheduleByNewVPKData(schedule));
