@@ -31,7 +31,7 @@ export const TableCell: FC<ITableCell> = ({
   const isCurrentCell =
     startTime <= currentTime &&
     currentTime <= endTime &&
-    indexOfRow === currentDate.getUTCDay() + 1;
+    indexOfRow === currentDate.getUTCDay();
 
   return (
     <Td
