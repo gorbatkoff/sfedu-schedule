@@ -28,7 +28,6 @@ export const ScheduleCard = (props: ScheduleCardProps) => {
   const groups =
     element.match(groupRegex) || element.match(subgroupRegex) || [];
   const subject = element
-    .replace("_", "")
     .split(subgroupRegex)[0]
     .replace(groups.join(","), "")
     .split(auditoryLMSRegex)[0];

@@ -44,7 +44,7 @@ export const TableCell: FC<ITableCell> = ({
           "1px solid var(--chakra-colors-chakra-border-color)",
       }}
     >
-      {element.replace("_", "")}
+      {element}
     </Td>
   );
 };

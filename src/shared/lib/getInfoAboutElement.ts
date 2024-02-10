@@ -15,7 +15,7 @@ export enum TableCellColor {
 type Themes = "dark" | "light";
 
 export const getInfoAboutElement = (element: string, theme?: Themes) => {
-  if (element === "_") return TableCellColor.DEFAULT_COLOR;
+  if (element === "") return TableCellColor.DEFAULT_COLOR;
   if (element.match(VPKRegex)) return TableCellColor.VPK_COLOR;
   if ([...weekDays, "Вск"].includes(element.slice(0, 3))) {
     if (theme === "light") {

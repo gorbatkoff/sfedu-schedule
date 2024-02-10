@@ -193,7 +193,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
             .map((item: string, index: number) => {
               const weekDay = schedule.table.table.slice(2)[day][0];
 
-              if (!isShowEmptyLessons && item === "_") return null;
+              if (!isShowEmptyLessons && item === "") return null;
 
               return (
                 <ScheduleCard
