@@ -72,10 +72,8 @@ export const WeeksList: FC<WeeksListProps> = memo(({ weeks, group, week }) => {
             className={styles.weekButton}
             ref={week === item ? myRef : null}
             onClick={() => fetchDataByWeek(item, week)}
-            isDisabled={week === item}
             opacity={item < currentWeek ? "0.5" : "1"}
-            colorScheme={item === week ? "green" : "twitter"}
-            backgroundColor={item === currentWeek ? "#3be7cb" : ""}
+            colorScheme={item === week ? "green" : "gray"}
           >
             {item}
           </Button>

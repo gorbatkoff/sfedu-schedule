@@ -10,6 +10,7 @@ interface IFetchScheduleByWeek {
 export const lessonsApi = createApi({
   reducerPath: "lessonsApi",
   baseQuery: fetchBaseQuery({ baseUrl: __API_URL__ }),
+  keepUnusedDataFor: 600,
   endpoints: (builder) => ({
     fetchUpcomingLessons: builder.query({
       query: ({ group, week }: IFetchScheduleByWeek) =>

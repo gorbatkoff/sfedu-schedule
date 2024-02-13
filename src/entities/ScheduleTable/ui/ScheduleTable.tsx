@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react";
+import { useEffect } from "react";
 
 import { StarIcon } from "@chakra-ui/icons";
 import {
@@ -27,11 +27,11 @@ import {
   IScheduleTable,
   TableCell,
   favoriteSearchActions,
-  fetchScheduleByWeek,
   getFavoriteSearch,
   getScheduleTable,
   tableActions,
 } from "/src/entities/ScheduleTable";
+import { TableSkeleton } from "/src/entities/ScheduleTable/ui/TableSkeleton/TableSkeleton";
 
 import {
   ADD_TO_FAVORITE_SUCCESS,
@@ -47,12 +47,12 @@ interface TableProps {
   className?: string;
 }
 
-const ScheduleTable = memo(({ className }: TableProps) => {
-  const textColor = useColorModeValue("black", "white");
-  const { colorMode } = useColorMode();
+const ScheduleTable = ({ className }: TableProps) => {
   const toast = useToast();
-  const { week: currentWeek } = useCurrentWeek();
   const dispatch = useAppDispatch();
+  const { colorMode } = useColorMode();
+  const { week: currentWeek } = useCurrentWeek();
+  const textColor = useColorModeValue("black", "white");
   const favoriteChoices = useSelector(getFavoriteSearch);
   const schedule = useSelector(getScheduleTable);
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
@@ -118,30 +118,12 @@ const ScheduleTable = memo(({ className }: TableProps) => {
 
   if (schedule.result === "no_entries") return null;
 
-  const fetchDataByWeek = async (week: number) => {
-    await dispatch(
-      fetchScheduleByWeek({
-        week: week,
-        group: schedule.table.group,
-      })
-    );
+  if (!schedule?.table?.name) return <TableSkeleton />;
 
-    await dispatch(
-      fetchVPKByWeek({
-        week: week,
-        vpk: {
-          group: userVPK.group,
-          name: "", // TODO should be fixed
-          id: "",
-        },
-      })
-    );
-  };
-
-  if (!schedule?.table?.name || schedule?.result === null) return null;
+  if (schedule?.result === null) return null;
 
   return (
-    <div className={classNames(styles.Table, {}, [className])}>
+    <Box className={classNames(styles.Table, {}, [className])}>
       <Box className={styles.groupActions}>
         <Heading color={textColor} className={styles.tableTitle}>
           Расписание {schedule.table.name}{" "}
@@ -182,6 +164,7 @@ const ScheduleTable = memo(({ className }: TableProps) => {
                     return (
                       <TableCell
                         key={index}
+                        colorMode={colorMode}
                         element={element}
                         indexOfCell={index}
                         indexOfRow={rowIndex}
@@ -195,8 +178,8 @@ const ScheduleTable = memo(({ className }: TableProps) => {
           </Tbody>
         </Table>
       </TableContainer>
-    </div>
+    </Box>
   );
-});
+};
 
 export default ScheduleTable;

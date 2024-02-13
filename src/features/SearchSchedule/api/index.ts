@@ -10,6 +10,7 @@ interface IFetchGroupByWeek {
 export const searchApi = createApi({
   reducerPath: "searchApi",
   baseQuery: fetchBaseQuery({ baseUrl: __API_URL__ }),
+  keepUnusedDataFor: 600,
   endpoints: (builder) => ({
     fetchChoices: builder.query({
       query: (query: string) => `/?query=${query}`,

@@ -7,8 +7,7 @@ import { StateSchema } from "/src/app/Providers";
 
 import { useLazyFetchGroupQuery } from "/src/features/SearchSchedule/api";
 
-import { tableActions } from "/src/entities/ScheduleTable";
-import { getFavoriteSearch } from "/src/entities/ScheduleTable";
+import { getFavoriteSearch, tableActions } from "/src/entities/ScheduleTable";
 
 import { GROUP_FETCH_SUCCESS } from "/src/shared/const/toast/toast";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
