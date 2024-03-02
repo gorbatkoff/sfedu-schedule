@@ -34,7 +34,7 @@ import {
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
+import { StateSchema } from "/src/app/providers/StoreProvider/config/StateSchema";
 
 const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 const isButtonBlock =
