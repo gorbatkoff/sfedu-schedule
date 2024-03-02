@@ -8,10 +8,6 @@
   }
 }
 
-.input {
-  border-radius: 5px 0 0 5px !important;
-}
-
 .choices {
   max-width: var(--app-width);
   width: 100%;
@@ -37,7 +33,7 @@
   opacity: 0.8;
 }
 
-@media (width <= 767px) {
+@media (width <=767px) {
   .form {
     width: 100%;
     margin: 25px auto;
