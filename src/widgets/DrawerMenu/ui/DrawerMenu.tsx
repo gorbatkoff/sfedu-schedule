@@ -1,6 +1,5 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 
-import { HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
   Button,
@@ -8,6 +7,7 @@ import {
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
+  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   Heading,
@@ -17,29 +17,24 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-
-import { StateSchema } from "/src/app/providers";
-
+import { HamburgerIcon } from "@chakra-ui/icons";
 import { userGroupActions } from "/src/widgets/DrawerMenu";
-
 import { fetchAndSaveUserGroup } from "/src/entities/ScheduleTable";
 
-import {
-  IS_BUTTONS_BLOCKED,
-  SHOW_EMPTY_LESSONS,
-  SHOW_SCHEDULE_AS_CARDS,
-  USER_GROUP,
-} from "/src/shared/const/localStorage/localStorageKeys";
 import {
   ERROR_SETTING_DEFAULT_GROUP,
   GROUP_NOT_FOUND,
   GROUP_SAVED_SUCCESSFULLY,
 } from "/src/shared/const/toast/toast";
+import {
+  IS_BUTTONS_BLOCKED,
+  SHOW_EMPTY_LESSONS,
+  USER_GROUP,
+} from "/src/shared/const/localStorage/localStorageKeys";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-
-import styles from "./DrawerMenu.module.scss";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import StateSchema from "/src/app/Providers/StoreProvider/config/StateSchema";
 
 const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 const isButtonBlock =
@@ -56,11 +51,7 @@ export function DrawerMenu() {
   const [isSetted, setIsSetted] = useState<boolean>(false);
 
   const isShowEmptyLessons = useSelector(
-    (state: StateSchema) => state.userGroup.userSettings.isShowEmptyLessons
-  );
-
-  const showScheduleAsCards = useSelector(
-    (state: StateSchema) => state.userGroup.userSettings.showScheduleAsCards
+    (state: StateSchema) => state.userGroup.userSettings.isShowEmptyLessons,
   );
 
   const dispatch = useAppDispatch();
@@ -70,28 +61,11 @@ export function DrawerMenu() {
     localStorage.setItem(SHOW_EMPTY_LESSONS, JSON.stringify(checked));
   };
 
-  const handleShowScheduleAsCards = (e: ChangeEvent<HTMLInputElement>) => {
-    const checked = e.target.checked; // true -> показывать
-    localStorage.setItem(SHOW_SCHEDULE_AS_CARDS, JSON.stringify(checked));
-  };
-
   const handleSaveSettings = () => {
-    const showEmptyLessons = JSON.parse(
-      localStorage.getItem(SHOW_EMPTY_LESSONS) || "true"
+    const newSettings = JSON.parse(
+      localStorage.getItem(SHOW_EMPTY_LESSONS) || "true",
     );
-
-    const scheduleAsCards = JSON.parse(
-      localStorage.getItem(SHOW_SCHEDULE_AS_CARDS) || "true"
-    );
-
-    if (isShowEmptyLessons !== showEmptyLessons) {
-      dispatch(userGroupActions.setShowEmptyLessons(showEmptyLessons));
-    }
-
-    if (showScheduleAsCards !== scheduleAsCards) {
-      dispatch(userGroupActions.setShowScheduleAsCards(scheduleAsCards));
-    }
-    onClose();
+    dispatch(userGroupActions.setUserSettings(newSettings));
   };
 
   const checkGroupId = () => {
@@ -143,7 +117,7 @@ export function DrawerMenu() {
     }
   }
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const cleanedValue = e.target.value.replace(/[^КТА-Яа-я1-6-0-9]+/g, "");
 
     if (!cleanedValue.startsWith("КТ")) {
@@ -198,12 +172,12 @@ export function DrawerMenu() {
         placement="left"
         onClose={() => {
           onClose();
+          handleSaveSettings();
         }}
-        onCloseComplete={() => handleSaveSettings()}
         finalFocusRef={btnRef}
       >
         <DrawerOverlay />
-        <DrawerContent className={styles.Drawer}>
+        <DrawerContent>
           <DrawerCloseButton onClick={handleSaveSettings} />
           <DrawerHeader>Выберите вашу группу</DrawerHeader>
 
@@ -237,28 +211,21 @@ export function DrawerMenu() {
               Редактировать
             </Button>
 
-            {window.screen.width <= 768 && (
-              <>
-                <Box className={styles.tableFilterSettings}>
-                  <Switch
-                    onChange={(e) => handleShowEmptyLessons(e)}
-                    defaultChecked={isShowEmptyLessons}
-                  />
-                  <Heading as="h6" size="md" my={5}>
-                    Показывать все пары
-                  </Heading>
-                </Box>
-                <Box className={styles.tableSwitcher}>
-                  <Switch
-                    onChange={(e) => handleShowScheduleAsCards(e)}
-                    defaultChecked={showScheduleAsCards}
-                  />
-                  <Heading as="h6" size="md" my={5}>
-                    Расписание в виде карточек
-                  </Heading>
-                </Box>
-              </>
-            )}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Switch
+                onChange={(e) => handleShowEmptyLessons(e)}
+                defaultChecked={isShowEmptyLessons}
+              />
+              <Heading as="h6" size="md" my={5}>
+                Показывать все пары
+              </Heading>
+            </Box>
           </DrawerBody>
         </DrawerContent>
       </Drawer>
