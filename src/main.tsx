@@ -6,8 +6,8 @@ import { BrowserRouter } from "react-router-dom";
 import { registerSW } from "virtual:pwa-register";
 
 import App from "/src/app/App";
-import { ErrorBoundary } from "/src/app/Providers/ErrorBoundary";
-import StoreProvider from "/src/app/Providers/StoreProvider/ui/ProviderOfStore";
+import { ErrorBoundary } from "/src/app/providers/ErrorBoundary";
+import StoreProvider from "/src/app/providers/StoreProvider/ui/ProviderOfStore";
 
 import "./app/styles/index.scss";
 

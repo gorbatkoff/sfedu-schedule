@@ -20,7 +20,7 @@ import {
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 
-import { StateSchema } from "/src/app/Providers";
+import { StateSchema } from "/src/app/providers";
 
 import { userGroupActions } from "/src/widgets/DrawerMenu";
 

@@ -65,7 +65,7 @@ const UpcomingLessons = () => {
     );
   }
 
-  if (status === "rejected" || !data?.table?.table?.group) return null;
+  if (status === "rejected" || !data?.table?.group) return null;
 
   return (
     <div className={styles.UpcomingLessonsList}>

@@ -3,7 +3,7 @@ import { FC, memo, useEffect, useMemo } from "react";
 import { Button, Heading, useToast } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
-import { StateSchema } from "/src/app/Providers";
+import { StateSchema } from "/src/app/providers";
 
 import {
   fetchVPK,

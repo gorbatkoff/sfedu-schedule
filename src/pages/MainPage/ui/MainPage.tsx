@@ -4,7 +4,7 @@ import { useToast } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
-import { StateSchema } from "/src/app/Providers";
+import { StateSchema } from "/src/app/providers";
 
 import { RenderTable } from "/src/processes/RenderTable";
 

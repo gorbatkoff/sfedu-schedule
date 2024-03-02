@@ -18,7 +18,7 @@ import {
 import classNames from "classnames";
 import { useSelector } from "react-redux";
 
-import { StateSchema } from "/src/app/Providers";
+import { StateSchema } from "/src/app/providers";
 
 import { fetchVPKByWeek } from "/src/features/SelectVPK";
 import { WeeksList } from "/src/features/WeeksList/WeeksList";
@@ -46,6 +46,8 @@ import styles from "./ScheduleTable.module.scss";
 interface TableProps {
   className?: string;
 }
+
+const userGroup = JSON.parse(localStorage.getItem("USER_GROUP") || "{}");
 
 const ScheduleTable = ({ className }: TableProps) => {
   const toast = useToast();
@@ -118,7 +120,7 @@ const ScheduleTable = ({ className }: TableProps) => {
 
   if (schedule.result === "no_entries") return null;
 
-  if (!schedule?.table?.name) return <TableSkeleton />;
+  if (!schedule?.table?.name && userGroup.name) return <TableSkeleton />;
 
   if (schedule?.result === null) return null;
 

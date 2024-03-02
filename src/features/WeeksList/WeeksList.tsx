@@ -3,7 +3,7 @@ import { FC, memo, useEffect, useRef } from "react";
 import { Button } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
-import { StateSchema } from "/src/app/Providers";
+import { StateSchema } from "/src/app/providers";
 
 import { fetchVPKByWeek } from "/src/features/SelectVPK";
 

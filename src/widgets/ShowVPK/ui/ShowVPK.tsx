@@ -3,7 +3,7 @@ import { Suspense, memo, useCallback, useState } from "react";
 import { Box, Button } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
-import { StateSchema } from "/src/app/Providers";
+import { StateSchema } from "/src/app/providers";
 
 import { SelectVPK } from "/src/features/SelectVPK";
 

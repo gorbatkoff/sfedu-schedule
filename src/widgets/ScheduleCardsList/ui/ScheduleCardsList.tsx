@@ -11,7 +11,7 @@ import {
 import classNames from "classnames";
 import { useSelector } from "react-redux";
 
-import { StateSchema } from "/src/app/Providers";
+import { StateSchema } from "/src/app/providers";
 
 import { fetchVPKByWeek } from "/src/features/SelectVPK";
 import { WeeksList } from "/src/features/WeeksList/WeeksList";

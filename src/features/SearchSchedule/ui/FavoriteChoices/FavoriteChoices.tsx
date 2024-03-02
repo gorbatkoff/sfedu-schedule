@@ -3,7 +3,7 @@ import { memo, useEffect } from "react";
 import { useToast } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
-import { StateSchema } from "/src/app/Providers";
+import { StateSchema } from "/src/app/providers";
 
 import { useLazyFetchGroupQuery } from "/src/features/SearchSchedule/api";
 
