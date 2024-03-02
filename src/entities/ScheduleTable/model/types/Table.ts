@@ -15,7 +15,7 @@ export interface IScheduleTable extends INoData {
 }
 
 export interface INoData {
-  result: "no_entries" | null;
+  result: "no_entries" | "cleared" | null;
 }
 
 export interface ScheduleSchema {

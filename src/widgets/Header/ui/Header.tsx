@@ -42,7 +42,7 @@ export const Header = ({ className }: HeaderProps) => {
   const handleUpdateData = () => {
     navigate("/");
     window.history.replaceState(null, "group", window.location.pathname);
-    dispatch(tableActions.setSchedule(defaultValue));
+    dispatch(tableActions.setSchedule({ ...defaultValue, result: "cleared" }));
   };
 
   return (

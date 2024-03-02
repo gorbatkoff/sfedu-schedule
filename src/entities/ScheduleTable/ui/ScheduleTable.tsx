@@ -116,12 +116,8 @@ const ScheduleTable = ({ className }: TableProps) => {
     }
   };
 
-  const userVPK = useSelector((state: StateSchema) => state.selectVPK.VPK);
-
-  if (schedule.result === "no_entries") return null;
-
-  if (!schedule?.table?.name && userGroup.name) return <TableSkeleton />;
-
+  if (schedule.result === "no_entries" || schedule.result === "cleared") return null;
+  if (!schedule?.table?.name) return <TableSkeleton />;
   if (schedule?.result === null) return null;
 
   return (

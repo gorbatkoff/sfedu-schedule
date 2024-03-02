@@ -11,7 +11,7 @@ interface LogoProps {
   className?: string;
 }
 
-export const Logo = memo(({ className }: LogoProps) => {
+export const Logo = ({ className }: LogoProps) => {
   return (
     <div className={classNames(styles.Logo, {}, [className])}>
       <img src={Great} alt="Логотип" className={styles.logoIcon} />
@@ -20,4 +20,4 @@ export const Logo = memo(({ className }: LogoProps) => {
       </Heading>
     </div>
   );
-});
+}
