@@ -11,7 +11,7 @@ const vitePwaConfig = {
   includeAssets: ["**/*"],
   manifest: {
     theme_color: "#1e1e1e",
-    background_color: "#B100FF",
+    background_color: "#1A202C",
     display: "standalone",
     scope: "/",
     start_url: "/",
