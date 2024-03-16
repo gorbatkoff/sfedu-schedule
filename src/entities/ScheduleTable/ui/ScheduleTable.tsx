@@ -45,11 +45,12 @@ import styles from "./ScheduleTable.module.scss";
 
 interface TableProps {
   className?: string;
+  isLoading: boolean;
 }
 
 const userGroup = JSON.parse(localStorage.getItem("USER_GROUP") || "{}");
 
-const ScheduleTable = ({ className }: TableProps) => {
+const ScheduleTable = ({ className, isLoading }: TableProps) => {
   const toast = useToast();
   const dispatch = useAppDispatch();
   const { colorMode } = useColorMode();
@@ -116,8 +117,10 @@ const ScheduleTable = ({ className }: TableProps) => {
     }
   };
 
-  if (schedule.result === "no_entries" || schedule.result === "cleared") return null;
-  if (!schedule?.table?.name) return <TableSkeleton />;
+  if (isLoading) return <TableSkeleton />;
+
+  if (schedule.result === "no_entries" || schedule.result === "cleared")
+    return null;
   if (schedule?.result === null) return null;
 
   return (

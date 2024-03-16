@@ -34,16 +34,32 @@ const savedUserSchedule = JSON.parse(
   localStorage.getItem(SAVED_SCHEDULE) || "{}"
 ) as IScheduleTable;
 
+const renderColumnsByViewPort = () => {
+  if (window.screen.width > 768)
+    return (
+      <MainColumns>
+        <Calendar />
+        <SearchSchedule />
+        <UpcomingLessons />
+      </MainColumns>
+    );
+  return <SearchSchedule />;
+};
+
 const MainPage = () => {
   const toast = useToast();
   const { week } = useCurrentWeek();
   const dispatch = useAppDispatch();
   const [queryParameters] = useSearchParams();
   const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
-  const { data } = useFetchGroupByWeekQuery({
-    group: queryParameters.get("group") || userGroup?.groupId || "",
+
+  const requestGroup = queryParameters.get("group") || userGroup?.groupId || "";
+
+  const { data, isLoading } = useFetchGroupByWeekQuery({
+    group: requestGroup,
     week: week,
   });
+
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
 
   useEffect(() => {
@@ -84,22 +100,10 @@ const MainPage = () => {
     }
   }, []);
 
-  const renderColumnsByViewPort = () => {
-    if (window.screen.width > 768)
-      return (
-        <MainColumns>
-          <Calendar />
-          <SearchSchedule />
-          <UpcomingLessons />
-        </MainColumns>
-      );
-    return <SearchSchedule />;
-  };
-
   return (
     <>
       {renderColumnsByViewPort()}
-      <RenderTable />
+      <RenderTable isLoading={isLoading && requestGroup} />
       <ShowVPK />
     </>
   );
