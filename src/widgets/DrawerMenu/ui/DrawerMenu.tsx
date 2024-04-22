@@ -40,6 +40,7 @@ import {
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 
 import styles from "./DrawerMenu.module.scss";
+import { DownloadButton } from "/src/widgets/DrawerMenu/ui/DownloadButton/DownloadButton";
 
 const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 const isButtonBlock =
@@ -240,6 +241,9 @@ export function DrawerMenu() {
                   <Heading as="h6" size="md" my={5}>
                     Расписание в виде карточек
                   </Heading>
+                </Box>
+                <Box>
+                  <DownloadButton />
                 </Box>
               </>
             )}
