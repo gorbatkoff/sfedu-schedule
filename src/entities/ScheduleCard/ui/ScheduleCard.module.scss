@@ -35,6 +35,10 @@
   align-items: center;
   display: flex;
   justify-content: space-between;
+
+  span {
+    white-space: nowrap;
+  }
 }
 
 .cardContent {

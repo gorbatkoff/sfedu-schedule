@@ -84,18 +84,18 @@ export const ScheduleCard = (props: ScheduleCardProps) => {
       </div>
 
       <div className={styles.cardFooter}>
-        <div>
+        <span>
           <TimeIcon boxSize={6} className={styles.icon} />
           {lessonTime || "--:-- — --:--"}
-        </div>
-        <div
+        </span>
+        <span
           style={{
             borderLeft: `${getInfoAboutElement(element)} 4px solid`,
             paddingLeft: "5px",
           }}
         >
           {auditory[0]}
-        </div>
+        </span>
       </div>
     </div>
   );
