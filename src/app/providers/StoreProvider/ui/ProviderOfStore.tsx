@@ -8,6 +8,6 @@ interface IStoreProvider {
   children: ReactNode;
 }
 
-export default function StoreProvider({ children }: IStoreProvider) {
+export function StoreProvider({ children }: IStoreProvider) {
   return <Provider store={store}>{children}</Provider>;
 }

@@ -1,5 +1,14 @@
 .WeeksListWrapper {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h2 {
+    height:100%;
+    padding: 1em 0;
+    font-size: 22px;
+    background-color: #000;
+  }
 }
 
 .WeeksList {

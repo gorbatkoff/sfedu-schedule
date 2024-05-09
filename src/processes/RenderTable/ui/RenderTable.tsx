@@ -20,5 +20,5 @@ export const RenderTable = memo((props: IRenderTable) => {
   if (screenWidth > 768) return <ScheduleTable isLoading={isLoading} />;
   if (screenWidth <= 768 && !showScheduleAsCards)
     return <ScheduleTable isLoading={isLoading} />;
-  return <ScheduleCardsList />;
+  return <ScheduleCardsList isLoading={isLoading} />;
 });

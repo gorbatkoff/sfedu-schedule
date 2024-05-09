@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useState } from "react";
+import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 
 import { StarIcon } from "@chakra-ui/icons";
 import {
@@ -36,12 +36,17 @@ import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
 
 import styles from "./ScheduleCardsList.module.scss";
+import { ScheduleCardsListSkeleton } from "./ScheduleCardsListSkeleton/ScheduleCardsListSkeleton";
 
 interface TableProps {
-  className?: string;
+  isLoading?: boolean;
 }
 
-const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
+const favoriteChoices = JSON.parse(
+  localStorage.getItem(USER_FAVORITE_SEARCH) || "[]"
+) as IFavoriteChoice[];
+
+const ScheduleCardsList: FC<TableProps> = memo(({ isLoading }) => {
   const [day, setDay] = useState(0);
 
   const toast = useToast();
@@ -56,12 +61,12 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
     (state: StateSchema) => state.userGroup.userSettings.isShowEmptyLessons
   );
 
-  const favoriteChoices = JSON.parse(
-    localStorage.getItem(USER_FAVORITE_SEARCH) || "[]"
-  ) as IFavoriteChoice[];
-
-  const defaultFavorite = favoriteChoices.some(
-    (choice: IFavoriteChoice) => choice.group === schedule?.table?.group
+  const defaultFavorite = useMemo(
+    () =>
+      favoriteChoices.some(
+        (choice: IFavoriteChoice) => choice.group === schedule?.table?.group
+      ),
+    [schedule?.table?.group]
   );
 
   const [isFavorite, setFavorite] = useState(defaultFavorite);
@@ -118,29 +123,33 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
     }
   };
 
-  const handleFavoriteSearch = (schedule: IScheduleTable) => {
-    const favoriteSearch = {
-      group: schedule.table.group,
-      name: schedule.table.name,
-    };
+  const handleFavoriteSearch = useCallback(
+    (schedule: IScheduleTable) => {
+      const favoriteSearch = {
+        group: schedule.table.group,
+        name: schedule.table.name,
+      };
 
-    const response = addSearchToFavorite(favoriteSearch);
+      const response = addSearchToFavorite(favoriteSearch);
 
-    if (response) {
-      dispatch(favoriteSearchActions.addSearchToFavorite(favoriteSearch));
-      toast(ADD_TO_FAVORITE_SUCCESS);
-      setFavorite(true);
-    } else {
-      dispatch(
-        favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name)
-      );
-      toast(REMOVE_FROM_FAVORITE);
-      setFavorite(false);
-    }
-  };
+      if (response) {
+        dispatch(favoriteSearchActions.addSearchToFavorite(favoriteSearch));
+        toast(ADD_TO_FAVORITE_SUCCESS);
+        setFavorite(true);
+      } else {
+        dispatch(
+          favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name)
+        );
+        toast(REMOVE_FROM_FAVORITE);
+        setFavorite(false);
+      }
+    },
+    [dispatch, toast]
+  );
 
+  if (isLoading) return <ScheduleCardsListSkeleton />;
   if (schedule.result === "no_entries") return;
-  if (schedule.table.table.length == 0) return null;
+  if (schedule.table.table.length == 0) return;
 
   return (
     <div className={styles.wrapper}>
@@ -167,6 +176,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ className }) => {
         weeks={schedule.weeks}
         week={schedule.table.week}
         group={schedule.table.group}
+        isMobileDevice={true}
       />
 
       <div className={styles.weekDayBtns}>
