@@ -145,6 +145,7 @@ const ScheduleTable = ({ className, isLoading }: TableProps) => {
         weeks={schedule.weeks}
         week={schedule.table.week}
         group={schedule.table.group}
+        isMobileDevice={false}
       />
 
       <TableContainer sx={{ height: "100%", overflowY: "auto" }}>

@@ -176,6 +176,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ isLoading }) => {
         weeks={schedule.weeks}
         week={schedule.table.week}
         group={schedule.table.group}
+        isMobileDevice={true}
       />
 
       <div className={styles.weekDayBtns}>

@@ -12,14 +12,12 @@
 }
 
 .WeeksList {
-  position: relative;
   display: flex;
   overflow-x: scroll;
   width: 100%;
   justify-content: flex-start;
   padding: 1em 0;
   column-gap: 1em;
-  margin-left: 10px;
 }
 
 .weekButton {
