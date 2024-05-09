@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 import { StarIcon } from "@chakra-ui/icons";
 import {
@@ -98,24 +98,27 @@ const ScheduleTable = ({ className, isLoading }: TableProps) => {
     }
   };
 
-  const handleFavoriteSearch = (schedule: IScheduleTable) => {
-    const favoriteSearch = {
-      group: schedule.table.group,
-      name: schedule.table.name,
-    };
+  const handleFavoriteSearch = useCallback(
+    (schedule: IScheduleTable) => {
+      const favoriteSearch = {
+        group: schedule.table.group,
+        name: schedule.table.name,
+      };
 
-    const response = addSearchToFavorite(favoriteSearch);
+      const response = addSearchToFavorite(favoriteSearch);
 
-    if (response) {
-      dispatch(favoriteSearchActions.addSearchToFavorite(favoriteSearch));
-      toast(ADD_TO_FAVORITE_SUCCESS);
-    } else if (isFavorite) {
-      dispatch(
-        favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name)
-      );
-      toast(REMOVE_FROM_FAVORITE);
-    }
-  };
+      if (response) {
+        dispatch(favoriteSearchActions.addSearchToFavorite(favoriteSearch));
+        toast(ADD_TO_FAVORITE_SUCCESS);
+      } else if (isFavorite) {
+        dispatch(
+          favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name)
+        );
+        toast(REMOVE_FROM_FAVORITE);
+      }
+    },
+    [dispatch, isFavorite, toast]
+  );
 
   if (isLoading) return <TableSkeleton />;
 

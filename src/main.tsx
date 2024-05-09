@@ -7,7 +7,7 @@ import { registerSW } from "virtual:pwa-register";
 
 import App from "/src/app/App";
 import { ErrorBoundary } from "/src/app/providers/ErrorBoundary";
-import StoreProvider from "/src/app/providers/StoreProvider/ui/ProviderOfStore";
+import { StoreProvider } from "/src/app/providers/StoreProvider";
 
 import "./app/styles/index.scss";
 
@@ -15,7 +15,6 @@ const theme: ThemeConfig = extendTheme({
   config: {
     initialColorMode: "dark",
   },
-  colors: {},
 });
 
 const updateSW = registerSW({
