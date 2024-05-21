@@ -19,9 +19,7 @@ const theme: ThemeConfig = extendTheme({
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    if (confirm("Есть свежие обновления. Загрузить?")) {
-      updateSW(true);
-    }
+    updateSW(true);
   },
 });
 
