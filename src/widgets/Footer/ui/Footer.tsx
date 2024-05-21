@@ -9,7 +9,7 @@ export const Footer = () => {
   return (
     <footer className={styles.footer}>
       <Heading as="h5" size="md" colorScheme="yellow" color="gray.500">
-        Сделано с любовью ❤
+        Сделано с любовью 💚
       </Heading>
       <a href={repositoryUrl}>
         <Heading size="md" as="h6" color="gray.500">

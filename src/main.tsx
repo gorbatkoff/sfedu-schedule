@@ -19,10 +19,9 @@ const theme: ThemeConfig = extendTheme({
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    updateSW(true);
-  },
-  onOfflineReady() {
-    console.log("offline ready");
+    if (confirm("Есть свежие обновления. Загрузить?")) {
+      updateSW(true);
+    }
   },
 });
 

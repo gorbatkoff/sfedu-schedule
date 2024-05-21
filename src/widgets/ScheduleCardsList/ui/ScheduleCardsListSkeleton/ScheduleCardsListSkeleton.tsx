@@ -31,12 +31,12 @@ export const ScheduleCardsListSkeleton = () => {
       </div>
 
       <div className={styles.weekDayBtns}>
-        {[1, 2, 3, 4, 5, 6].map((dayItem, index) => {
+        {[1, 2, 3, 4, 5, 6].map((_, index) => {
           return (
             <Skeleton
+              key={index}
               width="47px"
               height="40px"
-              key={index}
               borderRadius="6px"
             />
           );
@@ -47,6 +47,7 @@ export const ScheduleCardsListSkeleton = () => {
         {[1, 2, 3, 4, 5].map((item: number, index: number) => {
           return (
             <Skeleton
+              key={index}
               width="100%"
               height="153px"
               borderRadius="10px 10px 0 0"

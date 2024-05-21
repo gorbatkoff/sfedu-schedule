@@ -34,6 +34,7 @@ import {
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
+import { randomInteger } from "/src/shared/lib/randomInteger";
 
 import styles from "./ScheduleCardsList.module.scss";
 import { ScheduleCardsListSkeleton } from "./ScheduleCardsListSkeleton/ScheduleCardsListSkeleton";
@@ -147,6 +148,19 @@ const ScheduleCardsList: FC<TableProps> = memo(({ isLoading }) => {
     [dispatch, toast]
   );
 
+  const lessons = useMemo(
+    () =>
+      schedule.table.table.slice(2)[day] &&
+      schedule.table.table.slice(2)[day].slice(1),
+    [day, schedule.table.table]
+  );
+
+  const generateRandomImage = useCallback(() => {
+    const randomNumber = randomInteger(1, 3);
+    console.log("randomNumber :>>", randomNumber);
+    return `/src/shared/assets/Relax${randomNumber}.svg`;
+  }, []);
+
   if (isLoading) return <ScheduleCardsListSkeleton />;
   if (schedule.result === "no_entries") return;
   if (schedule.table.table.length == 0) return;
@@ -195,30 +209,32 @@ const ScheduleCardsList: FC<TableProps> = memo(({ isLoading }) => {
       </div>
 
       <div className={classNames(styles.ScheduleCardList)}>
-        {schedule.table.table.slice(2)[day] &&
-          schedule.table.table
-            .slice(2)
-            // eslint-disable-next-line no-unexpected-multiline
-            [day].slice(1)
-            .map((item: string, index: number) => {
-              const weekDay = schedule.table.table.slice(2)[day][0];
+        {lessons.map((item: string, index: number) => {
+          const weekDay = schedule.table.table.slice(2)[day][0];
 
-              if (!isShowEmptyLessons && item === "") return null;
+          if (!isShowEmptyLessons && item === "") return null;
 
-              return (
-                <ScheduleCard
-                  lessonTime={schedule.table.table[1][index + 1]}
-                  lessonNumber={index + 1}
-                  day={weekDay}
-                  key={index}
-                  element={item}
-                  className={classNames(
-                    colorMode === "light" ? styles.whiteMode : styles.darkMode,
-                    item === "" && styles.emptyLesson
-                  )}
-                />
-              );
-            })}
+          return (
+            <ScheduleCard
+              lessonTime={schedule.table.table[1][index + 1]}
+              lessonNumber={index + 1}
+              day={weekDay}
+              key={index}
+              element={item}
+              className={classNames(
+                colorMode === "light" ? styles.whiteMode : styles.darkMode,
+                item === "" && styles.emptyLesson
+              )}
+            />
+          );
+        })}
+        {!isShowEmptyLessons && lessons.every((l) => l === "") && (
+          <img
+            loading="lazy"
+            src={generateRandomImage()}
+            className={styles.relaxLogo}
+          />
+        )}
       </div>
     </div>
   );
