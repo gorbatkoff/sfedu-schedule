@@ -25,6 +25,9 @@ import {
   tableActions,
 } from "/src/entities/ScheduleTable";
 
+import Relax1 from "/src/shared/assets/Relax1.svg";
+import Relax2 from "/src/shared/assets/Relax2.svg";
+import Relax3 from "/src/shared/assets/Relax3.svg";
 import { weekDays } from "/src/shared/const/global/const";
 import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorage/localStorageKeys";
 import {
@@ -155,10 +158,24 @@ const ScheduleCardsList: FC<TableProps> = memo(({ isLoading }) => {
     [day, schedule.table.table]
   );
 
-  const generateRandomImage = useCallback(() => {
+  const generatedPreviewImage = useMemo(() => {
     const randomNumber = randomInteger(1, 3);
-    console.log("randomNumber :>>", randomNumber);
-    return `/src/shared/assets/Relax${randomNumber}.svg`;
+    let result;
+
+    switch (randomNumber) {
+      case 1:
+        result = Relax1;
+        break;
+      case 2:
+        result = Relax2;
+        break;
+      case 3:
+        result = Relax3;
+        break;
+      default:
+        result = Relax3;
+    }
+    return result;
   }, []);
 
   if (isLoading) return <ScheduleCardsListSkeleton />;
@@ -229,7 +246,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ isLoading }) => {
           );
         })}
         {!isShowEmptyLessons && lessons.every((l) => l === "") && (
-          <img src={generateRandomImage()} className={styles.relaxLogo} />
+          <img src={generatedPreviewImage} className={styles.relaxLogo} />
         )}
       </div>
     </div>
