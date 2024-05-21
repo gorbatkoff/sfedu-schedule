@@ -229,11 +229,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ isLoading }) => {
           );
         })}
         {!isShowEmptyLessons && lessons.every((l) => l === "") && (
-          <img
-            loading="lazy"
-            src={generateRandomImage()}
-            className={styles.relaxLogo}
-          />
+          <img src={generateRandomImage()} className={styles.relaxLogo} />
         )}
       </div>
     </div>
