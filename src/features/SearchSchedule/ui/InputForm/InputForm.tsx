@@ -69,6 +69,7 @@ export const InputForm: FC<IInputFormProps> = memo(
               onChange={handleInputChange}
               placeholder="Введите группу или фамилию преподавателя"
               autoFocus={true}
+              colorScheme="green"
               borderColor="gray.200"
               color={colorMode === "light" ? "black" : "white"}
             />
