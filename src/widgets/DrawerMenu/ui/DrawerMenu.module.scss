@@ -11,4 +11,9 @@
       margin-left: 15px;
     }
   }
+
+  .input:focus-visible {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 1px var(--primary-color);
+  }
 }

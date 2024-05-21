@@ -198,6 +198,7 @@ export function DrawerMenu() {
             </Heading>
             <InputGroup sx={{ display: "flex" }}>
               <Input
+                className={styles.input}
                 placeholder="КТ**-**"
                 value={inputValue}
                 onChange={handleInputChange}
@@ -207,7 +208,7 @@ export function DrawerMenu() {
                 readOnly={isInputBlocked}
               />
               <Button
-                colorScheme="blue"
+                colorScheme="green"
                 onClick={buttonHandler}
                 isDisabled={isButtonBlocked || inputValue.length < 7}
               >

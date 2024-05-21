@@ -108,7 +108,9 @@
 /* above is color on hover */
 .react-calendar__tile--now {
   background-color: var(--primary-color);
-  color: white;
+  color: black;
+  font-weight: bold;
+  border-radius: 4rem;
 }
 
 .react-calendar__tile--hasActive {

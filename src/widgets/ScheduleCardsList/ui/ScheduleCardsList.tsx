@@ -25,6 +25,9 @@ import {
   tableActions,
 } from "/src/entities/ScheduleTable";
 
+import Relax1 from "/src/shared/assets/Relax1.svg";
+import Relax2 from "/src/shared/assets/Relax2.svg";
+import Relax3 from "/src/shared/assets/Relax3.svg";
 import { weekDays } from "/src/shared/const/global/const";
 import { USER_FAVORITE_SEARCH } from "/src/shared/const/localStorage/localStorageKeys";
 import {
@@ -34,6 +37,7 @@ import {
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
+import { randomInteger } from "/src/shared/lib/randomInteger";
 
 import styles from "./ScheduleCardsList.module.scss";
 import { ScheduleCardsListSkeleton } from "./ScheduleCardsListSkeleton/ScheduleCardsListSkeleton";
@@ -147,6 +151,33 @@ const ScheduleCardsList: FC<TableProps> = memo(({ isLoading }) => {
     [dispatch, toast]
   );
 
+  const lessons = useMemo(
+    () =>
+      schedule.table.table.slice(2)[day] &&
+      schedule.table.table.slice(2)[day].slice(1),
+    [day, schedule.table.table]
+  );
+
+  const generatedPreviewImage = useMemo(() => {
+    const randomNumber = randomInteger(1, 3);
+    let result;
+
+    switch (randomNumber) {
+      case 1:
+        result = Relax1;
+        break;
+      case 2:
+        result = Relax2;
+        break;
+      case 3:
+        result = Relax3;
+        break;
+      default:
+        result = Relax3;
+    }
+    return result;
+  }, []);
+
   if (isLoading) return <ScheduleCardsListSkeleton />;
   if (schedule.result === "no_entries") return;
   if (schedule.table.table.length == 0) return;
@@ -195,30 +226,28 @@ const ScheduleCardsList: FC<TableProps> = memo(({ isLoading }) => {
       </div>
 
       <div className={classNames(styles.ScheduleCardList)}>
-        {schedule.table.table.slice(2)[day] &&
-          schedule.table.table
-            .slice(2)
-            // eslint-disable-next-line no-unexpected-multiline
-            [day].slice(1)
-            .map((item: string, index: number) => {
-              const weekDay = schedule.table.table.slice(2)[day][0];
+        {lessons.map((item: string, index: number) => {
+          const weekDay = schedule.table.table.slice(2)[day][0];
 
-              if (!isShowEmptyLessons && item === "") return null;
+          if (!isShowEmptyLessons && item === "") return null;
 
-              return (
-                <ScheduleCard
-                  lessonTime={schedule.table.table[1][index + 1]}
-                  lessonNumber={index + 1}
-                  day={weekDay}
-                  key={index}
-                  element={item}
-                  className={classNames(
-                    colorMode === "light" ? styles.whiteMode : styles.darkMode,
-                    item === "" && styles.emptyLesson
-                  )}
-                />
-              );
-            })}
+          return (
+            <ScheduleCard
+              lessonTime={schedule.table.table[1][index + 1]}
+              lessonNumber={index + 1}
+              day={weekDay}
+              key={index}
+              element={item}
+              className={classNames(
+                colorMode === "light" ? styles.whiteMode : styles.darkMode,
+                item === "" && styles.emptyLesson
+              )}
+            />
+          );
+        })}
+        {!isShowEmptyLessons && lessons.every((l) => l === "") && (
+          <img src={generatedPreviewImage} className={styles.relaxLogo} />
+        )}
       </div>
     </div>
   );

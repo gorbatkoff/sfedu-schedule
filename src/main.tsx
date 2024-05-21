@@ -21,9 +21,6 @@ const updateSW = registerSW({
   onNeedRefresh() {
     updateSW(true);
   },
-  onOfflineReady() {
-    console.log("offline ready");
-  },
 });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
