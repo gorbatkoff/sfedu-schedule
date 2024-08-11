@@ -72,6 +72,14 @@ export const SELECT_VPK_ERROR: UseToastOptions = {
   isClosable: true,
 };
 
+export const CELL_INFO_COPY_SUCCESS: UseToastOptions = {
+  title: "Успешно скопировано!",
+  description: "Информация о паре добавлена в буфер обмена",
+  status: "success",
+  duration: 1500,
+  isClosable: true,
+};
+
 export const ERROR_SETTING_DEFAULT_GROUP: UseToastOptions = {
   title: "Ошибка при установке группы!",
   description: "Возможно такой группы не существует.",

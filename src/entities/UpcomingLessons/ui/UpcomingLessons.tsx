@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Skeleton, Stack, useColorMode } from "@chakra-ui/react";
 import classNames from "classnames";
@@ -17,24 +17,30 @@ const currentDay = currentTime.getDay();
 const currentHour = currentTime.getHours();
 const currentMinute = currentTime.getMinutes();
 
+const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
+
 const UpcomingLessons = () => {
   const { week } = useCurrentWeek();
   const { colorMode } = useColorMode();
   const [day, setDay] = useState(0);
 
-  let currentLesson = 0;
+  const currentLesson = useMemo(() => {
+    let lesson = 0;
 
-  lessonsTime.forEach((lessonTime, i) => {
-    const [lessonHour, lessonMinute] = lessonTime
-      .split(":")
-      .map((item) => +item);
-    if (
-      currentHour > lessonHour ||
-      (currentHour === lessonHour && currentMinute >= lessonMinute)
-    ) {
-      currentLesson = i;
-    }
-  });
+    lessonsTime.forEach((lessonTime, i) => {
+      const [lessonHour, lessonMinute] = lessonTime
+        .split(":")
+        .map((item) => +item);
+      if (
+        currentHour > lessonHour ||
+        (currentHour === lessonHour && currentMinute >= lessonMinute)
+      ) {
+        lesson = i;
+      }
+    });
+
+    return lesson;
+  }, []);
 
   useEffect(() => {
     if (currentDay > 0 && currentDay < 7) {
@@ -43,8 +49,6 @@ const UpcomingLessons = () => {
       setDay(5);
     }
   }, []);
-
-  const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 
   if (!userGroup?.groupId || +currentHour >= 21) return null;
 

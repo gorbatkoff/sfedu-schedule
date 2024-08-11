@@ -1,4 +1,11 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  memo,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { HamburgerIcon } from "@chakra-ui/icons";
 import {
@@ -23,6 +30,7 @@ import { useLocation } from "react-router-dom";
 import { StateSchema } from "/src/app/providers";
 
 import { userGroupActions } from "/src/widgets/DrawerMenu";
+import { DrawerInfo } from "/src/widgets/DrawerMenu/ui/ui/DrawerInfo";
 
 import { fetchAndSaveUserGroup } from "/src/entities/ScheduleTable";
 
@@ -41,10 +49,21 @@ import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 
 import styles from "./DrawerMenu.module.scss";
 
-const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
+const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) ?? "{}");
 const isButtonBlock =
-  JSON.parse(localStorage.getItem(IS_BUTTONS_BLOCKED) || "false") || false;
-export function DrawerMenu() {
+  JSON.parse(localStorage.getItem(IS_BUTTONS_BLOCKED) ?? "false") || false;
+
+const handleShowEmptyLessons = (e: ChangeEvent<HTMLInputElement>) => {
+  const checked = e.target.checked; // true -> показывать
+  localStorage.setItem(SHOW_EMPTY_LESSONS, JSON.stringify(checked));
+};
+
+const handleShowScheduleAsCards = (e: ChangeEvent<HTMLInputElement>) => {
+  const checked = e.target.checked; // true -> показывать
+  localStorage.setItem(SHOW_SCHEDULE_AS_CARDS, JSON.stringify(checked));
+};
+
+export const DrawerMenu = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
   const location = useLocation();
@@ -52,7 +71,10 @@ export function DrawerMenu() {
   const [isInputBlocked, setInputBlocked] = useState<boolean>(isButtonBlock);
   const [inputValue, setInputValue] = useState<string>(userGroup.name || "КТ");
   const [groupId, setGroupId] = useState(userGroup.groupId || "");
-  const [isSetted, setIsSetted] = useState<boolean>(false);
+  const [isSetted, setIsSetted] = useState(false);
+
+  const dispatch = useAppDispatch();
+  const toast = useToast();
 
   const isShowEmptyLessons = useSelector(
     (state: StateSchema) => state.userGroup.userSettings.isShowEmptyLessons
@@ -62,18 +84,7 @@ export function DrawerMenu() {
     (state: StateSchema) => state.userGroup.userSettings.showScheduleAsCards
   );
 
-  const dispatch = useAppDispatch();
-  const handleShowEmptyLessons = (e: ChangeEvent<HTMLInputElement>) => {
-    const checked = e.target.checked; // true -> показывать
-    localStorage.setItem(SHOW_EMPTY_LESSONS, JSON.stringify(checked));
-  };
-
-  const handleShowScheduleAsCards = (e: ChangeEvent<HTMLInputElement>) => {
-    const checked = e.target.checked; // true -> показывать
-    localStorage.setItem(SHOW_SCHEDULE_AS_CARDS, JSON.stringify(checked));
-  };
-
-  const handleSaveSettings = () => {
+  const handleSaveSettings = useCallback(() => {
     const showEmptyLessons = JSON.parse(
       localStorage.getItem(SHOW_EMPTY_LESSONS) || "true"
     );
@@ -90,9 +101,22 @@ export function DrawerMenu() {
       dispatch(userGroupActions.setShowScheduleAsCards(scheduleAsCards));
     }
     onClose();
-  };
+  }, [dispatch, isShowEmptyLessons, onClose, showScheduleAsCards]);
 
-  const checkGroupId = () => {
+  const saveInputValue = useCallback(() => {
+    if (
+      inputValue.length >= 7 &&
+      inputValue.length <= 8 &&
+      inputValue.startsWith("КТ")
+    ) {
+      dispatch(userGroupActions.setUserGroup({ name: inputValue, groupId }));
+      setButtonBlocked(true);
+      setInputBlocked(true);
+      toast(GROUP_SAVED_SUCCESSFULLY);
+    }
+  }, [dispatch, groupId, inputValue, toast]);
+
+  const checkGroupId = useCallback(() => {
     if (groupId == "" && isSetted) {
       toast(GROUP_NOT_FOUND);
       setIsSetted(false);
@@ -101,20 +125,13 @@ export function DrawerMenu() {
     if (isSetted) {
       saveInputValue();
     }
-  };
+  }, [groupId, isSetted, saveInputValue, toast]);
+
   useEffect(() => {
     checkGroupId();
   }, [groupId]);
-  const buttonHandler = async () => {
-    try {
-      await fetchData();
-      setIsSetted(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const toast = useToast();
-  async function fetchData() {
+
+  const fetchData = useCallback(async () => {
     try {
       const data = await dispatch(fetchAndSaveUserGroup(inputValue));
       if (data.payload.table) {
@@ -131,9 +148,18 @@ export function DrawerMenu() {
       console.log(error);
       toast(ERROR_SETTING_DEFAULT_GROUP);
     }
-  }
+  }, [dispatch, inputValue, onClose, toast]);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const buttonHandler = useCallback(async () => {
+    try {
+      await fetchData();
+      setIsSetted(true);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [fetchData]);
+
+  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const cleanedValue = e.target.value.replace(/[^КТА-Яа-я1-6-0-9]+/g, "");
 
     if (!cleanedValue.startsWith("КТ")) {
@@ -151,23 +177,13 @@ export function DrawerMenu() {
     ) {
       setButtonBlocked(false);
     }
-  };
-  const saveInputValue = () => {
-    if (
-      inputValue.length >= 7 &&
-      inputValue.length <= 8 &&
-      inputValue.startsWith("КТ")
-    ) {
-      dispatch(userGroupActions.setUserGroup({ name: inputValue, groupId }));
-      setButtonBlocked(true);
-      setInputBlocked(true);
-      toast(GROUP_SAVED_SUCCESSFULLY);
-    }
-  };
-  const handleAllowEdit = () => {
+  }, []);
+
+  const handleAllowEdit = useCallback(() => {
     setButtonBlocked(false);
     setInputBlocked(false);
-  };
+  }, []);
+
   return (
     <>
       <HamburgerIcon
@@ -181,17 +197,13 @@ export function DrawerMenu() {
         size="xs"
         isOpen={isOpen}
         placement="left"
-        onClose={() => {
-          onClose();
-        }}
-        onCloseComplete={() => handleSaveSettings()}
+        onClose={onClose}
+        onCloseComplete={handleSaveSettings}
         finalFocusRef={btnRef}
       >
         <DrawerOverlay />
         <DrawerContent className={styles.Drawer}>
-          <DrawerCloseButton onClick={handleSaveSettings} />
-          <DrawerHeader>Выберите вашу группу</DrawerHeader>
-
+          <DrawerInfo handleSaveSettings={handleSaveSettings} />
           <DrawerBody>
             <Heading as="h6" size="md" my={5}>
               Пример КТбо1-10
@@ -249,4 +261,4 @@ export function DrawerMenu() {
       </Drawer>
     </>
   );
-}
+});

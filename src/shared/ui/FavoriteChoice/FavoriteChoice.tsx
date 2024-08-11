@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, memo } from "react";
+import { ButtonHTMLAttributes, memo, useCallback } from "react";
 
 import { StarIcon } from "@chakra-ui/icons";
 import {
@@ -26,10 +26,11 @@ export const FavoriteChoice = memo(
     const { colorMode } = useColorMode();
     const dispatch = useAppDispatch();
     const toast = useToast();
-    const handleRemoveFavorite = async () => {
+
+    const handleRemoveFavorite = useCallback(async () => {
       dispatch(favoriteSearchActions.removeSearchFromFavorite(title));
       toast(TOAST_SEARCH_REMOVED);
-    };
+    }, []);
 
     return (
       <div className={styles.ChoiceWrapper}>

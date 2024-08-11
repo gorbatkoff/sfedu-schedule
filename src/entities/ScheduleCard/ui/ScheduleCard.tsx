@@ -1,3 +1,5 @@
+import { memo, useMemo } from "react";
+
 import { TimeIcon } from "@chakra-ui/icons";
 import {
   Accordion,
@@ -22,17 +24,27 @@ interface ScheduleCardProps {
   element: string;
 }
 
-export const ScheduleCard = (props: ScheduleCardProps) => {
+export const ScheduleCard = memo((props: ScheduleCardProps) => {
   const { className, lessonNumber: index, lessonTime, day, element } = props;
 
-  const groups =
-    element.match(groupRegex) || element.match(subgroupRegex) || [];
-  const subject = element
-    .split(subgroupRegex)[0]
-    .replace(groups.join(","), "")
-    .split(auditoryLMSRegex)[0];
+  const groups = useMemo(
+    () => element.match(groupRegex) || element.match(subgroupRegex) || [],
+    [element]
+  );
 
-  const auditory = element.match(auditoryLMSRegex) || [""];
+  const subject = useMemo(
+    () =>
+      element
+        .split(subgroupRegex)[0]
+        .replace(groups.join(","), "")
+        .split(auditoryLMSRegex)[0],
+    [element, groups]
+  );
+
+  const auditory = useMemo(
+    () => element.match(auditoryLMSRegex) || [""],
+    [element]
+  );
 
   return (
     <div className={classNames(styles.ScheduleCard, {}, [className])}>
@@ -99,4 +111,4 @@ export const ScheduleCard = (props: ScheduleCardProps) => {
       </div>
     </div>
   );
-};
+});

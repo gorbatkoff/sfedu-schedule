@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { memo, useCallback, useState } from "react";
 
 import { EmailIcon } from "@chakra-ui/icons";
-import { Box, Icon, IconButton } from "@chakra-ui/react";
+import { Box, IconButton } from "@chakra-ui/react";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 
@@ -21,29 +21,29 @@ interface HeaderProps {
   className?: string;
 }
 
-export const Header = ({ className }: HeaderProps) => {
+export const Header = memo(({ className }: HeaderProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [openModal, setOpenModal] = useState(false);
 
-  const navigateToFeedback = () => {
+  const navigateToFeedback = useCallback(() => {
     setOpenModal(false);
     navigate("/leave-feedback");
-  };
+  }, [navigate]);
 
-  const onOpen = () => {
+  const onOpen = useCallback(() => {
     setOpenModal(true);
-  };
+  }, []);
 
-  const onClose = () => {
+  const onClose = useCallback(() => {
     setOpenModal(false);
-  };
+  }, []);
 
-  const handleUpdateData = () => {
+  const handleUpdateData = useCallback(() => {
     navigate("/");
     window.history.replaceState(null, "group", window.location.pathname);
     dispatch(tableActions.setSchedule({ ...defaultValue, result: "cleared" }));
-  };
+  }, [dispatch, navigate]);
 
   return (
     <Box
@@ -77,4 +77,4 @@ export const Header = ({ className }: HeaderProps) => {
       />
     </Box>
   );
-};
+});

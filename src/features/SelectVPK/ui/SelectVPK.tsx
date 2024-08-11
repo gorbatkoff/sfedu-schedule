@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useMemo } from "react";
+import { FC, memo, useCallback, useEffect, useMemo } from "react";
 
 import { Button, Heading, useToast } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
@@ -47,7 +47,7 @@ const SelectVPK: FC<ISelectVPKProps> = memo(({ handleHideVPKList }) => {
     dispatch(fetchVPK());
   }, []);
 
-  const updateData = async () => {
+  const updateData = useCallback(async () => {
     const header = schedule.table.table.slice(0, 2);
     const slicedSchedule = schedule.table.table.slice(2);
     const slicedVPK = VPKData.table.table.slice(2);
@@ -63,7 +63,7 @@ const SelectVPK: FC<ISelectVPKProps> = memo(({ handleHideVPKList }) => {
     });
 
     dispatch(tableActions.mergeScheduleAndVPK(header.concat(mergedSchedule)));
-  };
+  }, [VPKData.table.table, dispatch, schedule.table.table]);
 
   useEffect(() => {
     updateData();
