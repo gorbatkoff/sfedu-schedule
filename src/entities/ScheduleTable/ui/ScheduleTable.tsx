@@ -1,10 +1,7 @@
-import { useCallback, useEffect } from "react";
+import { memo, useCallback, useEffect } from "react";
 
-import { StarIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Heading,
-  IconButton,
   Table,
   TableContainer,
   Tbody,
@@ -13,7 +10,6 @@ import {
   Tr,
   useColorMode,
   useColorModeValue,
-  useToast,
 } from "@chakra-ui/react";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
@@ -23,23 +19,13 @@ import { StateSchema } from "/src/app/providers";
 import { fetchVPKByWeek } from "/src/features/SelectVPK";
 import { WeeksList } from "/src/features/WeeksList/WeeksList";
 
-import {
-  IScheduleTable,
-  TableCell,
-  favoriteSearchActions,
-  getFavoriteSearch,
-  getScheduleTable,
-  tableActions,
-} from "/src/entities/ScheduleTable";
+import { getScheduleTable, tableActions } from "/src/entities/ScheduleTable";
+import { ScheduleInfo } from "/src/entities/ScheduleTable/ui/ScheduleInfo/ScheduleInfo";
+import { TableBody } from "/src/entities/ScheduleTable/ui/TableBody/TableBody";
 import { TableSkeleton } from "/src/entities/ScheduleTable/ui/TableSkeleton/TableSkeleton";
 
-import {
-  ADD_TO_FAVORITE_SUCCESS,
-  REMOVE_FROM_FAVORITE,
-} from "/src/shared/const/toast/toast";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
-import { addSearchToFavorite } from "/src/shared/lib/addSearchToFavorite";
 
 import styles from "./ScheduleTable.module.scss";
 
@@ -48,22 +34,14 @@ interface TableProps {
   isLoading: boolean;
 }
 
-const userGroup = JSON.parse(localStorage.getItem("USER_GROUP") || "{}");
-
-const ScheduleTable = ({ className, isLoading }: TableProps) => {
-  const toast = useToast();
+const ScheduleTable = memo(({ className, isLoading }: TableProps) => {
   const dispatch = useAppDispatch();
   const { colorMode } = useColorMode();
   const { week: currentWeek } = useCurrentWeek();
   const textColor = useColorModeValue("black", "white");
-  const favoriteChoices = useSelector(getFavoriteSearch);
   const schedule = useSelector(getScheduleTable);
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
   const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
-
-  const isFavorite =
-    favoriteChoices.filter((item) => item.name === schedule.table?.name)
-      .length > 0;
 
   useEffect(() => {
     if (vpkInfo.group) {
@@ -77,7 +55,7 @@ const ScheduleTable = ({ className, isLoading }: TableProps) => {
     }
   }, [vpkData]);
 
-  const mergeVPKAndSchedule = () => {
+  const mergeVPKAndSchedule = useCallback(() => {
     const header = schedule.table.table.slice(0, 2);
     const slicedSchedule = schedule.table.table.slice(2);
 
@@ -96,29 +74,12 @@ const ScheduleTable = ({ className, isLoading }: TableProps) => {
 
       dispatch(tableActions.mergeScheduleAndVPK(header.concat(mergedSchedule)));
     }
-  };
-
-  const handleFavoriteSearch = useCallback(
-    (schedule: IScheduleTable) => {
-      const favoriteSearch = {
-        group: schedule.table.group,
-        name: schedule.table.name,
-      };
-
-      const response = addSearchToFavorite(favoriteSearch);
-
-      if (response) {
-        dispatch(favoriteSearchActions.addSearchToFavorite(favoriteSearch));
-        toast(ADD_TO_FAVORITE_SUCCESS);
-      } else if (isFavorite) {
-        dispatch(
-          favoriteSearchActions.removeSearchFromFavorite(favoriteSearch.name)
-        );
-        toast(REMOVE_FROM_FAVORITE);
-      }
-    },
-    [dispatch, isFavorite, toast]
-  );
+  }, [
+    dispatch,
+    schedule.table.table,
+    vpkData.table?.group,
+    vpkData.table.table,
+  ]);
 
   if (isLoading) return <TableSkeleton />;
 
@@ -128,18 +89,7 @@ const ScheduleTable = ({ className, isLoading }: TableProps) => {
 
   return (
     <Box className={classNames(styles.Table, {}, [className])}>
-      <Box className={styles.groupActions}>
-        <Heading color={textColor} className={styles.tableTitle}>
-          Расписание {schedule.table.name}{" "}
-          <span className={styles.week}>Неделя {schedule.table.week}</span>
-        </Heading>
-        <IconButton
-          aria-label="Добавить в избранное"
-          onClick={() => handleFavoriteSearch(schedule)}
-        >
-          <StarIcon color={isFavorite ? "yellow" : ""} />
-        </IconButton>
-      </Box>
+      <ScheduleInfo schedule={schedule} />
 
       <WeeksList
         weeks={schedule.weeks}
@@ -162,29 +112,12 @@ const ScheduleTable = ({ className, isLoading }: TableProps) => {
             })}
           </Thead>
           <Tbody className={styles.tableBody}>
-            {schedule.table.table.slice(2).map((row, rowIndex) => {
-              return (
-                <Tr key={rowIndex}>
-                  {row.map((element, index) => {
-                    return (
-                      <TableCell
-                        key={index}
-                        colorMode={colorMode}
-                        element={element}
-                        indexOfCell={index}
-                        indexOfRow={rowIndex}
-                        tableHead={schedule.table.table.slice(1, 2)[0].slice(1)}
-                      />
-                    );
-                  })}
-                </Tr>
-              );
-            })}
+            <TableBody schedule={schedule} />
           </Tbody>
         </Table>
       </TableContainer>
     </Box>
   );
-};
+});
 
 export default ScheduleTable;

@@ -14,7 +14,8 @@ const currentDate = new Date(getCurrentDate()); // Год-месяц-день
 const currentWeekDate = +currentDate - +startDate;
 
 // Конвертируем миллисекунды в недели
-const currentWeek = Math.ceil(currentWeekDate / (1000 * 60 * 60 * 24 * 7));
+const supposedWeek = Math.ceil(currentWeekDate / (1000 * 60 * 60 * 24 * 7));
+const currentWeek = supposedWeek > 23 ? 22 : supposedWeek;
 
 export default function useCurrentWeek() {
   return { week: currentWeek };

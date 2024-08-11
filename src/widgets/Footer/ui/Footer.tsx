@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Heading } from "@chakra-ui/react";
 
@@ -5,7 +7,7 @@ import styles from "./Footer.module.scss";
 
 const repositoryUrl = `https://github.com/gorbatkoff/sfedu-schedule`;
 
-export const Footer = () => {
+export const Footer = memo(() => {
   return (
     <footer className={styles.footer}>
       <Heading as="h5" size="md" colorScheme="yellow" color="gray.500">
@@ -19,4 +21,4 @@ export const Footer = () => {
       </a>
     </footer>
   );
-};
+});

@@ -100,13 +100,16 @@ const ScheduleCardsList: FC<TableProps> = memo(({ isLoading }) => {
     }
   }, [vpkData]);
 
-  const dayHandler = (index: number) => {
-    if (day !== index) {
-      setDay(index);
-    }
-  };
+  const dayHandler = useCallback(
+    (index: number) => {
+      if (day !== index) {
+        setDay(index);
+      }
+    },
+    [day]
+  );
 
-  const mergeVPKAndSchedule = () => {
+  const mergeVPKAndSchedule = useCallback(() => {
     const header = schedule.table.table.slice(0, 2);
     const slicedSchedule = schedule.table.table.slice(2);
 
@@ -125,7 +128,12 @@ const ScheduleCardsList: FC<TableProps> = memo(({ isLoading }) => {
 
       dispatch(tableActions.mergeScheduleAndVPK(header.concat(mergedSchedule)));
     }
-  };
+  }, [
+    dispatch,
+    schedule.table.table,
+    vpkData.table?.group,
+    vpkData.table.table,
+  ]);
 
   const handleFavoriteSearch = useCallback(
     (schedule: IScheduleTable) => {
