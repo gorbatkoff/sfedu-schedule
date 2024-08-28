@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useEffect, useRef } from "react";
 
-import { Badge, Button } from "@chakra-ui/react";
+import { Badge, Button, useToast } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 import { StateSchema } from "/src/app/providers";
@@ -13,6 +13,7 @@ import {
   tableActions,
 } from "/src/entities/ScheduleTable";
 
+import { SCHEDULE_REQUEST_ERROR } from "/src/shared/const/toast/toast";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 
@@ -29,6 +30,7 @@ export const WeeksList: FC<WeeksListProps> = memo(
   ({ weeks, group, week, isMobileDevice }) => {
     const myRef = useRef<HTMLButtonElement | null>(null);
     const { week: currentWeek } = useCurrentWeek();
+    const toast = useToast();
     const dispatch = useAppDispatch();
     const schedule = useSelector(getSchedule);
     const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
@@ -53,15 +55,20 @@ export const WeeksList: FC<WeeksListProps> = memo(
       async (week: number, propWeek: number) => {
         if (week === propWeek) return;
 
-        await dispatch(fetchScheduleByWeek({ week, group }));
+        const response = await dispatch(fetchScheduleByWeek({ week, group }));
 
         if (vpkInfo.group) {
           await dispatch(fetchVPKByWeek({ week, vpk: vpkInfo }));
         }
 
         dispatch(tableActions.updateScheduleByNewVPKData(schedule));
+
+        //@ts-ignore
+        if (response.error.message === "Rejected") {
+          toast(SCHEDULE_REQUEST_ERROR);
+        }
       },
-      [dispatch, group, schedule, vpkInfo]
+      [dispatch, group, schedule, toast, vpkInfo]
     );
 
     useEffect(() => {

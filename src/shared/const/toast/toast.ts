@@ -80,6 +80,14 @@ export const CELL_INFO_COPY_SUCCESS: UseToastOptions = {
   isClosable: true,
 };
 
+export const SCHEDULE_REQUEST_ERROR: UseToastOptions = {
+  title: "Ошибка!",
+  description: "Не удалось загрузить расписание на неделю",
+  status: "error",
+  duration: 1500,
+  isClosable: true,
+};
+
 export const ERROR_SETTING_DEFAULT_GROUP: UseToastOptions = {
   title: "Ошибка при установке группы!",
   description: "Возможно такой группы не существует.",

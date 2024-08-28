@@ -7,7 +7,7 @@ const getCurrentDate = () => {
   return `${year}-${month}-${day}`;
 };
 
-const startDate = new Date("2024-02-04"); // Год-месяц-день
+const startDate = new Date("2024-08-24"); // Год-месяц-день
 const currentDate = new Date(getCurrentDate()); // Год-месяц-день
 
 // Вычисляем разницу между датами в миллисекундах
