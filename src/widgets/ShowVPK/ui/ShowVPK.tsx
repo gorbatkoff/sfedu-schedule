@@ -1,6 +1,7 @@
 import { Suspense, memo, useCallback, useState } from "react";
 
-import { Box, Button } from "@chakra-ui/react";
+import { PhoneIcon, QuestionIcon, QuestionOutlineIcon } from "@chakra-ui/icons";
+import { Box, Button, Tooltip } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 import { StateSchema } from "/src/app/providers";
@@ -20,10 +21,6 @@ export const ShowVPK = memo(() => {
     setShowVPKGroups(false);
   }, []);
 
-  const scheduleCourse = +schedule?.schedule?.table?.name.charAt(4);
-
-  if (scheduleCourse < 3) return null;
-
   return (
     <Suspense fallback={<Loader />}>
       <div className={styles.showVPK}>
@@ -33,6 +30,8 @@ export const ShowVPK = memo(() => {
               display: "flex",
               justifyContent: "center",
               marginBottom: "2em",
+              columnGap: "10px",
+              alignItems: "center",
             }}
           >
             <Button
@@ -41,6 +40,16 @@ export const ShowVPK = memo(() => {
             >
               Выбрать ВПК
             </Button>
+            <Tooltip
+              label="ВПК - Вариативные Профессиональные Компетенции. Уникально только для третьего курса и выше."
+              fontSize="md"
+            >
+              <QuestionIcon
+                w={8}
+                h={8}
+                color={"var(--inverted-secondary-color)"}
+              />
+            </Tooltip>
           </Box>
         )}
         {showVPKGroups && <SelectVPK handleHideVPKList={handleHideVPKList} />}

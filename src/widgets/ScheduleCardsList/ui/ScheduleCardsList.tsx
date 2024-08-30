@@ -130,9 +130,9 @@ const ScheduleCardsList: FC<TableProps> = memo(({ isLoading }) => {
     }
   }, [
     dispatch,
-    schedule.table.table,
-    vpkData.table?.group,
-    vpkData.table.table,
+    schedule?.table?.table,
+    vpkData?.table?.group,
+    vpkData?.table?.table,
   ]);
 
   const handleFavoriteSearch = useCallback(
@@ -160,9 +160,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ isLoading }) => {
   );
 
   const lessons = useMemo(
-    () =>
-      schedule.table.table.slice(2)[day] &&
-      schedule.table.table.slice(2)[day].slice(1),
+    () => schedule.table.table.slice(2)[day]?.slice(1),
     [day, schedule.table.table]
   );
 

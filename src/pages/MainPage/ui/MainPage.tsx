@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 import { useToast } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
@@ -31,7 +31,7 @@ import MainColumns from "/src/shared/ui/MainColumns/MainColumns";
 const isUserOnline = navigator.onLine;
 
 const savedUserSchedule = JSON.parse(
-  localStorage.getItem(SAVED_SCHEDULE) || "{}"
+  localStorage.getItem(SAVED_SCHEDULE) ?? "{}"
 ) as IScheduleTable;
 
 const renderColumnsByViewPort = () => {
@@ -46,12 +46,13 @@ const renderColumnsByViewPort = () => {
   return <SearchSchedule />;
 };
 
+const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) ?? "{}");
+
 const MainPage = () => {
   const toast = useToast();
   const { week } = useCurrentWeek();
   const dispatch = useAppDispatch();
   const [queryParameters] = useSearchParams();
-  const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
 
   const requestGroup = queryParameters.get("group") || userGroup?.groupId || "";
 
@@ -69,7 +70,7 @@ const MainPage = () => {
     }
   }, [data]);
 
-  const mergeVPKAndSchedule = () => {
+  const mergeVPKAndSchedule = useCallback(() => {
     const header = data.table.table.slice(0, 2);
     const slicedSchedule = data.table.table.slice(2);
 
@@ -89,7 +90,12 @@ const MainPage = () => {
       );
       dispatch(tableActions.mergeScheduleAndVPK(header.concat(mergedSchedule)));
     }
-  };
+  }, [
+    data?.table?.table,
+    dispatch,
+    vpkData?.table?.group,
+    vpkData?.table?.table,
+  ]);
 
   useEffect(() => {
     if (!isUserOnline) {

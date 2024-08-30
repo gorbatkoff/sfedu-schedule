@@ -6,6 +6,7 @@
 
   .tableTitle {
     text-align: center;
+    margin-bottom: 10px;
   }
 
   thead {
@@ -87,6 +88,7 @@
 
   .week {
     font-weight: unset;
+    cursor: default;
   }
 
   @media (width <= 768px) {

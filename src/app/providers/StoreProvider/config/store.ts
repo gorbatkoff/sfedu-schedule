@@ -6,9 +6,11 @@ import { userGroupReducer } from "/src/widgets/DrawerMenu";
 import { searchApi } from "/src/features/SearchSchedule";
 import { selectVPKReducer } from "/src/features/SelectVPK";
 
-import { scheduleApi } from "/src/entities/ScheduleTable";
-import { favoriteSearchReducer } from "/src/entities/ScheduleTable";
-import { tableReducer } from "/src/entities/ScheduleTable";
+import {
+  favoriteSearchReducer,
+  scheduleApi,
+  tableReducer,
+} from "/src/entities/ScheduleTable";
 import { lessonsApi } from "/src/entities/UpcomingLessons";
 
 export const store = configureStore({

@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react";
+import { memo, useCallback, useEffect } from "react";
 
 import { useToast } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
@@ -25,7 +25,7 @@ export const FavoriteChoices = memo(() => {
 
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
 
-  const mergeVPKAndSchedule = () => {
+  const mergeVPKAndSchedule = useCallback(() => {
     const header = data.table.table.slice(0, 2);
     const slicedSchedule = data.table.table.slice(2);
 
@@ -45,7 +45,12 @@ export const FavoriteChoices = memo(() => {
       });
       dispatch(tableActions.mergeScheduleAndVPK(header.concat(mergedSchedule)));
     }
-  };
+  }, [
+    data?.table?.table,
+    dispatch,
+    vpkData?.table?.group,
+    vpkData?.table?.table,
+  ]);
 
   useEffect(() => {
     if (status === "fulfilled") {

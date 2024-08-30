@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 import { Box, Skeleton } from "@chakra-ui/react";
 
 import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
@@ -9,7 +11,10 @@ export const TableSkeleton = () => {
 
   const countOfVisibleWeeks = week > 20 ? 23 : week + 2;
 
-  const arrayOfVisibleWeeks = new Array(countOfVisibleWeeks).fill(0);
+  const arrayOfVisibleWeeks = useMemo(
+    () => new Array(countOfVisibleWeeks).fill(0),
+    [countOfVisibleWeeks]
+  );
 
   return (
     <Box className={styles.Table}>

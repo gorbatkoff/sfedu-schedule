@@ -1,4 +1,4 @@
-export { DrawerMenu } from "./ui/DrawerMenu";
+export { GroupSettingMenu } from "./ui/GroupSettingMenu";
 
 export * from "./model/types/UserGroup";
 export * from "./model/slice/userGroupSlice";

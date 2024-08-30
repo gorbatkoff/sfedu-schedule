@@ -52,12 +52,12 @@
 }
 
 .react-calendar__navigation button:disabled {
-  background-color: var(--primary-color);
+  background-color: var(--secondary-color);
 }
 
 .react-calendar__navigation button:enabled:hover,
 .react-calendar__navigation button:enabled:focus {
-  background-color: var(--primary-color);
+  background-color: var(--secondary-color);
 }
 
 .react-calendar__month-view__weekdays {

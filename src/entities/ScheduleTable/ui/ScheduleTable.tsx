@@ -76,9 +76,9 @@ const ScheduleTable = memo(({ className, isLoading }: TableProps) => {
     }
   }, [
     dispatch,
-    schedule.table.table,
-    vpkData.table?.group,
-    vpkData.table.table,
+    schedule?.table?.table,
+    vpkData?.table?.group,
+    vpkData?.table?.table,
   ]);
 
   if (isLoading) return <TableSkeleton />;

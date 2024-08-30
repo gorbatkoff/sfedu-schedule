@@ -56,6 +56,14 @@ export const VPK_SELECTED_SUCCESSFULLY: UseToastOptions = {
   isClosable: true,
 };
 
+export const VPK_REMOVED_SUCCESSFULLY: UseToastOptions = {
+  title: "Внимание!",
+  description: "Вы удалили выбранную группу ВПК!",
+  status: "error",
+  duration: 3000,
+  isClosable: true,
+};
+
 export const GROUP_SAVED_SUCCESSFULLY: UseToastOptions = {
   title: "Вы успешно сохранили группу!",
   description: "Теперь вы можете просматривать расписание без интернета! 😊",
@@ -67,6 +75,14 @@ export const GROUP_SAVED_SUCCESSFULLY: UseToastOptions = {
 export const SELECT_VPK_ERROR: UseToastOptions = {
   title: "Ошибка!",
   description: "Не удалось успешно установить ВПК или получить данные",
+  status: "error",
+  duration: 3000,
+  isClosable: true,
+};
+
+export const REMOVE_VPK_ERROR: UseToastOptions = {
+  title: "Ошибка!",
+  description: "Не удалось удалить ВПК",
   status: "error",
   duration: 3000,
   isClosable: true,

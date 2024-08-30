@@ -17,7 +17,7 @@ const currentDay = currentTime.getDay();
 const currentHour = currentTime.getHours();
 const currentMinute = currentTime.getMinutes();
 
-const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) || "{}");
+const userGroup = JSON.parse(localStorage.getItem(USER_GROUP) ?? "{}");
 
 const UpcomingLessons = () => {
   const { week } = useCurrentWeek();

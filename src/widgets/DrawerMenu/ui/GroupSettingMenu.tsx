@@ -30,7 +30,7 @@ import { useLocation } from "react-router-dom";
 import { StateSchema } from "/src/app/providers";
 
 import { userGroupActions } from "/src/widgets/DrawerMenu";
-import { DrawerInfo } from "/src/widgets/DrawerMenu/ui/ui/DrawerInfo";
+import { DrawerInfo } from "/src/widgets/DrawerMenu/ui/GroupSettingInfo/DrawerInfo";
 
 import { fetchAndSaveUserGroup } from "/src/entities/ScheduleTable";
 
@@ -63,18 +63,18 @@ const handleShowScheduleAsCards = (e: ChangeEvent<HTMLInputElement>) => {
   localStorage.setItem(SHOW_SCHEDULE_AS_CARDS, JSON.stringify(checked));
 };
 
-export const DrawerMenu = memo(() => {
+export const GroupSettingMenu = memo(() => {
+  const toast = useToast();
+  const dispatch = useAppDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const btnRef = useRef(null);
-  const location = useLocation();
+
   const [isButtonBlocked, setButtonBlocked] = useState<boolean>(isButtonBlock);
   const [isInputBlocked, setInputBlocked] = useState<boolean>(isButtonBlock);
   const [inputValue, setInputValue] = useState<string>(userGroup.name || "КТ");
   const [groupId, setGroupId] = useState(userGroup.groupId || "");
   const [isSetted, setIsSetted] = useState(false);
-
-  const dispatch = useAppDispatch();
-  const toast = useToast();
 
   const isShowEmptyLessons = useSelector(
     (state: StateSchema) => state.userGroup.userSettings.isShowEmptyLessons
@@ -86,11 +86,11 @@ export const DrawerMenu = memo(() => {
 
   const handleSaveSettings = useCallback(() => {
     const showEmptyLessons = JSON.parse(
-      localStorage.getItem(SHOW_EMPTY_LESSONS) || "true"
+      localStorage.getItem(SHOW_EMPTY_LESSONS) ?? "true"
     );
 
     const scheduleAsCards = JSON.parse(
-      localStorage.getItem(SHOW_SCHEDULE_AS_CARDS) || "true"
+      localStorage.getItem(SHOW_SCHEDULE_AS_CARDS) ?? "true"
     );
 
     if (isShowEmptyLessons !== showEmptyLessons) {

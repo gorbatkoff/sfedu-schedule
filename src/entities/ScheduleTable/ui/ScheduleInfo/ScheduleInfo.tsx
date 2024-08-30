@@ -66,8 +66,29 @@ export const ScheduleInfo = memo((props: IScheduleInfoProps) => {
   return (
     <Box className={styles.groupActions}>
       <Heading color={textColor} className={styles.tableTitle}>
-        Расписание {schedule.table.name}{" "}
-        <span className={styles.week}>Неделя {schedule.table.week}</span>
+        Расписание
+        <span
+          style={{
+            backgroundColor: "#ffffff14",
+            padding: "0 10px",
+            borderRadius: "12px",
+            margin: "0 10px",
+          }}
+        >
+          {schedule.table.name}
+        </span>
+        <span>Неделя:</span>
+        <span
+          style={{
+            backgroundColor: "#ffffff14",
+            padding: "0 10px",
+            borderRadius: "12px",
+            margin: "0 0.5em",
+          }}
+          className={styles.week}
+        >
+          {schedule.table.week}
+        </span>
       </Heading>
       <IconButton
         aria-label="Добавить в избранное"

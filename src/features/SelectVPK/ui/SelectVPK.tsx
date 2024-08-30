@@ -6,17 +6,18 @@ import { useSelector } from "react-redux";
 import { StateSchema } from "/src/app/providers";
 
 import {
+  IVPK,
   fetchVPK,
   fetchVPKByWeek,
   selectVPKActions,
 } from "/src/features/SelectVPK";
-import { IVPK } from "/src/features/SelectVPK";
 
-import { getSchedule } from "/src/entities/ScheduleTable";
-import { tableActions } from "/src/entities/ScheduleTable";
+import { getSchedule, tableActions } from "/src/entities/ScheduleTable";
 
 import {
+  REMOVE_VPK_ERROR,
   SELECT_VPK_ERROR,
+  VPK_REMOVED_SUCCESSFULLY,
   VPK_SELECTED_SUCCESSFULLY,
 } from "/src/shared/const/toast/toast";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
@@ -69,15 +70,27 @@ const SelectVPK: FC<ISelectVPKProps> = memo(({ handleHideVPKList }) => {
     updateData();
   }, [fetchVPKByWeek]);
 
-  async function setVPK(vpk: IVPK) {
+  const selectVPK = useCallback(
+    async (vpk: IVPK) => {
+      try {
+        dispatch(selectVPKActions.setVPK(vpk));
+        await dispatch(fetchVPKByWeek({ vpk, week }));
+        toast(VPK_SELECTED_SUCCESSFULLY);
+      } catch (error) {
+        toast(SELECT_VPK_ERROR);
+      }
+    },
+    [dispatch, toast, week]
+  );
+
+  const removeVPK = useCallback(() => {
     try {
-      dispatch(selectVPKActions.setVPK(vpk));
-      await dispatch(fetchVPKByWeek({ vpk, week }));
-      toast(VPK_SELECTED_SUCCESSFULLY);
+      dispatch(selectVPKActions.setVPK({ group: "", name: "", id: "" }));
+      toast(VPK_REMOVED_SUCCESSFULLY);
     } catch (error) {
-      toast(SELECT_VPK_ERROR);
+      toast(REMOVE_VPK_ERROR);
     }
-  }
+  }, [dispatch, toast]);
 
   return (
     <div className={styles.SelectVPK}>
@@ -85,13 +98,16 @@ const SelectVPK: FC<ISelectVPKProps> = memo(({ handleHideVPKList }) => {
         Установите группу ВПК
       </Heading>
       <div className={styles.hideVPKList}>
+        <Button onClick={removeVPK} isDisabled={!VPKInfo.id}>
+          Удалить выбранный ВПК
+        </Button>
         <Button onClick={handleHideVPKList}>Скрыть</Button>
       </div>
       <div className={styles.vpkList}>
         {filteredVPKList.map((item, index) => (
           <Button
-            key={index}
-            onClick={() => setVPK(item)}
+            key={`${item.name}-${index}`}
+            onClick={() => selectVPK(item)}
             isDisabled={item.name === VPKInfo.name}
           >
             {item.name}

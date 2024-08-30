@@ -5,7 +5,7 @@ import { Box, IconButton } from "@chakra-ui/react";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
 
-import { DrawerMenu } from "/src/widgets/DrawerMenu";
+import { GroupSettingMenu } from "/src/widgets/DrawerMenu";
 import { ModalNews } from "/src/widgets/ModalNews/ui/ModalNews";
 
 import { tableActions } from "/src/entities/ScheduleTable";
@@ -67,7 +67,7 @@ export const Header = memo(({ className }: HeaderProps) => {
           <button className={styles.emailIcon} onClick={onOpen}>
             <EmailIcon w={22} h={22} as="button" />
           </button>
-          <DrawerMenu />
+          <GroupSettingMenu />
         </div>
       </div>
       <ModalNews
