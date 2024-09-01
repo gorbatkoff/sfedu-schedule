@@ -56,7 +56,7 @@ const SelectVPK: FC<ISelectVPKProps> = memo(({ handleHideVPKList }) => {
     const mergedSchedule = slicedSchedule.map((row, rowIndex) => {
       return row.map((item, itemIndex) => {
         if (item.includes("Дисциплины ВПК")) {
-          item = slicedVPK?.[rowIndex]?.[Number(itemIndex)];
+          item = slicedVPK[rowIndex][Number(itemIndex)];
           return item;
         }
         return item;
@@ -76,6 +76,7 @@ const SelectVPK: FC<ISelectVPKProps> = memo(({ handleHideVPKList }) => {
         dispatch(selectVPKActions.setVPK(vpk));
         await dispatch(fetchVPKByWeek({ vpk, week }));
         toast(VPK_SELECTED_SUCCESSFULLY);
+        window.location.reload();
       } catch (error) {
         toast(SELECT_VPK_ERROR);
       }
@@ -86,6 +87,7 @@ const SelectVPK: FC<ISelectVPKProps> = memo(({ handleHideVPKList }) => {
   const removeVPK = useCallback(() => {
     try {
       dispatch(selectVPKActions.setVPK({ group: "", name: "", id: "" }));
+      window.location.reload();
       toast(VPK_REMOVED_SUCCESSFULLY);
     } catch (error) {
       toast(REMOVE_VPK_ERROR);
