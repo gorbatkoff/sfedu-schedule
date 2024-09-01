@@ -42,3 +42,15 @@
     opacity: 1;
   }
 }
+
+
+@media (width <=767px) {
+  .hideVPKList {
+    display: flex;
+    flex-direction: column-reverse;
+
+    .hideVPKButton {
+      margin-bottom: 1em;
+    }
+  }
+}

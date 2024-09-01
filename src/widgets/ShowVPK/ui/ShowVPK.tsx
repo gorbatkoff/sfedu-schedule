@@ -29,9 +29,10 @@ export const ShowVPK = memo(() => {
             sx={{
               display: "flex",
               justifyContent: "center",
-              marginBottom: "2em",
+              margin: "0 auto 2em auto",
               columnGap: "10px",
               alignItems: "center",
+              width: "80vw",
             }}
           >
             <Button

@@ -56,7 +56,7 @@ const SelectVPK: FC<ISelectVPKProps> = memo(({ handleHideVPKList }) => {
     const mergedSchedule = slicedSchedule.map((row, rowIndex) => {
       return row.map((item, itemIndex) => {
         if (item.includes("Дисциплины ВПК")) {
-          item = slicedVPK[rowIndex][Number(itemIndex)];
+          item = slicedVPK?.[rowIndex]?.[Number(itemIndex)];
           return item;
         }
         return item;
@@ -101,7 +101,9 @@ const SelectVPK: FC<ISelectVPKProps> = memo(({ handleHideVPKList }) => {
         <Button onClick={removeVPK} isDisabled={!VPKInfo.id}>
           Удалить выбранный ВПК
         </Button>
-        <Button onClick={handleHideVPKList}>Скрыть</Button>
+        <Button onClick={handleHideVPKList} className={styles.hideVPKButton}>
+          Скрыть
+        </Button>
       </div>
       <div className={styles.vpkList}>
         {filteredVPKList.map((item, index) => (
