@@ -18,6 +18,7 @@ export const TableBody = memo((props: ITableBodyProps) => {
 
   const handleCellDoubleClick = useCallback(
     (cellInfo: string) => {
+      if (!cellInfo) return;
       navigator.clipboard.writeText(cellInfo).then(() => {
         toast(CELL_INFO_COPY_SUCCESS);
       });
@@ -34,8 +35,8 @@ export const TableBody = memo((props: ITableBodyProps) => {
               return (
                 <TableCell
                   key={index}
-                  colorMode={colorMode}
                   element={element}
+                  colorMode={colorMode}
                   onDoubleClick={handleCellDoubleClick}
                 />
               );
