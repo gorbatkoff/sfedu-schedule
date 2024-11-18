@@ -19,6 +19,20 @@ const vitePwaConfig = {
     short_name: "Sfedu Schedule",
     description:
       "Sfedu Schedule это приложение помощник для просмотра расписания студентов ЮФУ",
+    screenshots: [
+      {
+        src: "/screenshots/desktop.png",
+        sizes: "1919x929",
+        type: "image/png",
+        form_factor: "wide",
+      },
+      {
+        src: "/screenshots/mobile.png",
+        sizes: "458x820",
+        type: "image/png",
+        form_factor: "narrow",
+      },
+    ],
     icons: [
       {
         src: "images/icons/icon-72x72.png",
@@ -60,5 +74,5 @@ const vitePwaConfig = {
 };
 
 export default defineConfig({
-  plugins: [react(), VitePWA(vitePwaConfig)],
+  plugins: [react(), VitePWA(vitePwaConfig as any)],
 });
