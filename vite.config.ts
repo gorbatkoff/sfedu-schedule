@@ -50,18 +50,19 @@ const vitePwaConfig = {
         type: "image/png",
       },
       {
-        src: "icon-152x152.png",
+        src: "/icons/icon-144x144.png",
+        sizes: "144x144",
+        type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: "icon-144x144.png",
         sizes: "152x152",
         type: "image/png",
       },
       {
         src: "icon-192x192.png",
         sizes: "192x192",
-        type: "image/png",
-      },
-      {
-        src: "123123.png",
-        sizes: "384x384",
         type: "image/png",
       },
       {
