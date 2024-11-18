@@ -18,6 +18,5 @@ const supposedWeek = Math.ceil(currentWeekDate / (1000 * 60 * 60 * 24 * 7));
 const currentWeek = supposedWeek > 23 ? 22 : supposedWeek;
 
 export default function useCurrentWeek() {
-  console.log("currentWeek :>>", currentWeek);
   return { week: currentWeek };
 }
