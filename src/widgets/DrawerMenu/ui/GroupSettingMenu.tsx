@@ -13,9 +13,7 @@ import {
   Button,
   Drawer,
   DrawerBody,
-  DrawerCloseButton,
   DrawerContent,
-  DrawerHeader,
   DrawerOverlay,
   Heading,
   Input,
@@ -24,8 +22,8 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import confetti from "canvas-confetti";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 
 import { StateSchema } from "/src/app/providers";
 
@@ -113,6 +111,11 @@ export const GroupSettingMenu = memo(() => {
       setButtonBlocked(true);
       setInputBlocked(true);
       toast(GROUP_SAVED_SUCCESSFULLY);
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+      });
     }
   }, [dispatch, groupId, inputValue, toast]);
 

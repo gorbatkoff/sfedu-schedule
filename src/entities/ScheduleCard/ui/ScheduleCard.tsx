@@ -32,19 +32,12 @@ export const ScheduleCard = memo((props: ScheduleCardProps) => {
     [element]
   );
 
-  const subject = useMemo(
-    () =>
-      element
-        .split(subgroupRegex)[0]
-        .replace(groups.join(","), "")
-        .split(auditoryLMSRegex)[0],
-    [element, groups]
-  );
+  const subject = element
+    .split(subgroupRegex)[0]
+    .replace(groups.join(","), "")
+    .split(auditoryLMSRegex)[0];
 
-  const auditory = useMemo(
-    () => element.match(auditoryLMSRegex) || [""],
-    [element]
-  );
+  const auditory = element.match(auditoryLMSRegex) || [""];
 
   return (
     <div className={classNames(styles.ScheduleCard, {}, [className])}>
@@ -53,7 +46,7 @@ export const ScheduleCard = memo((props: ScheduleCardProps) => {
         <span>{index}-ая пара</span>
       </div>
       <div className={styles.cardContent}>
-        <h3>{subject || "Нет пары"}</h3>
+        <h3>{subject || "Окно"}</h3>
         {groups.length < 2 ? (
           groups.map((item, index) => {
             return (

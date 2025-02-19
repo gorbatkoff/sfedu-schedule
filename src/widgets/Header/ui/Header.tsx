@@ -1,6 +1,6 @@
 import { memo, useCallback, useState } from "react";
 
-import { EmailIcon } from "@chakra-ui/icons";
+import { EmailIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import { Box, IconButton } from "@chakra-ui/react";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
@@ -65,7 +65,7 @@ export const Header = memo(({ className }: HeaderProps) => {
             <ThemeSwitcher />
           </div>
           <button className={styles.emailIcon} onClick={onOpen}>
-            <EmailIcon w={22} h={22} as="button" />
+            <InfoOutlineIcon w={22} h={22} as="button" />
           </button>
           <GroupSettingMenu />
         </div>

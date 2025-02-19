@@ -32,7 +32,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <ChakraProvider theme={theme}>
             <App />
             <Snowfall
-              snowflakeCount={25}
+              snowflakeCount={10}
               style={{
                 position: "fixed",
                 width: "100vw",

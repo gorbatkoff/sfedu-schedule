@@ -20,6 +20,7 @@
     "@emotion/styled": "^11.11.0",
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
+    "canvas-confetti": "^1.9.3",
     "classnames": "^2.3.2",
     "react": "^18.2.0",
     "react-calendar": "^4.6.0",
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/canvas-confetti": "^1.9.0",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
