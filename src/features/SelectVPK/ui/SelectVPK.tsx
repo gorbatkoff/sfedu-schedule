@@ -1,6 +1,7 @@
 import { FC, memo, useCallback, useEffect, useMemo } from "react";
 
 import { Button, Heading, useToast } from "@chakra-ui/react";
+import confetti from "canvas-confetti";
 import { useSelector } from "react-redux";
 
 import { StateSchema } from "/src/app/providers";
@@ -76,7 +77,14 @@ const SelectVPK: FC<ISelectVPKProps> = memo(({ handleHideVPKList }) => {
         dispatch(selectVPKActions.setVPK(vpk));
         await dispatch(fetchVPKByWeek({ vpk, week }));
         toast(VPK_SELECTED_SUCCESSFULLY);
-        window.location.reload();
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+        });
+        setTimeout(() => {
+          window.location.reload();
+        }, 1400);
       } catch (error) {
         toast(SELECT_VPK_ERROR);
       }
