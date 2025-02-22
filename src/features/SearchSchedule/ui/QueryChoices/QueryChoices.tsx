@@ -47,7 +47,7 @@ export const QueryChoices: FC<IQueryChoicesProps> = memo(({ data }) => {
     return (
       <Button
         className={styles.choice}
-        onClick={() => fetchChoice(data.table.group)}
+        onClick={() => fetchChoice({ group: data.table.group })}
       >
         {"table" in data ? data.table.name : null}
       </Button>
@@ -61,7 +61,12 @@ export const QueryChoices: FC<IQueryChoicesProps> = memo(({ data }) => {
             className={styles.choice}
             key={choice.id}
             onClick={() => {
-              fetchChoice(choice.group, true);
+              fetchChoice(
+                {
+                  group: choice.group,
+                },
+                true
+              );
             }}
           >
             {choice.name}
