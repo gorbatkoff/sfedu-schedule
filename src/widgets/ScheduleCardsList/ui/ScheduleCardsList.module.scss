@@ -21,9 +21,13 @@
 }
 
 .weekDayBtns {
+  position: sticky;
+  top: 0;
+  background: var(--chakra-colors-gray-800); /* Добавь фон, чтобы не просвечивал контент снизу */
+  z-index: 1000; /* Сделай z-index выше, чтобы блок не перекрывался */
   margin: 0 auto;
   display: flex;
-  overflow-x: scroll;
+  overflow-x: auto;
   width: 100%;
   justify-content: space-between;
   padding: 1em 0;

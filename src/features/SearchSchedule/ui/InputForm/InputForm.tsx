@@ -16,8 +16,10 @@ import {
   InputLeftElement,
   InputRightElement,
   useColorMode,
+  useToast,
 } from "@chakra-ui/react";
 
+import { TOAST_SEARCH_REMOVED } from "/src/shared/const/toast/toast";
 import { useDebounce } from "/src/shared/hooks/useDebounce";
 
 import styles from "../SearchSchedule.module.scss";
@@ -31,6 +33,7 @@ export const InputForm: FC<IInputFormProps> = memo(
   ({ fetchByQuery, isLoading }) => {
     const [input, setInput] = useState("");
     const { colorMode } = useColorMode();
+    const toast = useToast();
 
     useEffect(() => {
       input.trim() !== "" && debounceInput();
@@ -52,6 +55,7 @@ export const InputForm: FC<IInputFormProps> = memo(
 
     const handleClearInput = () => {
       setInput("");
+      toast(TOAST_SEARCH_REMOVED);
     };
 
     return (

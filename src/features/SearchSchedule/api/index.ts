@@ -16,7 +16,8 @@ export const searchApi = createApi({
       query: (query: string) => `/?query=${query}`,
     }),
     fetchGroup: builder.query({
-      query: (group: string) => `/?group=${group}`,
+      query: ({ group, week }: IFetchGroupByWeek) =>
+        `/?group=${group}&week=${week}`,
     }),
     fetchGroupByWeek: builder.query({
       query: ({ group, week }: IFetchGroupByWeek) =>

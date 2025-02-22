@@ -11,6 +11,7 @@ import { getFavoriteSearch, tableActions } from "/src/entities/ScheduleTable";
 
 import { GROUP_FETCH_SUCCESS } from "/src/shared/const/toast/toast";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
+import useCurrentWeek from "/src/shared/hooks/useCurrentWeek";
 import { FavoriteChoice } from "/src/shared/ui/FavoriteChoice/FavoriteChoice";
 
 export const FavoriteChoices = memo(() => {
@@ -18,6 +19,8 @@ export const FavoriteChoices = memo(() => {
   const [fetchGroup, { data, status }] = useLazyFetchGroupQuery();
   const toast = useToast();
   const dispatch = useAppDispatch();
+
+  const { week } = useCurrentWeek();
 
   if (data) {
     window.history.pushState(null, "group", `/?group=${data.table.group}`);
@@ -68,7 +71,7 @@ export const FavoriteChoices = memo(() => {
             title={choice.name}
             key={choice.group}
             onClick={() => {
-              fetchGroup(choice.group);
+              fetchGroup({ group: choice.group, week });
             }}
           />
         );

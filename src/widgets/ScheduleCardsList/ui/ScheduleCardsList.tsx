@@ -210,50 +210,52 @@ const ScheduleCardsList: FC<TableProps> = memo(({ isLoading }) => {
       </div>
 
       <WeeksList
+        isMobileDevice={true}
+        dayHandler={dayHandler}
         weeks={schedule.weeks}
         week={schedule.table.week}
         group={schedule.table.group}
-        isMobileDevice={true}
       />
 
-      <div className={styles.weekDayBtns}>
-        {weekDays.map((dayItem, index) => {
-          return (
-            <Button
-              key={index}
-              onClick={() => dayHandler(index)}
-              colorScheme={day === index ? "green" : "gray"}
-              className={styles.weekDayButton}
-            >
-              {dayItem}
-            </Button>
-          );
-        })}
-      </div>
+      <div style={{ position: "relative" }}>
+        <div className={styles.weekDayBtns}>
+          {weekDays.map((dayItem, index) => {
+            return (
+              <Button
+                key={index}
+                onClick={() => dayHandler(index)}
+                colorScheme={day === index ? "green" : "gray"}
+                className={styles.weekDayButton}
+              >
+                {dayItem}
+              </Button>
+            );
+          })}
+        </div>
 
-      <div className={classNames(styles.ScheduleCardList)}>
-        {lessons.map((item: string, index: number) => {
-          const weekDay = schedule.table.table.slice(2)[day][0];
+        <div className={classNames(styles.ScheduleCardList)}>
+          {lessons.map((item: string, index: number) => {
+            const weekDay = schedule.table.table.slice(2)[day][0];
 
-          if (!isShowEmptyLessons && item === "") return null;
-
-          return (
-            <ScheduleCard
-              lessonTime={schedule.table.table[1][index + 1]}
-              lessonNumber={index + 1}
-              day={weekDay}
-              key={index}
-              element={item}
-              className={classNames(
-                colorMode === "light" ? styles.whiteMode : styles.darkMode,
-                item === "" && styles.emptyLesson
-              )}
-            />
-          );
-        })}
-        {!isShowEmptyLessons && lessons.every((l) => l === "") && (
-          <img src={generatedPreviewImage} className={styles.relaxLogo} />
-        )}
+            if (!isShowEmptyLessons && item === "") return null;
+            return (
+              <ScheduleCard
+                lessonTime={schedule.table.table[1][index + 1]}
+                lessonNumber={index + 1}
+                day={weekDay}
+                key={index}
+                element={item}
+                className={classNames(
+                  colorMode === "light" ? styles.whiteMode : styles.darkMode,
+                  item === "" && styles.emptyLesson
+                )}
+              />
+            );
+          })}
+          {!isShowEmptyLessons && lessons.every((l) => l === "") && (
+            <img src={generatedPreviewImage} className={styles.relaxLogo} />
+          )}
+        </div>
       </div>
     </div>
   );

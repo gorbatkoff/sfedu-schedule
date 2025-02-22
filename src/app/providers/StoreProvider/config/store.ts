@@ -11,7 +11,6 @@ import {
   scheduleApi,
   tableReducer,
 } from "/src/entities/ScheduleTable";
-import { lessonsApi } from "/src/entities/UpcomingLessons";
 
 export const store = configureStore({
   reducer: {
@@ -21,13 +20,11 @@ export const store = configureStore({
     selectVPK: selectVPKReducer,
     [searchApi.reducerPath]: searchApi.reducer,
     [scheduleApi.reducerPath]: scheduleApi.reducer,
-    [lessonsApi.reducerPath]: lessonsApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(searchApi.middleware)
-      .concat(scheduleApi.middleware)
-      .concat(lessonsApi.middleware),
+      .concat(scheduleApi.middleware),
 });
 
 setupListeners(store.dispatch);

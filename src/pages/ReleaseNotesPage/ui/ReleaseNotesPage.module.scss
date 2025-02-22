@@ -1,0 +1,20 @@
+
+
+.changeTag {
+  min-width: fit-content;
+  text-align: center;
+}
+
+@media (width <=767px) {
+  .stack {
+    display: grid !important;
+  }
+
+  .card {
+    padding: 0 !important;
+  }
+
+  .changeTag {
+    width: fit-content;
+  }
+}

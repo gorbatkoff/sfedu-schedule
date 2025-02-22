@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 
 import { LeaveFeedbackPage } from "/src/pages/LeaveFeedback";
 import { MainPage } from "/src/pages/MainPage";
+import ReleaseNotesPage from "/src/pages/ReleaseNotesPage/ui/ReleaseNotesPage";
 import { ThankYouPage } from "/src/pages/ThankYouPage";
 
 import { RenderFooter } from "/src/processes/RenderFooter";
@@ -21,6 +22,7 @@ const App = () => {
           <Route element={<MainPage />} path="*" />
           <Route element={<ThankYouPage />} path="thanks-page" />
           <Route element={<LeaveFeedbackPage />} path="/leave-feedback" />
+          <Route element={<ReleaseNotesPage />} path="/release" />
         </Routes>
         <RenderFooter />
       </div>

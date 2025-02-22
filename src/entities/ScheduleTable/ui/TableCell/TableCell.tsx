@@ -6,18 +6,21 @@ import { getInfoAboutElement } from "/src/shared/lib/getInfoAboutElement";
 
 interface ITableCell {
   element: string;
+  className?: string;
   colorMode: ColorMode;
-  onDoubleClick: (cellInfo: string) => void;
+  onClick: (cellInfo: string) => void;
 }
 
 export const TableCell: FC<ITableCell> = memo(
-  ({ element, colorMode, onDoubleClick }) => {
+  ({ element, colorMode, className, onClick }) => {
     return (
       <Td
-        onDoubleClick={() => onDoubleClick(element)}
+        className={className}
+        onClick={() => onClick(element)}
         sx={{
           background: getInfoAboutElement(element, colorMode),
           color: "white",
+          minWidth: "120px",
           borderRight: "1px solid var(--chakra-colors-chakra-border-color)",
         }}
       >

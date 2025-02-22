@@ -34,9 +34,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <Snowfall
               snowflakeCount={10}
               style={{
-                position: "fixed",
                 width: "100vw",
-                height: "100vh",
+                height: "100%",
                 zIndex: 100,
               }}
             />

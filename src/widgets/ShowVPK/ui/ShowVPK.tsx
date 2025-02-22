@@ -1,6 +1,6 @@
 import { Suspense, memo, useCallback, useState } from "react";
 
-import { PhoneIcon, QuestionIcon, QuestionOutlineIcon } from "@chakra-ui/icons";
+import { QuestionIcon } from "@chakra-ui/icons";
 import { Box, Button, Tooltip } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 

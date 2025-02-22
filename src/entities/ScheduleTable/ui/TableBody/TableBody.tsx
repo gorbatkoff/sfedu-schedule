@@ -6,12 +6,28 @@ import { IScheduleTable, TableCell } from "/src/entities/ScheduleTable";
 
 import { CELL_INFO_COPY_SUCCESS } from "/src/shared/const/toast/toast";
 
+import styles from "./TableBody.module.scss";
+
 interface ITableBodyProps {
   schedule: IScheduleTable;
+  isCurrentWeek: boolean;
 }
 
+const currentDay = new Date().getDay() - 1;
+
+const shouldHighlightCell = (
+  rowIndex: number,
+  cellIndex: number,
+  isCurrentWeek: boolean
+) => {
+  if (!isCurrentWeek) return false;
+  if (cellIndex === 0) return false;
+  if (currentDay === 6) return false;
+  if (rowIndex < currentDay) return true;
+};
+
 export const TableBody = memo((props: ITableBodyProps) => {
-  const { schedule } = props;
+  const { schedule, isCurrentWeek } = props;
 
   const toast = useToast();
   const { colorMode } = useColorMode();
@@ -19,6 +35,7 @@ export const TableBody = memo((props: ITableBodyProps) => {
   const handleCellDoubleClick = useCallback(
     (cellInfo: string) => {
       if (!cellInfo) return;
+
       navigator.clipboard.writeText(cellInfo).then(() => {
         toast(CELL_INFO_COPY_SUCCESS);
       });
@@ -34,10 +51,15 @@ export const TableBody = memo((props: ITableBodyProps) => {
             {row.map((element, index) => {
               return (
                 <TableCell
+                  className={
+                    shouldHighlightCell(rowIndex, index, isCurrentWeek)
+                      ? styles.element
+                      : undefined
+                  }
                   key={index}
                   element={element}
                   colorMode={colorMode}
-                  onDoubleClick={handleCellDoubleClick}
+                  onClick={handleCellDoubleClick}
                 />
               );
             })}

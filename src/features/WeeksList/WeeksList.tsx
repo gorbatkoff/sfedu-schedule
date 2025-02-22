@@ -1,6 +1,7 @@
 import { FC, memo, useCallback, useEffect, useRef } from "react";
 
 import { Badge, Button, useToast } from "@chakra-ui/react";
+import classNames from "classnames";
 import { useSelector } from "react-redux";
 
 import { StateSchema } from "/src/app/providers";
@@ -24,10 +25,11 @@ interface WeeksListProps {
   group: string;
   week: number;
   isMobileDevice: boolean;
+  dayHandler?: (index: number) => void;
 }
 
 export const WeeksList: FC<WeeksListProps> = memo(
-  ({ weeks, group, week, isMobileDevice }) => {
+  ({ weeks, group, week, isMobileDevice, dayHandler }) => {
     const myRef = useRef<HTMLButtonElement | null>(null);
     const { week: currentWeek } = useCurrentWeek();
     const toast = useToast();
@@ -54,6 +56,11 @@ export const WeeksList: FC<WeeksListProps> = memo(
     const fetchDataByWeek = useCallback(
       async (week: number, propWeek: number) => {
         if (week === propWeek) return;
+        if (week === currentWeek) {
+          dayHandler?.(new Date().getDay() - 1);
+        } else {
+          dayHandler?.(0);
+        }
 
         const response = await dispatch(fetchScheduleByWeek({ week, group }));
 
@@ -68,7 +75,7 @@ export const WeeksList: FC<WeeksListProps> = memo(
           toast(SCHEDULE_REQUEST_ERROR);
         }
       },
-      [dispatch, group, schedule, toast, vpkInfo]
+      [currentWeek, dayHandler, dispatch, group, schedule, toast, vpkInfo]
     );
 
     useEffect(() => {
@@ -95,10 +102,14 @@ export const WeeksList: FC<WeeksListProps> = memo(
           style={{ marginLeft: isMobileDevice ? "10px" : "" }}
         >
           {weeks.map((item, index) => {
+            const current =
+              item === currentWeek && item !== week
+                ? styles.current
+                : undefined;
             return (
               <Button
                 key={index}
-                className={styles.weekButton}
+                className={classNames(styles.weekButton, [current])}
                 ref={week === item ? myRef : null}
                 onClick={() => fetchDataByWeek(item, week)}
                 opacity={item < currentWeek ? "0.5" : "1"}

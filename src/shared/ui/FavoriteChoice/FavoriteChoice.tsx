@@ -11,7 +11,7 @@ import {
 
 import { favoriteSearchActions } from "/src/entities/ScheduleTable";
 
-import { TOAST_SEARCH_REMOVED } from "/src/shared/const/toast/toast";
+import { REMOVE_FROM_FAVORITE } from "/src/shared/const/toast/toast";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 
 import styles from "./FavoriteChoice.module.scss";
@@ -29,8 +29,8 @@ export const FavoriteChoice = memo(
 
     const handleRemoveFavorite = useCallback(async () => {
       dispatch(favoriteSearchActions.removeSearchFromFavorite(title));
-      toast(TOAST_SEARCH_REMOVED);
-    }, []);
+      toast(REMOVE_FROM_FAVORITE);
+    }, [dispatch, title, toast]);
 
     return (
       <div className={styles.ChoiceWrapper}>

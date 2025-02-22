@@ -16,4 +16,13 @@
     border-color: var(--primary-color);
     box-shadow: 0 0 0 1px var(--primary-color);
   }
+
+  .releaseNotes {
+    margin-top: 2em;
+
+    a {
+      font-size: 20px;
+      text-decoration: underline;
+    }
+  }
 }

@@ -24,6 +24,7 @@ import {
 } from "@chakra-ui/react";
 import confetti from "canvas-confetti";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { StateSchema } from "/src/app/providers";
 
@@ -259,6 +260,12 @@ export const GroupSettingMenu = memo(() => {
                 </Box>
               </>
             )}
+
+            <Box className={styles.releaseNotes}>
+              <Link to={"/release"} onClick={onClose}>
+                Описание обновлений
+              </Link>
+            </Box>
           </DrawerBody>
         </DrawerContent>
       </Drawer>

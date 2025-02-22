@@ -1,0 +1,26 @@
+.quotesWrapper {
+  position: relative;
+  border-radius: 12px;
+  background-color: var(--secondary-color);
+  height: fit-content;
+  min-height: 140px;
+
+  blockquote {
+    margin: 1em;
+    text-align: center;
+    color: white;
+    line-height: 30px;
+    font-size: 22px;
+  }
+
+  .reload {
+    position: absolute;
+    top: -20px;
+    display: flex;
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+    margin-left: 43%;
+    align-items: center;
+    justify-content: center
+  }
+}

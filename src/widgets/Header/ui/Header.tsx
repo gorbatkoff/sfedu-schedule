@@ -1,6 +1,6 @@
 import { memo, useCallback, useState } from "react";
 
-import { EmailIcon, InfoOutlineIcon } from "@chakra-ui/icons";
+import { InfoOutlineIcon } from "@chakra-ui/icons";
 import { Box, IconButton } from "@chakra-ui/react";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";

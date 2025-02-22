@@ -16,8 +16,8 @@ import {
 } from "/src/features/SearchSchedule";
 
 import { Calendar } from "/src/entities/Calendar";
+import { QuotesWidget } from "/src/entities/QuotesWidget";
 import { IScheduleTable, tableActions } from "/src/entities/ScheduleTable";
-import { UpcomingLessons } from "/src/entities/UpcomingLessons";
 
 import {
   SAVED_SCHEDULE,
@@ -40,7 +40,7 @@ const renderColumnsByViewPort = () => {
       <MainColumns>
         <Calendar />
         <SearchSchedule />
-        <UpcomingLessons />
+        <QuotesWidget />
       </MainColumns>
     );
   return <SearchSchedule />;

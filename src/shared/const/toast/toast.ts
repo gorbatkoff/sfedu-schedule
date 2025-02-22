@@ -12,7 +12,7 @@ export const GROUP_FETCH_SUCCESS = (name: string): UseToastOptions => ({
   title: "Успех!",
   description: `Расписание группы ${name} загружено успешно!`,
   status: "success",
-  duration: 800,
+  duration: 2500,
   isClosable: true,
 });
 
@@ -20,7 +20,7 @@ export const ADD_TO_FAVORITE_SUCCESS: UseToastOptions = {
   title: "Добавлено! ",
   description: "Успех! Данное расписание было добавлено в список избранных.",
   status: "success",
-  duration: 1000,
+  duration: 2500,
   isClosable: true,
 };
 
@@ -28,7 +28,7 @@ export const REMOVE_FROM_FAVORITE: UseToastOptions = {
   title: "Удалено!",
   description: "Данное расписание было удалено из списка избранных.",
   status: "error",
-  duration: 1000,
+  duration: 2500,
   isClosable: true,
 };
 
@@ -90,7 +90,7 @@ export const REMOVE_VPK_ERROR: UseToastOptions = {
 
 export const CELL_INFO_COPY_SUCCESS: UseToastOptions = {
   title: "Успешно скопировано!",
-  description: "Информация о паре добавлена в буфер обмена",
+  description: "Информация о занятии добавлена в буфер обмена",
   status: "success",
   duration: 1500,
   isClosable: true,

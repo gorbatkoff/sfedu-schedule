@@ -87,6 +87,8 @@ const ScheduleTable = memo(({ className, isLoading }: TableProps) => {
     return null;
   if (schedule?.result === null) return null;
 
+  const isCurrentWeek = currentWeek === schedule?.table?.week;
+
   return (
     <Box className={classNames(styles.Table, {}, [className])}>
       <ScheduleInfo schedule={schedule} />
@@ -112,7 +114,7 @@ const ScheduleTable = memo(({ className, isLoading }: TableProps) => {
             })}
           </Thead>
           <Tbody className={styles.tableBody}>
-            <TableBody schedule={schedule} />
+            <TableBody schedule={schedule} isCurrentWeek={isCurrentWeek} />
           </Tbody>
         </Table>
       </TableContainer>
