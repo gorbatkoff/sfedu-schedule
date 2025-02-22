@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom";
 
 import { LeaveFeedbackPage } from "/src/pages/LeaveFeedback";
 import { MainPage } from "/src/pages/MainPage";
-import ReleaseNotesPage from "/src/pages/ReleaseNotesPage/ui/ReleaseNotesPage";
+import { ReleaseNotesPage } from "/src/pages/ReleaseNotesPage";
 import { ThankYouPage } from "/src/pages/ThankYouPage";
 
 import { RenderFooter } from "/src/processes/RenderFooter";
