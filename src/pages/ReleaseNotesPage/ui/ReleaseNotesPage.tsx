@@ -145,31 +145,29 @@ const ReleaseNotesPage: React.FC = () => {
     : releaseNotes;
 
   return (
-    <ChakraProvider>
-      <Box maxW="900px" mx="auto" py={8} px={4}>
-        <Heading mb={4} sx={{ color: "white" }}>
-          Журнал обновлений
-        </Heading>
-        <Select
-          className={styles.select}
-          placeholder="Выберите версию"
-          mb={4}
-          sx={{ color: "white" }}
-          onChange={(e) => setSelectedVersion(e.target.value)}
-        >
-          {releaseNotes.map((note) => (
-            <option key={note.version} value={note.version}>
-              {note.version}
-            </option>
-          ))}
-        </Select>
-        <VStack spacing={4}>
-          {filteredNotes.map((note) => (
-            <ReleaseCard key={note.version} {...note} />
-          ))}
-        </VStack>
-      </Box>
-    </ChakraProvider>
+    <Box maxW="900px" mx="auto" py={8} px={4}>
+      <Heading mb={4} sx={{ color: "white" }}>
+        Журнал обновлений
+      </Heading>
+      <Select
+        className={styles.select}
+        placeholder="Выберите версию"
+        mb={4}
+        sx={{ color: "white" }}
+        onChange={(e) => setSelectedVersion(e.target.value)}
+      >
+        {releaseNotes.map((note) => (
+          <option key={note.version} value={note.version}>
+            {note.version}
+          </option>
+        ))}
+      </Select>
+      <VStack spacing={4}>
+        {filteredNotes.map((note) => (
+          <ReleaseCard key={note.version} {...note} />
+        ))}
+      </VStack>
+    </Box>
   );
 };
 

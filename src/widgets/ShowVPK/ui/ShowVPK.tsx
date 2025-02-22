@@ -1,7 +1,17 @@
 import { Suspense, memo, useCallback, useState } from "react";
 
 import { QuestionIcon } from "@chakra-ui/icons";
-import { Box, Button, Tooltip } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
+} from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 import { StateSchema } from "/src/app/providers";
@@ -11,6 +21,8 @@ import { SelectVPK } from "/src/features/SelectVPK";
 import Loader from "/src/shared/ui/Loader/Loader";
 
 import styles from "./ShowVPK.module.scss";
+
+const trigger = window.screen.width > 768 ? "hover" : "click";
 
 export const ShowVPK = memo(() => {
   const [showVPKGroups, setShowVPKGroups] = useState(false);
@@ -41,16 +53,24 @@ export const ShowVPK = memo(() => {
             >
               Выбрать ВПК
             </Button>
-            <Tooltip
-              label="ВПК - Вариативные Профессиональные Компетенции. Уникально только для третьего курса и выше."
-              fontSize="md"
-            >
-              <QuestionIcon
-                w={8}
-                h={8}
-                color={"var(--inverted-secondary-color)"}
-              />
-            </Tooltip>
+            <Popover trigger={trigger}>
+              <PopoverTrigger>
+                <QuestionIcon
+                  w={8}
+                  h={8}
+                  color={"var(--inverted-secondary-color)"}
+                />
+              </PopoverTrigger>
+              <PopoverContent sx={{ color: "white" }}>
+                <PopoverArrow />
+                <PopoverCloseButton />
+                <PopoverHeader>Информация:</PopoverHeader>
+                <PopoverBody>
+                  ВПК - Вариативные Профессиональные Компетенции. Уникально
+                  только для третьего курса и выше.
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
           </Box>
         )}
         {showVPKGroups && <SelectVPK handleHideVPKList={handleHideVPKList} />}

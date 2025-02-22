@@ -262,9 +262,7 @@ export const GroupSettingMenu = memo(() => {
             )}
 
             <Box className={styles.releaseNotes}>
-              <Link to={"/release"} onClick={onClose}>
-                Описание обновлений
-              </Link>
+              <Link to={"/release"}>Описание обновлений</Link>
             </Box>
           </DrawerBody>
         </DrawerContent>
