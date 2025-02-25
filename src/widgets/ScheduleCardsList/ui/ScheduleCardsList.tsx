@@ -211,7 +211,6 @@ const ScheduleCardsList: FC<TableProps> = memo(({ isLoading }) => {
 
       <WeeksList
         isMobileDevice={true}
-        dayHandler={dayHandler}
         weeks={schedule.weeks}
         week={schedule.table.week}
         group={schedule.table.group}

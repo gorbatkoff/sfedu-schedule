@@ -27,6 +27,7 @@ const QuotesWidget = () => {
       </div>
 
       <blockquote>&quot;{quotes[quoteCount]}&quot;</blockquote>
+      <span>Цитата дня:</span>
     </div>
   );
 };

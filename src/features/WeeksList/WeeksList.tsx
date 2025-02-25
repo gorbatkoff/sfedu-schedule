@@ -25,11 +25,10 @@ interface WeeksListProps {
   group: string;
   week: number;
   isMobileDevice: boolean;
-  dayHandler?: (index: number) => void;
 }
 
 export const WeeksList: FC<WeeksListProps> = memo(
-  ({ weeks, group, week, isMobileDevice, dayHandler }) => {
+  ({ weeks, group, week, isMobileDevice }) => {
     const myRef = useRef<HTMLButtonElement | null>(null);
     const { week: currentWeek } = useCurrentWeek();
     const toast = useToast();
@@ -56,11 +55,6 @@ export const WeeksList: FC<WeeksListProps> = memo(
     const fetchDataByWeek = useCallback(
       async (week: number, propWeek: number) => {
         if (week === propWeek) return;
-        if (week === currentWeek) {
-          dayHandler?.(new Date().getDay() - 1);
-        } else {
-          dayHandler?.(0);
-        }
 
         const response = await dispatch(fetchScheduleByWeek({ week, group }));
 
@@ -75,7 +69,7 @@ export const WeeksList: FC<WeeksListProps> = memo(
           toast(SCHEDULE_REQUEST_ERROR);
         }
       },
-      [currentWeek, dayHandler, dispatch, group, schedule, toast, vpkInfo]
+      [currentWeek, dispatch, group, schedule, toast, vpkInfo]
     );
 
     useEffect(() => {
