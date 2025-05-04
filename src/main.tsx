@@ -31,14 +31,6 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <BrowserRouter>
           <ChakraProvider theme={theme}>
             <App />
-            <Snowfall
-              snowflakeCount={10}
-              style={{
-                width: "100vw",
-                height: "100%",
-                zIndex: 100,
-              }}
-            />
           </ChakraProvider>
         </BrowserRouter>
       </StoreProvider>
