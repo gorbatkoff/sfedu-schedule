@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from "react";
 
 import { useToast } from "@chakra-ui/react";
+import { Calendar } from "@snack-uikit/calendar";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
@@ -15,9 +16,8 @@ import {
   useFetchGroupByWeekQuery,
 } from "/src/features/SearchSchedule";
 
-import { Calendar } from "/src/entities/Calendar";
 import { QuotesWidget } from "/src/entities/QuotesWidget";
-import { IScheduleTable, tableActions } from "/src/entities/ScheduleTable";
+import { tableActions } from "/src/entities/ScheduleTable";
 
 import {
   SAVED_SCHEDULE,
@@ -32,13 +32,22 @@ const isUserOnline = navigator.onLine;
 
 const savedUserSchedule = JSON.parse(
   localStorage.getItem(SAVED_SCHEDULE) ?? "{}"
-) as IScheduleTable;
+);
+const locale = new Intl.Locale("ru-RU"); // Создаем локаль для русского языка (Россия)
 
 const renderColumnsByViewPort = () => {
   if (window.screen.width > 768)
     return (
       <MainColumns>
-        <Calendar />
+        <Calendar
+          style={{
+            background: "var(--sys-neutral-background2-level)",
+            borderRadius: "var(--radius-search-m, 14px)",
+          }}
+          mode="date"
+          locale={locale}
+          fitToContainer={true}
+        />
         <SearchSchedule />
         <QuotesWidget />
       </MainColumns>

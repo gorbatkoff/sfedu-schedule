@@ -5,7 +5,6 @@
 
   h3 {
     text-align: center;
-    color: white;
     margin: 0 auto;
     width: fit-content;
   }
@@ -24,7 +23,6 @@
 
 .vpkList {
   margin: 0 auto;
-  color: #fff;
   padding: 2vh 0;
   display: grid;
   gap: 1em;
@@ -32,13 +30,12 @@
   justify-content: space-between;
 
   button:disabled {
-    background: var(--primary-color);
+    background: var(--sys-green-background);
     opacity: 1;
-    color: black;
   }
 
   button:disabled:hover {
-    background: var(--primary-color);
+    background: var(--sys-green-background);
     opacity: 1;
   }
 }

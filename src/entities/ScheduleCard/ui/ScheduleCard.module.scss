@@ -4,7 +4,6 @@
   flex-direction: column;
   max-width: 600px;
   width: 100%;
-  color: aliceblue;
   border-radius: var(--border-radius) var(--border-radius) 0 0;
   padding: 10px;
   row-gap: 30px;
@@ -13,19 +12,19 @@
 
 .ScheduleCardVisual {
   background: var(--secondary-color);
-  color: white;
   padding: 15%;
   font-weight: normal;
   transition: all 0.5s;
 }
 
 .ScheduleCardVisual:hover {
-  color: #000;
+  transform: scale(2);
 }
 
 .cardHeader {
   display: flex;
   justify-content: space-between;
+
   span {
     white-space: nowrap;
   }
@@ -58,11 +57,10 @@
 
 .accordion {
   border-radius: var(--border-radius);
-  background-color: #2c5282;
-  color: white;
+  background-color: var(--inverted-secondary-color);
+
 }
 
 .accordionContent {
-  background-color: #2d3748;
-  color: white;
+  background-color: var(--inverted-secondary-color);
 }

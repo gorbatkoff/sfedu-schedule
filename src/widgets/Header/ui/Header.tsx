@@ -1,43 +1,42 @@
-import { memo, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 
-import { InfoOutlineIcon } from "@chakra-ui/icons";
-import { Box, IconButton } from "@chakra-ui/react";
-import classNames from "classnames";
+import { Box } from "@chakra-ui/react";
+import { ThemeContext } from "@emotion/react";
+import { ButtonFilled, ButtonSimple } from "@snack-uikit/button";
+import DefaultBrand from "@snack-uikit/figma-tokens/build/css/brand.module.css";
+import { DaySVG, EmailSVG } from "@snack-uikit/icons";
+import { useThemeConfig } from "@snack-uikit/utils";
 import { useNavigate } from "react-router-dom";
 
 import { GroupSettingMenu } from "/src/widgets/DrawerMenu";
-import { ModalNews } from "/src/widgets/ModalNews/ui/ModalNews";
+import { ModalNews } from "/src/widgets/ModalNews";
 
 import { tableActions } from "/src/entities/ScheduleTable";
 
-import { defaultValue } from "/src/shared/const/global/const";
+import { defaultValue } from "/src/shared/const";
+import { Theme, themeMap } from "/src/shared/const/theme";
 import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
-import { Logo } from "/src/shared/ui/Logo/Logo";
-import { ThemeSwitcher } from "/src/shared/ui/ThemeSwitcher/ThemeSwitcher";
+import { Logo } from "/src/shared/ui";
 
 import styles from "./Header.module.scss";
 
-interface HeaderProps {
-  className?: string;
-}
-
-export const Header = memo(({ className }: HeaderProps) => {
+export const Header = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [openModal, setOpenModal] = useState(false);
 
-  const navigateToFeedback = useCallback(() => {
+  const navigateToFeedback = () => {
     setOpenModal(false);
     navigate("/leave-feedback");
-  }, [navigate]);
+  };
 
-  const onOpen = useCallback(() => {
+  const onOpen = () => {
     setOpenModal(true);
-  }, []);
+  };
 
-  const onClose = useCallback(() => {
+  const onClose = () => {
     setOpenModal(false);
-  }, []);
+  };
 
   const handleUpdateData = useCallback(() => {
     navigate("/");
@@ -47,26 +46,19 @@ export const Header = memo(({ className }: HeaderProps) => {
 
   return (
     <Box
+      id={"header"}
       bg="var(--secondary-color)"
       as="header"
-      className={classNames(styles.Header, {}, [className])}
+      className={styles.Header}
     >
       <div className={styles.headerWrapper}>
-        <IconButton
-          aria-label="Логотип"
-          bg="transparent"
-          onClick={handleUpdateData}
-        >
-          <Logo />
-        </IconButton>
+        <Logo onUpdateData={handleUpdateData} />
 
-        <div className={styles.menuBlock}>
-          <div className={styles.themeSwitcher}>
-            <ThemeSwitcher />
-          </div>
-          <button className={styles.emailIcon} onClick={onOpen}>
-            <InfoOutlineIcon w={22} h={22} as="button" />
-          </button>
+        <div
+          style={{ display: "flex", alignItems: "center", columnGap: "1em" }}
+        >
+          <DaySVG />
+          <EmailSVG onClick={onOpen} cursor={"pointer"} />
           <GroupSettingMenu />
         </div>
       </div>
@@ -77,4 +69,4 @@ export const Header = memo(({ className }: HeaderProps) => {
       />
     </Box>
   );
-});
+};

@@ -1,6 +1,6 @@
 import { memo, useCallback } from "react";
 
-import { Tr, useColorMode, useToast } from "@chakra-ui/react";
+import { Tr, useToast } from "@chakra-ui/react";
 
 import { IScheduleTable, TableCell } from "/src/entities/ScheduleTable";
 
@@ -30,7 +30,6 @@ export const TableBody = memo((props: ITableBodyProps) => {
   const { schedule, isCurrentWeek } = props;
 
   const toast = useToast();
-  const { colorMode } = useColorMode();
 
   const handleCellDoubleClick = useCallback(
     (cellInfo: string) => {
@@ -58,7 +57,6 @@ export const TableBody = memo((props: ITableBodyProps) => {
                   }
                   key={index}
                   element={element}
-                  colorMode={colorMode}
                   onClick={handleCellDoubleClick}
                 />
               );

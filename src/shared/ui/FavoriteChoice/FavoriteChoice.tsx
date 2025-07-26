@@ -1,13 +1,16 @@
 import { ButtonHTMLAttributes, memo, useCallback } from "react";
 
-import { StarIcon } from "@chakra-ui/icons";
+import { Button, IconButton, useToast } from "@chakra-ui/react";
 import {
-  Button,
-  Heading,
-  IconButton,
-  useColorMode,
-  useToast,
-} from "@chakra-ui/react";
+  ButtonElevated,
+  ButtonFilled,
+  ButtonFunction,
+  ButtonOutline,
+  ButtonSimple,
+  ButtonTonal,
+} from "@snack-uikit/button";
+import { CrossSVG, StarFilledSVG, TrashSVG } from "@snack-uikit/icons";
+import { Typography } from "@snack-uikit/typography";
 
 import { favoriteSearchActions } from "/src/entities/ScheduleTable";
 
@@ -23,7 +26,6 @@ type FavoriteChoiceProps = {
 
 export const FavoriteChoice = memo(
   ({ title, onClick }: FavoriteChoiceProps) => {
-    const { colorMode } = useColorMode();
     const dispatch = useAppDispatch();
     const toast = useToast();
 
@@ -34,26 +36,19 @@ export const FavoriteChoice = memo(
 
     return (
       <div className={styles.ChoiceWrapper}>
-        <Button
+        <ButtonTonal
           type="reset"
-          className={styles.FavoriteChoice}
+          appearance={"neutral"}
+          label={title}
+          fullWidth={true}
           onClick={onClick}
-        >
-          <Heading
-            size="md"
-            color={colorMode}
-            className={styles.favoriteChoiceHeader}
-          >
-            {title}
-          </Heading>
-        </Button>
-        <IconButton
+        />
+        <ButtonSimple
           aria-label="Избранный поиск"
           onClick={handleRemoveFavorite}
           className={styles.actionButton}
-        >
-          <StarIcon color="yellow" />
-        </IconButton>
+          icon={<CrossSVG />}
+        />
       </div>
     );
   }

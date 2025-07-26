@@ -8,8 +8,8 @@
   }
 
   .input:focus-visible {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 1px var(--primary-color);
+    border-color: var(--sys-green-background);
+    box-shadow: 0 0 0 1px var(--sys-green-background);
   }
 }
 
@@ -29,7 +29,6 @@
   padding: 0.5em 2em;
   margin: 2px 0;
   background: #262d3f;
-  color: #fff;
   cursor: pointer;
   letter-spacing: 1.2px;
 }

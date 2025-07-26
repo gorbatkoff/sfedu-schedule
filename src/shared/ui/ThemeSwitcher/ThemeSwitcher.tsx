@@ -8,8 +8,7 @@ export const ThemeSwitcher: FC = memo(() => {
   const localStorageTheme = localStorage.getItem("chakra-ui-color-mode");
 
   const props = {
-    boxSize: 6,
-    color: "white",
+    boxSize: 5,
     sx: { cursor: "pointer" },
     onClick: toggleColorMode,
   };

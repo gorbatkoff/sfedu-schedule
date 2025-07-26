@@ -3,7 +3,6 @@ import { Suspense, memo, useCallback, useState } from "react";
 import { QuestionIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Button,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -12,6 +11,7 @@ import {
   PopoverHeader,
   PopoverTrigger,
 } from "@chakra-ui/react";
+import { ButtonFilled } from "@snack-uikit/button";
 import { useSelector } from "react-redux";
 
 import { StateSchema } from "/src/app/providers";
@@ -47,21 +47,16 @@ export const ShowVPK = memo(() => {
               width: "80vw",
             }}
           >
-            <Button
+            <ButtonFilled
+              label={"Выбрать ВПК"}
               className={styles.showVPKButton}
               onClick={() => setShowVPKGroups(true)}
-            >
-              Выбрать ВПК
-            </Button>
+            ></ButtonFilled>
             <Popover trigger={trigger}>
               <PopoverTrigger>
-                <QuestionIcon
-                  w={8}
-                  h={8}
-                  color={"var(--inverted-secondary-color)"}
-                />
+                <QuestionIcon w={8} h={8} />
               </PopoverTrigger>
-              <PopoverContent sx={{ color: "white" }}>
+              <PopoverContent>
                 <PopoverArrow />
                 <PopoverCloseButton />
                 <PopoverHeader>Информация:</PopoverHeader>

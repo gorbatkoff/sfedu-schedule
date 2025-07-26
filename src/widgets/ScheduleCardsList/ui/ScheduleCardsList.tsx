@@ -1,13 +1,8 @@
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 
 import { StarIcon } from "@chakra-ui/icons";
-import {
-  Button,
-  Heading,
-  IconButton,
-  useColorMode,
-  useToast,
-} from "@chakra-ui/react";
+import { Button, IconButton, useToast } from "@chakra-ui/react";
+import { Typography } from "@snack-uikit/typography";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
 
@@ -56,7 +51,6 @@ const ScheduleCardsList: FC<TableProps> = memo(({ isLoading }) => {
   const toast = useToast();
   const dispatch = useAppDispatch();
   const { week } = useCurrentWeek();
-  const { colorMode } = useColorMode();
 
   const schedule = useSelector(getScheduleTable);
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
@@ -192,13 +186,15 @@ const ScheduleCardsList: FC<TableProps> = memo(({ isLoading }) => {
     <div className={styles.wrapper}>
       <div className={styles.groupActions}>
         <div className={styles.groupActionsFirst}>
-          <Heading
-            color={colorMode === "dark" ? "white" : "var(--secondary-color)"}
+          <Typography
+            size={"m"}
+            tag={"h3"}
+            family={"light"}
+            purpose={"display"}
             className={styles.tableTitle}
-            size="md"
           >
             Расписание {schedule.table.name}
-          </Heading>
+          </Typography>
         </div>
         <IconButton
           size="sm"
@@ -244,10 +240,7 @@ const ScheduleCardsList: FC<TableProps> = memo(({ isLoading }) => {
                 day={weekDay}
                 key={index}
                 element={item}
-                className={classNames(
-                  colorMode === "light" ? styles.whiteMode : styles.darkMode,
-                  item === "" && styles.emptyLesson
-                )}
+                className={classNames(item === "" && styles.emptyLesson)}
               />
             );
           })}

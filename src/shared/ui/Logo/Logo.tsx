@@ -1,23 +1,28 @@
 import { memo } from "react";
 
-import { Heading } from "@chakra-ui/react";
-import classNames from "classnames";
+import { Typography } from "@snack-uikit/typography";
 
 import Icon from "/src/shared/assets/Logo.svg";
 
 import styles from "./Logo.module.scss";
 
 interface LogoProps {
-  className?: string;
+  onUpdateData?: () => void;
 }
 
-export const Logo = memo(({ className }: LogoProps) => {
+export const Logo = memo(({ onUpdateData }: LogoProps) => {
   return (
-    <div className={classNames(styles.Logo, {}, [className])}>
+    <div className={styles.Logo} onClick={onUpdateData}>
       <img src={Icon} alt="Логотип" className={styles.logoIcon} />
-      <Heading size="16px" className={styles.title}>
+      <Typography
+        tag={"h1"}
+        className={styles.title}
+        family={"light"}
+        size={"s"}
+        purpose={"headline"}
+      >
         Sfedu Schedule
-      </Heading>
+      </Typography>
     </div>
   );
 });

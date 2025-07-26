@@ -1,6 +1,7 @@
 import { FC, memo, useCallback, useEffect, useRef } from "react";
 
 import { Badge, Button, useToast } from "@chakra-ui/react";
+import { ButtonFilled } from "@snack-uikit/button";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
 
@@ -101,16 +102,16 @@ export const WeeksList: FC<WeeksListProps> = memo(
                 ? styles.current
                 : undefined;
             return (
-              <Button
+              <ButtonFilled
                 key={index}
+                label={item.toString()}
+                size={"m"}
                 className={classNames(styles.weekButton, [current])}
                 ref={week === item ? myRef : null}
                 onClick={() => fetchDataByWeek(item, week)}
-                opacity={item < currentWeek ? "0.5" : "1"}
-                colorScheme={item === week ? "green" : "gray"}
-              >
-                {item}
-              </Button>
+                /*opacity={item < currentWeek ? "0.5" : "1"}*/
+                /*colorScheme={item === week ? "green" : "gray"}*/
+              />
             );
           })}
         </div>

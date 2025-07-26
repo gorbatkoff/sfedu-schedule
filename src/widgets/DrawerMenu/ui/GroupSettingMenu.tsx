@@ -22,6 +22,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
+import { Typography } from "@snack-uikit/typography";
 import confetti from "canvas-confetti";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -193,7 +194,7 @@ export const GroupSettingMenu = memo(() => {
       <HamburgerIcon
         w={25}
         h={25}
-        sx={{ cursor: "pointer", color: "white" }}
+        sx={{ cursor: "pointer" }}
         ref={btnRef}
         onClick={onOpen}
       />
@@ -209,9 +210,14 @@ export const GroupSettingMenu = memo(() => {
         <DrawerContent className={styles.Drawer}>
           <DrawerInfo handleSaveSettings={handleSaveSettings} />
           <DrawerBody>
-            <Heading as="h6" size="md" my={5}>
+            <Typography
+              tag="h6"
+              size={"m"}
+              family={"light"}
+              purpose={"display"}
+            >
               Пример КТбо1-10
-            </Heading>
+            </Typography>
             <InputGroup sx={{ display: "flex" }}>
               <Input
                 className={styles.input}

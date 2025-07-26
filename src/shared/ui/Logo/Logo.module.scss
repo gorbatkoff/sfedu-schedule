@@ -4,16 +4,15 @@
   align-items: center;
 
   .logoIcon {
-    height: 44px;
-    width: 44px;
+    height: 34px;
+    width: 34px;
     border-radius: 8px;
+    cursor: pointer;
   }
 }
 
 .title {
   text-transform: uppercase;
-  font-size: var(--font-size-m);
-  font-weight: bold;
   margin: 0 10px;
-  color: var(--white-color);
+  cursor: pointer;
 }

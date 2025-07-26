@@ -13,17 +13,15 @@
   --font-xl: var(--font-size-xl) / var(--font-line-xl) var(--font-family-main);
 
   // Colors
-  --primary-color: #9ae6b4;
-  --secondary-color: #262d3f;
-  --white-color: #fff;
+  --white-color: var(--sys-violet-decor-activated);
   --black-color: #000;
-  --inverted-secondary-color: #a8a8a8;
-  --inverted-white-color: #e7ebf3;
-  --success-color: #25ca5d;
+  --inverted-secondary-color: var(--sys-violet-decor-activated);
+  --inverted-white-color: var(--sys-violet-decor-activated);
+  --success-color: var(--sys-violet-decor-activated);
   --danger-color: #ef4d2a;
   --inverted-danger-color: #ffdede;
-  --tile-link-bg: #777f95;
-  --tile-article-bg: #d7deef;
+  --tile-link-bg:var(--sys-violet-decor-activated);
+  --tile-article-bg: var(--sys-violet-decor-activated);
 
   // width, indent
   --app-width: 1440px;

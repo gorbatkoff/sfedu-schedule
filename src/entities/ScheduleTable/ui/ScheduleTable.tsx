@@ -8,8 +8,6 @@ import {
   Td,
   Thead,
   Tr,
-  useColorMode,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
@@ -36,9 +34,7 @@ interface TableProps {
 
 const ScheduleTable = memo(({ className, isLoading }: TableProps) => {
   const dispatch = useAppDispatch();
-  const { colorMode } = useColorMode();
   const { week: currentWeek } = useCurrentWeek();
-  const textColor = useColorModeValue("black", "white");
   const schedule = useSelector(getScheduleTable);
   const vpkData = useSelector((state: StateSchema) => state.selectVPK.VPKData);
   const vpkInfo = useSelector((state: StateSchema) => state.selectVPK.VPK);
@@ -100,9 +96,11 @@ const ScheduleTable = memo(({ className, isLoading }: TableProps) => {
         isMobileDevice={false}
       />
 
-      <TableContainer sx={{ height: "100%", overflowY: "auto" }}>
-        <Table variant="simple" sx={{ color: textColor }}>
-          <Thead className={classNames(styles.tableHead, styles[colorMode])}>
+      <TableContainer
+        sx={{ height: "100%", overflowY: "auto", borderRadius: "16px" }}
+      >
+        <Table variant="simple">
+          <Thead className={classNames(styles.tableHead)}>
             {schedule.table.table.slice(0, 2).map((row, index) => {
               return (
                 <Tr key={index}>

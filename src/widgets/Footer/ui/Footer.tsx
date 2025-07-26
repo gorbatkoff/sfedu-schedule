@@ -14,10 +14,10 @@ export const Footer = memo(() => {
         Сделано с любовью 💚
       </Heading>
       <a href={repositoryUrl}>
-        <Heading size="md" as="h6" color="gray.500">
+        <Heading size="md" as="h6">
           GitHub
         </Heading>
-        <ExternalLinkIcon color="gray.500" boxSize={5} />
+        <ExternalLinkIcon boxSize={5} />
       </a>
     </footer>
   );

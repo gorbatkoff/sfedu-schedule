@@ -1,94 +1,84 @@
-import {
-  ChangeEvent,
-  FC,
-  KeyboardEvent,
-  memo,
-  useEffect,
-  useState,
-} from "react";
+import { memo, useEffect, useState } from "react";
 
-import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
-import {
-  Button,
-  FormControl,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
-  useColorMode,
-  useToast,
-} from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
+import { BaseItemProps } from "@snack-uikit/list";
+import { Search } from "@snack-uikit/search";
 
-import { TOAST_SEARCH_REMOVED } from "/src/shared/const/toast/toast";
+import {
+  useLazyFetchChoicesQuery,
+  useLazyFetchGroupQuery,
+} from "/src/features/SearchSchedule";
+
+import { tableActions } from "/src/entities/ScheduleTable";
+
+import { GROUP_FETCH_SUCCESS } from "/src/shared/const";
+import { useAppDispatch } from "/src/shared/hooks/useAppDispatch";
 import { useDebounce } from "/src/shared/hooks/useDebounce";
 
 import styles from "../SearchSchedule.module.scss";
 
-interface IInputFormProps {
-  fetchByQuery: (query: string, cachedRequest: boolean) => void;
-  isLoading: boolean;
-}
+export const InputForm = memo(() => {
+  const [input, setInput] = useState("");
+  const [fetchByQuery, { data, isLoading }] = useLazyFetchChoicesQuery();
 
-export const InputForm: FC<IInputFormProps> = memo(
-  ({ fetchByQuery, isLoading }) => {
-    const [input, setInput] = useState("");
-    const { colorMode } = useColorMode();
-    const toast = useToast();
+  const [fetchChoice, { data: response, status }] = useLazyFetchGroupQuery();
+  const toast = useToast();
+  const dispatch = useAppDispatch();
 
-    useEffect(() => {
-      input.trim() !== "" && debounceInput();
-    }, [input]);
+  useEffect(() => {
+    if (status === "fulfilled") {
+      window.history.pushState(
+        null,
+        "group",
+        `/?group=${response?.table?.group}`
+      );
+      dispatch(tableActions.setSchedule(response));
+      toast(GROUP_FETCH_SUCCESS(response?.table?.name));
+    }
+  }, [status]);
 
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-      setInput(e.target.value);
-    };
+  useEffect(() => {
+    input.trim() !== "" && debounceInput();
+  }, [input]);
 
-    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-      if (e.key === "Enter" && input.trim() !== "") {
-        setInput((prev) => prev.trim());
-      }
-    };
+  const handleInputChange = (value: string) => {
+    setInput(value);
+  };
 
-    const debounceInput = useDebounce(() => {
-      fetchByQuery(input, true);
-    }, 500);
+  const debounceInput = useDebounce(() => {
+    fetchByQuery(input, true);
+  }, 500);
 
-    const handleClearInput = () => {
-      setInput("");
-      toast(TOAST_SEARCH_REMOVED);
-    };
+  function transformDataToBaseItems(data: {
+    choices: Array<{
+      name: string;
+      id: string;
+      group: string;
+    }>;
+  }): BaseItemProps[] {
+    if (!data?.choices) {
+      return [];
+    }
 
-    return (
-      <div className={styles.form}>
-        <FormControl className={styles.formControl}>
-          <InputGroup>
-            <InputLeftElement pointerEvents="none">
-              <SearchIcon color="gray.300" />
-            </InputLeftElement>
-            <Input
-              type="text"
-              value={input}
-              className={styles.input}
-              onKeyDown={handleKeyDown}
-              onChange={handleInputChange}
-              placeholder="Введите группу или фамилию преподавателя"
-              autoFocus={true}
-              colorScheme="green"
-              borderColor="gray.200"
-              color={colorMode === "light" ? "black" : "white"}
-            />
-            {input && (
-              <InputRightElement>
-                <CloseIcon
-                  onClick={handleClearInput}
-                  color="gray.500"
-                  style={{ cursor: "pointer" }}
-                />
-              </InputRightElement>
-            )}
-          </InputGroup>
-        </FormControl>
-      </div>
-    );
+    return data.choices.map((choice) => ({
+      content: choice.name,
+      id: choice.name,
+      disabled: false,
+      hidden: false,
+      onClick: () => fetchChoice({ group: choice.group }),
+    }));
   }
-);
+
+  return (
+    <Search
+      outline={true}
+      autocomplete={true}
+      size={"m"}
+      options={data ? transformDataToBaseItems(data) : []}
+      value={input}
+      className={styles.input}
+      loading={isLoading}
+      onChange={handleInputChange}
+    />
+  );
+});
