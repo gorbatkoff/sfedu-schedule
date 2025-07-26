@@ -65,7 +65,7 @@ export const FavoriteChoices = memo(() => {
 
   return (
     <div style={{ marginTop: "1em" }}>
-      {favoriteChoices.map((choice, index) => {
+      {favoriteChoices.map((choice) => {
         return (
           <FavoriteChoice
             title={choice.name}

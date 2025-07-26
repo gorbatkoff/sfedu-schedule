@@ -13,17 +13,10 @@
     position: sticky;
     top: 0;
     z-index: 1;
-    color: white;
-  }
 
-  .light {
-    background: #3182ce;
-    color: white;
-  }
-
-  .dark {
-    background: #262d3f;
-    color: white;
+    tr {
+      background: var(--sys-neutral-background2-level);
+    }
   }
 
   tbody {
@@ -42,7 +35,6 @@
 
       /* cursor: pointer; */
       cursor: default;
-      transition: all 0.3s ease-in-out;
     }
 
     td:hover {
@@ -51,6 +43,7 @@
 
     td:first-child {
       text-align: center;
+      background: var(--sys-neutral-background2-level);
     }
   }
 
@@ -69,14 +62,12 @@
   }
 
   .weekButton:disabled {
-    background: #5b32e2;
-    color: white;
+    background: var(--inverted-secondary-color);
     opacity: 1;
   }
 
   .weekButton:disabled:hover {
-    background: #5b32e2;
-    color: white;
+    background: var(--inverted-secondary-color);
     opacity: 0.6;
   }
 

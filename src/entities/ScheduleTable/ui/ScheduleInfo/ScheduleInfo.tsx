@@ -1,13 +1,7 @@
 import { memo, useCallback } from "react";
 
 import { StarIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Heading,
-  IconButton,
-  useColorModeValue,
-  useToast,
-} from "@chakra-ui/react";
+import { Box, Heading, IconButton, useToast } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 import {
@@ -31,7 +25,6 @@ interface IScheduleInfoProps {
 
 export const ScheduleInfo = memo((props: IScheduleInfoProps) => {
   const { schedule } = props;
-  const textColor = useColorModeValue("black", "white");
 
   const favoriteChoices = useSelector(getFavoriteSearch);
   const isFavorite =
@@ -65,11 +58,10 @@ export const ScheduleInfo = memo((props: IScheduleInfoProps) => {
 
   return (
     <Box className={styles.groupActions}>
-      <Heading color={textColor} className={styles.tableTitle}>
+      <Heading className={styles.tableTitle}>
         Расписание
         <span
           style={{
-            backgroundColor: "#ffffff14",
             padding: "0 10px",
             borderRadius: "12px",
             margin: "0 10px",
@@ -80,7 +72,6 @@ export const ScheduleInfo = memo((props: IScheduleInfoProps) => {
         <span>Неделя:</span>
         <span
           style={{
-            backgroundColor: "#ffffff14",
             padding: "0 10px",
             borderRadius: "12px",
             margin: "0 0.5em",

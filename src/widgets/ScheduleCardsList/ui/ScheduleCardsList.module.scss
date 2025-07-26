@@ -50,9 +50,7 @@
 }
 
 .whiteMode {
-  color: #000;
-  background: #fff;
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-search-m, 14px);
   font-weight: bold;
   border: 3px dashed var(--chakra-colors-gray-300);
 }

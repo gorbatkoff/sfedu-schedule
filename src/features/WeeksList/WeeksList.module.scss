@@ -7,7 +7,6 @@
     height:100%;
     padding: 1em 0;
     font-size: 22px;
-    background-color: #000;
   }
 }
 
@@ -21,9 +20,11 @@
 }
 
 .current {
-  border-bottom: 3px solid var(--primary-color);
+  border-bottom: 3px solid var(--sys-green-background);
 }
 
 .weekButton {
-  border-radius: 7px 0;
+  min-width: 10px !important;
+  padding: 0 15px !important;
 }
+

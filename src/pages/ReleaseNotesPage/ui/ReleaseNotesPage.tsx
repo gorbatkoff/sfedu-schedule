@@ -122,9 +122,7 @@ const ReleaseCard: React.FC<ReleaseNote> = ({ version, date, changes }) => (
   >
     <CardBody>
       <Heading size="md">Версия {version}</Heading>
-      <Text fontSize="sm" color="gray.500">
-        {date}
-      </Text>
+      <Text fontSize="sm">{date}</Text>
       <VStack align="start" mt={2}>
         {changes.map((change, index) => (
           <HStack key={index} spacing={4} mt={5} className={styles.stack}>
@@ -146,14 +144,11 @@ const ReleaseNotesPage: React.FC = () => {
 
   return (
     <Box maxW="900px" mx="auto" py={8} px={4}>
-      <Heading mb={4} sx={{ color: "white" }}>
-        Журнал обновлений
-      </Heading>
+      <Heading mb={4}>Журнал обновлений</Heading>
       <Select
         className={styles.select}
         placeholder="Выберите версию"
         mb={4}
-        sx={{ color: "white" }}
         onChange={(e) => setSelectedVersion(e.target.value)}
       >
         {releaseNotes.map((note) => (

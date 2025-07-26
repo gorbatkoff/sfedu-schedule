@@ -6,15 +6,14 @@
 
 .formElement {
   margin: 1.5em 0;
-  color: white;
+
 
   &::placeholder {
-    color: white;
     opacity: 0.6;
   }
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .LeaveFeedback {
     width: 100%;
   }

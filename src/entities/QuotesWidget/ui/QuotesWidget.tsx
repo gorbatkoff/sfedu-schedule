@@ -16,7 +16,6 @@ const QuotesWidget = () => {
 
   return (
     <div className={styles.quotesWrapper}>
-      <div>&#xf10d;</div>
       <div className={styles.reload}>
         <IconButton
           onClick={() => setQouteCount(getRandomNumber(1, 150))}
@@ -27,7 +26,6 @@ const QuotesWidget = () => {
       </div>
 
       <blockquote>&quot;{quotes[quoteCount]}&quot;</blockquote>
-      <span>Цитата дня:</span>
     </div>
   );
 };
